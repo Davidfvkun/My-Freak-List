@@ -2,6 +2,7 @@
 
 include "../vendor/autoload.php";
 include "../vendor/password.php";
+include "funciones.php";
 require_once "../config.php";
 $app = new \Slim\Slim(
         array(
@@ -37,6 +38,25 @@ $app->map('/registro', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
+                    break;
+                case "POST":
+                    echo $_POST['email'];
+                    $registra = registrarse($_POST['nick'],$_POST['clave'],$_POST['email'],
+                            $_POST['nombre'],$_POST['apellido'],$_POST['descripcion']);
+                    if($registra)
+                    {
+                        $mensaje = "Se ha registrado correctamente";
+                        $clase = "info";
+                    }
+                    else
+                    {
+                        $mensaje = "Ha ocurrido algún fallo inesperado";
+                        $clase = "info error";
+                    }
+                    $app->render('myfreakzone.html.twig', array(
+                           'clase' => $clase,
+                           'mensaje' => $mensaje
+                           ));
                     break;
             }
         })->name('registro')->via('GET', 'POST');

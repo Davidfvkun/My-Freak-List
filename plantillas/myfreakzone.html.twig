@@ -36,6 +36,7 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
         </div>
     </div>
+        <div class="{{ clase }}">{{ mensaje }}</div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -71,37 +72,37 @@
                         <div id="tab2" class="tab-pane fade">
                             <form class="form-horizontal" method="POST" action="{{ urlFor("registro")}}">
                                 <div class="form-group">
-                                    <label for="inputnick" class="col-lg-2 control-label">Nick *</label>
+                                    <label for="nick" class="col-lg-2 control-label">Nick *</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="nick" placeholder="Introduce tu nick de usuario">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputclave" class="col-lg-2 control-label">Clave *</label>
+                                    <label for="clave" class="col-lg-2 control-label">Clave *</label>
                                     <div class="col-lg-10">
                                         <input type="password" class="form-control" name="clave" placeholder="Introduce tu contraseña">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputemail" class="col-lg-2 control-label">Email *</label>
+                                    <label for="email" class="col-lg-2 control-label">Email *</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="email" placeholder="Introduce tu email">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputdescripcion" class="col-lg-2 control-label">Nombre</label>
+                                    <label for="nombre" class="col-lg-2 control-label">Nombre</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="nombre" placeholder="Introduce aquí tu nombre">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputdescripcion" class="col-lg-2 control-label">Apellido</label>
+                                    <label for="apellido" class="col-lg-2 control-label">Apellido</label>
                                     <div class="col-lg-10">
                                         <input type="text" class="form-control" name="apellido" placeholder="Introduce aquí tu apellido">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputdescripcion" class="col-lg-2 control-label">Algo sobre ti</label>
+                                    <label for="descripcion" class="col-lg-2 control-label">Algo sobre ti</label>
                                     <div class="col-lg-10">
                                         <textarea rows="15" type="text"class="form-control" name="descripcion"
                                                   placeholder="Introduce aquí lo que quieras contar sobre ti"></textarea>

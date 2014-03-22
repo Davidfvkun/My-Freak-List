@@ -2,6 +2,25 @@
 {
     margin-top: 100px !important;
 }
+.info
+{   
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    background-color: #58ACFA;
+    margin-left: 30%;
+    margin-right: 30%;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.error
+{
+    background-color: #B40404 !important;
+}
 .minibuttons
 {
     font-size: 30px;
