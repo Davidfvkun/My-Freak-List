@@ -1,0 +1,44 @@
+.margintop
+{
+    margin-top: 100px !important;
+}
+.minibuttons
+{
+    font-size: 30px;
+    border-radius: 0 20px 20px 0;
+    -webkit-border-radius: 0 20px 20px 0;
+    border-radius: 0 20px 20px 0;
+}
+.center
+{
+    text-align: center;
+}
+.flatly
+{/* Flatly*/
+    color: #0B0B61;
+}
+.cerulean
+{/* Cerulean */
+    color: cyan;
+}
+.cosmo
+{/*cosmo*/
+    color: #424242;
+}
+.cyborg
+{/*Cyborg*/
+    color: #000000;
+}
+.lumen
+{
+    color: #E6E6E6;
+}
+.readable
+{
+    color: #A9E2F3;
+}
+img
+{
+    width: 25px;
+    height: 25px;
+}
