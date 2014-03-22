@@ -21,7 +21,7 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
 );
 
-$app->map('/myfreakzone', function() use ($app) {
+$app->map('/MyFreakZone/principal', function() use ($app) {
 
             switch ($app->request()->getMethod()) {
                 case "GET":
@@ -33,33 +33,46 @@ $app->map('/myfreakzone', function() use ($app) {
             }
         })->name('myfreakzone')->via('GET', 'POST');
 
-        /* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
-$app->map('/registro', function() use ($app) {
+/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
+$app->map('/MyFreakZone', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    echo $_POST['email'];
-                    $registra = registrarse($_POST['nick'],$_POST['clave'],$_POST['email'],
-                            $_POST['nombre'],$_POST['apellido'],$_POST['descripcion']);
-                    if($registra)
-                    {
+                    $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                    if ($registra == true) {
                         $mensaje = "Se ha registrado correctamente";
                         $clase = "info";
+                    } else if($registra == false) {
+                        $mensaje = "Ha ocurrido un fallo inesperado";
+                        $clase = "info error";
                     }
                     else
                     {
-                        $mensaje = "Ha ocurrido algún fallo inesperado";
+                        $mensaje = $registra;
                         $clase = "info error";
                     }
                     $app->render('myfreakzone.html.twig', array(
-                           'clase' => $clase,
-                           'mensaje' => $mensaje
-                           ));
+                        'clase' => $clase,
+                        'mensaje' => $mensaje
+                    ));
                     break;
             }
         })->name('registro')->via('GET', 'POST');
+//////////////////////////////////////////////////////////////////////
+
+/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
+$app->map('/login', function() use ($app) {
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    $app->render('myfreakzone.html.twig');
+                    break;
+                case "POST":
+                    login($_POST['nick'],$_POST['clave'], $app);
+                    break;
+            }
+        })->name('login')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
 $app->run();

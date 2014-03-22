@@ -36,7 +36,7 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
         </div>
     </div>
-        <div class="{{ clase }}">{{ mensaje }}</div>
+    <div class="{{ clase }}">{{ mensaje }}</div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -49,17 +49,17 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <div id="tab1" class="tab-pane fade">
-                            <form class="form-horizontal" method="POST" action="#">
-                                <div class="form-group">
+                            <form class="form-horizontal" method="POST" action="{{ urlFor('login') }}">
+                                <div class="form-group" id="nickdiv">
                                     <label for="inputnick" class="col-lg-2 control-label">Nick</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Introduce tu nick de usuario">
+                                        <input type="text" name="nick" class="form-control" placeholder="Introduce tu nick de usuario">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="clavediv" >
                                     <label for="inputclave" class="col-lg-2 control-label">Clave</label>
                                     <div class="col-lg-10">
-                                        <input type="password" class="form-control" placeholder="Introduce tu contraseña">
+                                        <input type="password" name="clave" class="form-control" placeholder="Introduce tu contraseña">
                                     </div>
                                 </div>
                                 <div class="center" class="col-lg-2 control-label">
@@ -71,34 +71,34 @@
                         </div>
                         <div id="tab2" class="tab-pane fade">
                             <form class="form-horizontal" method="POST" action="{{ urlFor("registro")}}">
-                                <div class="form-group">
+                                <div class="form-group" id="nickRdiv">
                                     <label for="nick" class="col-lg-2 control-label">Nick *</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="nick" placeholder="Introduce tu nick de usuario">
+                                        <input type="text" class="form-control" id="nickR" name="nick" placeholder="Nick (Solo caracteres Alfanumericos)">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="claveRdiv">
                                     <label for="clave" class="col-lg-2 control-label">Clave *</label>
                                     <div class="col-lg-10">
-                                        <input type="password" class="form-control" name="clave" placeholder="Introduce tu contraseña">
+                                        <input type="password" class="form-control" id="claveR" name="clave" placeholder="Contraseña (Min 8 caracteres, Max 20)">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="emaildiv">
                                     <label for="email" class="col-lg-2 control-label">Email *</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="email" placeholder="Introduce tu email">
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email (valido)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre" class="col-lg-2 control-label">Nombre</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="nombre" placeholder="Introduce aquí tu nombre">
+                                        <input type="text" class="form-control"  name="nombre" placeholder="Nombre">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label for="apellido" class="col-lg-2 control-label">Apellido</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="apellido" placeholder="Introduce aquí tu apellido">
+                                        <input type="text" class="form-control" name="apellido" placeholder="Apellido">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="center" class="col-lg-2 control-label">
-                                    <input type="submit" value="Registrarse" name="registrarse" class="btn btn-primary" />
+                                    <input type="submit" value="Registrarse" id="registrarse" name="registrarse" class="btn btn-primary" disabled />
                                     <input type="reset" value="Limpiar" name="limpiar" class="btn btn-default" />
                                 </div>
                             </form>
@@ -138,4 +138,7 @@
         </div>
     </div>
 </div>
+<script type="text/JavaScript">
+    window.onload = init();
+</script>
 {% endblock %}
