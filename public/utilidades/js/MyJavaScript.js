@@ -26,6 +26,17 @@ function init()
             }, false);
 }
 
+function InitPlantillaPrincipal()
+{
+    document.getElementById("inputbusqueda").addEventListener(
+            'keypress',
+            function()
+            {
+                Ajax_Usuario(document.getElementById("inputbusqueda").value, 
+                document.getElementById("selectfiltrausuarios").value, 1);
+            }, false);
+}
+
 function CompruebaCampo(id, expresionRegular)
 {
     valor = document.getElementById(id).value;
@@ -48,6 +59,31 @@ function CompruebaCampo(id, expresionRegular)
     {
         document.getElementById("registrarse").disabled = false;
     }
+}
+
+function Ajax_Usuario(valor1, valor2, peticionn)
+{
+    var request;
+            request = $.ajax({
+                url: "ajax.php",
+                type: "GET",
+                data: { val1: valor1, val2: valor2, peticion: peticionn}
+            });
+
+            request.done(function (response, textStatus, jqXHR)
+            {
+                coso = JSON.parse(response);
+                 $("#inputbusqueda").autocomplete({
+                    source: coso
+                    });
+                cad = ""
+                for(i=0;i<coso.length;i++)
+                    {
+                        cad = cad + " - " + coso[i];
+                    }
+                document.getElementById("pruebas").innerHTML = cad
+            });
+      console.log("hi");
 }
 
 

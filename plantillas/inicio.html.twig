@@ -91,20 +91,20 @@
                     <h3 class="panel-title">Buscar usuarios</h3>
                 </div>
                 <div class="panel panel-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="POST" action="{{ urlFor("busqueda") }}">
                         <div class="form-group">
-                            <label for="inputBusqueda" class="col-lg-2 control-label">Buscar usuario</label>
+                            <label for="busquedausuario" class="col-lg-2 control-label">Buscar usuario</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" id="inputBusqueda" placeholder="Introduce el X del usuario">
+                                <input type="text" class="form-control" name="busquedausuario" id="inputbusqueda" placeholder="Introduce el X del usuario">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="select" class="col-lg-2 control-label">Filtrar por</label>
                             <div class="col-lg-10">
-                                <select class="form-control" id="select">
-                                    <option>Nombre</option>
-                                    <option>Nick</option>
-                                    <option>Material</option>
+                                <select class="form-control" id="selectfiltrausuarios" name="filtrado">
+                                    <option value="1">Nombre</option>
+                                    <option value="2">Nick</option>
+                                    <option value="3">Material</option>
                                 </select>
                             </div>
                         </div>
@@ -129,5 +129,8 @@
             </div>
         </div>
     </div>
-
+        <div id="pruebas"></div>
+<script type="text/JavaScript">
+    window.onload = InitPlantillaPrincipal();
+</script>
 {% endblock %}

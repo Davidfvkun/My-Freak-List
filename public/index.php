@@ -74,6 +74,23 @@ $app->map('/login', function() use ($app) {
             }
         })->name('login')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
+        
+/* Buscar usuarios */
+        
+
+/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
+$app->map('/busqueda', function() use ($app) {
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    $app->render('myfreakzone.html.twig');
+                    break;
+                case "POST":
+                    $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
+                    echo "Crear otra plantilla para mostrar los resultados de la consulta";
+                    break;
+            }
+        })->name('busqueda')->via('GET', 'POST');
+//////////////////////////////////////////////////////////////////////
 
 $app->run();
 ?>

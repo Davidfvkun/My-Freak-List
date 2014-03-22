@@ -8,7 +8,6 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
     $dbh->beginTransaction();
     $ok = false;
     if ($nick != "" && $nick != null && $contraseña != "" && $contraseña != null && $email != "" && $email != null) {
-        if ($pasa) {
             try {
                 $insertarUsuario = ORM::for_table('usuario')->create();
                 $insertarUsuario->nick = $nick;
@@ -25,7 +24,6 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
                 $dbh->rollback();
                 $ok = false;
             }
-        }
     }
     return $ok;
 }
@@ -42,6 +40,27 @@ function login($nick, $contraseña, $app) {
         // $_SESSION['loge'] = $login->id; Aun no se como mantendré el login
         $app->render('inicio.html.twig');
     }
+}
+
+function buscar_usuarios($busqueda, $filtrado)
+{
+    $buscaUsuario = ORM::for_table('usuario');
+    switch($filtrado)
+    {
+        case "1":
+            $buscaUsuario = $buscaUsuario->where_like("nombre","%".$busqueda."%");
+            break;
+        case "2":
+            $buscaUsuario = $buscaUsuario->where_like("nick","%".$busqueda."%");
+            break;
+        case "3":
+            // Esta es la consulta mas complicada, de momento la obviaré.
+            break;
+        default:
+            break;
+    }
+    $buscaUsuario = $buscaUsuario->find_many();
+    return $buscaUsuario;
 }
 
 ?>
