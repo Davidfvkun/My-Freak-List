@@ -77,8 +77,6 @@ $app->map('/login', function() use ($app) {
         
 /* Buscar usuarios */
         
-
-/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
 $app->map('/busqueda', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
@@ -90,6 +88,21 @@ $app->map('/busqueda', function() use ($app) {
                     break;
             }
         })->name('busqueda')->via('GET', 'POST');
+//////////////////////////////////////////////////////////////////////
+        
+/* Buscar animes-series-peliculas */
+        
+/*$app->map('/busqueda', function() use ($app) {
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    $app->render('myfreakzone.html.twig');
+                    break;
+                case "POST":
+                    $busqueda = buscar_material($_POST['busquedausuario'], $_POST['cbmaterial']);
+                    echo "Crear otra plantilla para mostrar los resultados de la consulta";
+                    break;
+            }
+        })->name('busqueda')->via('GET', 'POST');*/
 //////////////////////////////////////////////////////////////////////
 
 $app->run();

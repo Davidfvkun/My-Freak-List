@@ -76,14 +76,7 @@ function Ajax_Usuario(valor1, valor2, peticionn)
                  $("#inputbusqueda").autocomplete({
                     source: coso
                     });
-                cad = ""
-                for(i=0;i<coso.length;i++)
-                    {
-                        cad = cad + " - " + coso[i];
-                    }
-                document.getElementById("pruebas").innerHTML = cad
             });
-      console.log("hi");
 }
 
 
