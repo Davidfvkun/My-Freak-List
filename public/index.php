@@ -40,21 +40,23 @@ $app->map('/MyFreakZone', function() use ($app) {
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
-                    if ($registra == true) {
-                        $mensaje = "Se ha registrado correctamente";
-                        $clase = "info";
-                    } else if ($registra == false) {
-                        $mensaje = "Ha ocurrido un fallo inesperado";
-                        $clase = "info error";
-                    } else {
-                        $mensaje = $registra;
-                        $clase = "info error";
+                    if (isset($_POST['registrarse'])) {
+                        $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                        if ($registra == true) {
+                            $mensaje = "Se ha registrado correctamente";
+                            $clase = "info";
+                        } else if ($registra == false) {
+                            $mensaje = "Ha ocurrido un fallo inesperado";
+                            $clase = "info error";
+                        } else {
+                            $mensaje = $registra;
+                            $clase = "info error";
+                        }
+                        $app->render('myfreakzone.html.twig', array(
+                            'clase' => $clase,
+                            'mensaje' => $mensaje
+                        ));
                     }
-                    $app->render('myfreakzone.html.twig', array(
-                        'clase' => $clase,
-                        'mensaje' => $mensaje
-                    ));
                     break;
             }
         })->name('registro')->via('GET', 'POST');
@@ -67,7 +69,9 @@ $app->map('/login', function() use ($app) {
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    login($_POST['nick'], $_POST['clave'], $app);
+                    if (isset($_POST['entrar'])) {
+                        login($_POST['nick'], $_POST['clave'], $app);
+                    }
                     break;
             }
         })->name('login')->via('GET', 'POST');
@@ -75,38 +79,62 @@ $app->map('/login', function() use ($app) {
 
 /* Buscar usuarios */
 
-$app->map('/busqueda', function() use ($app) {
+$app->map('/busquedausuario', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
-                    echo "Crear otra plantilla para mostrar los resultados de la consulta";
+                    if (isset($_POST['buscaru'])) {
+                        $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
+                        foreach($busqueda as $i)
+                        {
+                            echo $i->nick;
+                            echo $i->nombre;
+                            echo $i->apellido;
+                        }
+                        $app->render('busquedausuario.html.twig', array('datos' => $busqueda));
+                    }
                     break;
             }
-        })->name('busqueda')->via('GET', 'POST');
+        })->name('busquedausuario')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
 /* Buscar animes-series-peliculas */
 
-$app->map('/busquedaanime', function() use ($app) {
+$app->map('/busquedam', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
                     $V = array(0, 0, 0);
-                    foreach ($_POST['cbmaterial'] as $i) {
-                        $V[$i] = 1;
+                    if (isset($_POST['cbmaterial'])) {
+                        foreach ($_POST['cbmaterial'] as $i) {
+                            $V[$i] = 1;
+                        }
+                    } else {
+                        $V = array(1, 1, 1);
                     }
-                    $busqueda = buscar_material($_POST['buscaanime'], $V);
-                    foreach ($busqueda as $i) {
-                        echo $i->nombre;
+                    if (isset($_POST['buscarm'])) {
+
+                        $busqueda = buscar_material($_POST['buscaanime'], $V);
+
+                        $app->render('busquedamaterial.html.twig', array('datos' => $busqueda));
+                    } else if (isset($_POST['buscarma'])) {
+                        if (isset($_POST['incluir'])) {
+                            //$busqueda = funcionbusquedaavanzadaaunsinhacer($_POST['buscaanime'], $V);
+                        } else {
+                            //$busqueda = funcionbusquedaavanzadaaunsinhacer($_POST['buscaanime'], $V);
+                        }
+                        /* foreach ($busqueda as $i) {
+                          echo $i->nombre;
+                          } */
+                        echo "Nada";
                     }
                     break;
             }
-        })->name('busquedaanime')->via('GET', 'POST');
+        })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
 $app->run();

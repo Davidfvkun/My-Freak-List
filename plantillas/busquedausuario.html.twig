@@ -1,0 +1,35 @@
+{% extends "base2.html.twig" %}
+{% block contenido2 %}
+<div class="container margintop">
+    <div class="row">
+        <div class="col-lg-2">
+            <label class="minibuttons flatly" onClick="CambiaEstilos('Flatly')">&#9679;</label>
+            <label class="minibuttons readable" onClick="CambiaEstilos('Readable')">&#9679;</label>
+            <label class="minibuttons cosmo" onClick="CambiaEstilos('Cosmo')">&#9679;</label>
+            <label class="minibuttons cerulean" onClick="CambiaEstilos('Cerulean')">&#9679;</label>
+            <label class="minibuttons cyborg" onClick="CambiaEstilos('Cyborg')">&#9679;</label>
+            <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover mytable" >
+                <thead>
+                    <th>Nick</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <!-- Planteandome incluir una "Fecha de registro" -->
+                </thead>
+                <tbody>
+                    {% for i in datos %}
+                        <tr>
+                            <td>{{ i.nick }}</td>
+                            <td>{{ i.nombre }}</td>
+                            <td>{{ i.apellido }}</td>
+                        </tr>
+                     {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

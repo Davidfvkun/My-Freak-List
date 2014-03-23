@@ -2,6 +2,18 @@
 {
     margin-top: 100px !important;
 }
+.mytable td, .mytable th
+{
+    text-align: center !important;
+}
+.mytable td
+{
+    font-size: 14px;
+}
+.mytable th
+{
+    font-size: 18px;
+}
 .info
 {   
     padding-top: 5px;

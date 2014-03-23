@@ -66,22 +66,30 @@ function buscar_material($busqueda, $V) {
     $buscaMaterial = ORM::for_table('material');
     $consulta = "SELECT * FROM material ";
     $cadena = "";
+    $sep = false;
     if ($V[0] == 1) {
         $cadena = $cadena . "WHERE (tipo = 1 ";
+        $sep = true;
     }
     if ($V[1] == 1) {
+        $sep = true;
         if ($cadena != "")
             $cadena = $cadena . "OR tipo = 2 ";
         else
             $cadena = $cadena . "WHERE (tipo = 2 ";
     }
     if ($V[2] == 1) {
+        $sep = true;
         if ($cadena != "")
             $cadena = $cadena . "OR tipo = 3";
         else
             $cadena = $cadena . "WHERE (tipo = 3";
     }
-    $cadena = $cadena.") AND nombre like '%".$busqueda."%'";
+    if($sep)
+        $cadena = $cadena.") AND nombre like '%".$busqueda."%'";
+    else
+        $cadena = $cadena."WHERE nombre like '%".$busqueda."%'";
+    
     $consulta = $consulta . $cadena;
     $buscaMaterial = $buscaMaterial->raw_query($consulta)->find_many();
     return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
