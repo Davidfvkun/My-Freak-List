@@ -8,22 +8,22 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
     $dbh->beginTransaction();
     $ok = false;
     if ($nick != "" && $nick != null && $contraseña != "" && $contraseña != null && $email != "" && $email != null) {
-            try {
-                $insertarUsuario = ORM::for_table('usuario')->create();
-                $insertarUsuario->nick = $nick;
-                $insertarUsuario->nombre = $nombre;
-                $insertarUsuario->apellido = $apellido;
-                $insertarUsuario->email = $email;
-                $insertarUsuario->descripcion = $descripcion;
-                $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
-                $insertarUsuario->es_admin = 1; // 1 es que si es admin. Solo habrá un admin para pruebas
-                $insertarUsuario->save();
-                $ok = true;
-                $dbh->commit();
-            } catch (\PDOException $e) {
-                $dbh->rollback();
-                $ok = false;
-            }
+        try {
+            $insertarUsuario = ORM::for_table('usuario')->create();
+            $insertarUsuario->nick = $nick;
+            $insertarUsuario->nombre = $nombre;
+            $insertarUsuario->apellido = $apellido;
+            $insertarUsuario->email = $email;
+            $insertarUsuario->descripcion = $descripcion;
+            $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
+            $insertarUsuario->es_admin = 1; // 1 es que si es admin. Solo habrá un admin para pruebas
+            $insertarUsuario->save();
+            $ok = true;
+            $dbh->commit();
+        } catch (\PDOException $e) {
+            $dbh->rollback();
+            $ok = false;
+        }
     }
     return $ok;
 }
@@ -42,16 +42,14 @@ function login($nick, $contraseña, $app) {
     }
 }
 
-function buscar_usuarios($busqueda, $filtrado)
-{
+function buscar_usuarios($busqueda, $filtrado) {
     $buscaUsuario = ORM::for_table('usuario');
-    switch($filtrado)
-    {
+    switch ($filtrado) {
         case "1":
-            $buscaUsuario = $buscaUsuario->where_like("nombre","%".$busqueda."%");
+            $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%");
             break;
         case "2":
-            $buscaUsuario = $buscaUsuario->where_like("nick","%".$busqueda."%");
+            $buscaUsuario = $buscaUsuario->where_like("nick", "%" . $busqueda . "%");
             break;
         case "3":
             // Esta es la consulta mas complicada, de momento la obviaré.
@@ -62,25 +60,31 @@ function buscar_usuarios($busqueda, $filtrado)
     $buscaUsuario = $buscaUsuario->find_many();
     return $buscaUsuario;
 }
-function buscar_material($busqueda, $filtrado)
-{
-    $buscaUsuario = ORM::for_table('material');
-    /*switch($filtrado)
-    {
-        case "1":
-            $buscaUsuario = $buscaUsuario->where_like("nombre","%".$busqueda."%");
-            break;
-        case "2":
-            $buscaUsuario = $buscaUsuario->where_like("nick","%".$busqueda."%");
-            break;
-        case "3":
-            // Esta es la consulta mas complicada, de momento la obviaré.
-            break;
-        default:
-            break;
-    }*/
-    $buscaUsuario = $buscaUsuario->find_many();
-    return null; // Primero haré unos inserts SQL para poder probar esto.
+
+function buscar_material($busqueda, $V) {
+    
+    $buscaMaterial = ORM::for_table('material');
+    $consulta = "SELECT * FROM material ";
+    $cadena = "";
+    if ($V[0] == 1) {
+        $cadena = $cadena . "WHERE (tipo = 1 ";
+    }
+    if ($V[1] == 1) {
+        if ($cadena != "")
+            $cadena = $cadena . "OR tipo = 2 ";
+        else
+            $cadena = $cadena . "WHERE (tipo = 2 ";
+    }
+    if ($V[2] == 1) {
+        if ($cadena != "")
+            $cadena = $cadena . "OR tipo = 3";
+        else
+            $cadena = $cadena . "WHERE (tipo = 3";
+    }
+    $cadena = $cadena.") AND nombre like '%".$busqueda."%'";
+    $consulta = $consulta . $cadena;
+    $buscaMaterial = $buscaMaterial->raw_query($consulta)->find_many();
+    return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
 }
 
 ?>

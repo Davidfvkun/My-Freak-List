@@ -30,7 +30,16 @@ switch ($_REQUEST['peticion']) {
         }
         break;
     // FIN DEL CASO DE LAS BUSQUEDAS DE USUARIOS
-    case 2:
+    case 2: // Caso de busqueda de animes 
+        $arri = array($_GET['val2'], $_GET['val3'], $_GET['val4']);
+        $busqueda = buscar_material($_GET['val1'], $arri);
+        $i = 0;
+        $arr = array();
+        foreach ($busqueda as $j) {
+            $arr[$i] = $j->nombre;
+            $i = $i + 1;
+        }
+        print_r(json_encode($arr));
         break;
 }
 ?>

@@ -32,8 +32,17 @@ function InitPlantillaPrincipal()
             'keypress',
             function()
             {
-                Ajax_Usuario(document.getElementById("inputbusqueda").value, 
-                document.getElementById("selectfiltrausuarios").value, 1);
+                Ajax_Usuario(document.getElementById("inputbusqueda").value,
+                        document.getElementById("selectfiltrausuarios").value, 1);
+            }, false);
+    document.getElementById("inputbusqueda1").addEventListener(
+            'keypress',
+            function()
+            {
+                Ajax_Material(document.getElementById("inputbusqueda1").value,
+                              document.getElementById("A").checked,
+                              document.getElementById("B").checked,
+                              document.getElementById("C").checked,2); //PENDIENTE
             }, false);
 }
 
@@ -64,19 +73,39 @@ function CompruebaCampo(id, expresionRegular)
 function Ajax_Usuario(valor1, valor2, peticionn)
 {
     var request;
-            request = $.ajax({
-                url: "ajax.php",
-                type: "GET",
-                data: { val1: valor1, val2: valor2, peticion: peticionn}
-            });
+    request = $.ajax({
+        url: "ajax.php",
+        type: "GET",
+        data: {val1: valor1, val2: valor2, peticion: peticionn}
+    });
 
-            request.done(function (response, textStatus, jqXHR)
-            {
-                coso = JSON.parse(response);
-                 $("#inputbusqueda").autocomplete({
-                    source: coso
-                    });
-            });
+    request.done(function(response, textStatus, jqXHR)
+    {
+        coso = JSON.parse(response);
+        $("#inputbusqueda").autocomplete({
+            source: coso
+        });
+    });
+}
+function Ajax_Material(valor1, valor2, valor3, valor4,  peticionn)
+{
+    valor2 == true ? valor2 = 1 : valor2 = 0;
+    valor3 == true ? valor3 = 1 : valor3 = 0;
+    valor4 == true ? valor4 = 1 : valor4 = 0;
+    var request;
+    request = $.ajax({
+        url: "ajax.php",
+        type: "GET",
+        data: {val1: valor1, val2: valor2, val3: valor3, val4: valor4, peticion: peticionn}
+    });
+
+    request.done(function(response, textStatus, jqXHR)
+    {
+        coso = JSON.parse(response);
+        $("#inputbusqueda1").autocomplete({
+            source: coso
+        });
+    });
 }
 
 

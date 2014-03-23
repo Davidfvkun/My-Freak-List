@@ -44,12 +44,10 @@ $app->map('/MyFreakZone', function() use ($app) {
                     if ($registra == true) {
                         $mensaje = "Se ha registrado correctamente";
                         $clase = "info";
-                    } else if($registra == false) {
+                    } else if ($registra == false) {
                         $mensaje = "Ha ocurrido un fallo inesperado";
                         $clase = "info error";
-                    }
-                    else
-                    {
+                    } else {
                         $mensaje = $registra;
                         $clase = "info error";
                     }
@@ -69,14 +67,14 @@ $app->map('/login', function() use ($app) {
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    login($_POST['nick'],$_POST['clave'], $app);
+                    login($_POST['nick'], $_POST['clave'], $app);
                     break;
             }
         })->name('login')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
-        
+
 /* Buscar usuarios */
-        
+
 $app->map('/busqueda', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
@@ -89,20 +87,26 @@ $app->map('/busqueda', function() use ($app) {
             }
         })->name('busqueda')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
-        
+
 /* Buscar animes-series-peliculas */
-        
-/*$app->map('/busqueda', function() use ($app) {
+
+$app->map('/busquedaanime', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
                     break;
                 case "POST":
-                    $busqueda = buscar_material($_POST['busquedausuario'], $_POST['cbmaterial']);
-                    echo "Crear otra plantilla para mostrar los resultados de la consulta";
+                    $V = array(0, 0, 0);
+                    foreach ($_POST['cbmaterial'] as $i) {
+                        $V[$i] = 1;
+                    }
+                    $busqueda = buscar_material($_POST['buscaanime'], $V);
+                    foreach ($busqueda as $i) {
+                        echo $i->nombre;
+                    }
                     break;
             }
-        })->name('busqueda')->via('GET', 'POST');*/
+        })->name('busquedaanime')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
 $app->run();

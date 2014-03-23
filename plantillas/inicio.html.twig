@@ -22,13 +22,13 @@
                     </ul>
                 </div>
                 <div class="panel-body">
-                    <div class="tab-content">
-                        <div id="tab1" class="tab-pane fade">
-                            <form class="form-horizontal" method="POST" action="">
+                    <form class="form-horizontal" method="POST" action="{{ urlFor("busquedaanime") }}">
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade">
                                 <div class="form-group">
                                     <label for="inputBusqueda" class="col-lg-2 control-label">Buscar</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="inputBusqueda" placeholder="Introduce el nombre del X">
+                                        <input type="text" class="form-control" name="buscaanime" id="inputbusqueda1">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -36,30 +36,28 @@
                                     <div class="col-lg-10">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="cbmaterial[]" > Anime
+                                                <input type="checkbox" name="cbmaterial[]" id="A" value='0'> Serie
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="cbmaterial[]"> Serie
+                                                <input type="checkbox" name="cbmaterial[]" id="B" value='1' > Anime
                                             </label>
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="cbmaterial[]" > Película
+                                                <input type="checkbox" name="cbmaterial[]" id="C" value='2' > Película
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="center" class="col-lg-10">
-                                        <button type="submit" class="btn btn-primary" disabled>Buscar</button>
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
-                        <div id="tab2" class="tab-pane fade">
-                            <form class="form-horizontal" method="POST" action="#">
+                            </div>
+                            <div id="tab2" class="tab-pane fade">
                                 <div class="form-group">
                                     <label for="inputgenero" class="col-lg-2 control-label">Género</label>
                                     <div class="col-lg-10">
@@ -73,14 +71,19 @@
                                         <input type="text" class="form-control" placeholder="Introducir año">
                                     </div>
                                 </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="incluir" > Incluir los datos de la busqueda normal
+                                    </label>
+                                </div>
                                 <div class="form-group">
                                     <div class="center" class="col-lg-10">
                                         <button type="submit" class="btn btn-primary">Buscar</button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -128,8 +131,8 @@
             </div>
         </div>
     </div>
-        <div id="pruebas"></div>
-<script type="text/JavaScript">
-    window.onload = InitPlantillaPrincipal();
-</script>
+    <div id="pruebas"></div>
+    <script type="text/JavaScript">
+        window.onload = InitPlantillaPrincipal();
+    </script>
 {% endblock %}
