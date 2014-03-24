@@ -74,7 +74,7 @@ function Ajax_Usuario(valor1, valor2, peticionn)
 {
     var request;
     request = $.ajax({
-        url: "ajax.php",
+        url: "/ajax.php",
         type: "GET",
         data: {val1: valor1, val2: valor2, peticion: peticionn}
     });
@@ -94,7 +94,7 @@ function Ajax_Material(valor1, valor2, valor3, valor4,  peticionn)
     valor4 == true ? valor4 = 1 : valor4 = 0;
     var request;
     request = $.ajax({
-        url: "ajax.php",
+        url: "/ajax.php",
         type: "GET",
         data: {val1: valor1, val2: valor2, val3: valor3, val4: valor4, peticion: peticionn}
     });

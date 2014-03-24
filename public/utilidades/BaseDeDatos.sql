@@ -102,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`capitulo` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `myfreakzone`.`mensaje`
 -- -----------------------------------------------------
@@ -122,6 +121,9 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material_usuario` (
   `usuario_id` INT NOT NULL,
   `material_id` INT NOT NULL,
   `estado` INT NOT NULL COMMENT 'Estado: 1 = Visto, 2 = Viendo, 3 = Pendiente, 4 = Borrada',
+  `puntuacion` INT NULL,
+  `vista_en` VARCHAR(45) NULL,
+  `comentario` TEXT NULL,
   PRIMARY KEY (`usuario_id`, `material_id`),
   INDEX `fk_usuario_has_material_material1_idx` (`material_id` ASC),
   INDEX `fk_usuario_has_material_usuario_idx` (`usuario_id` ASC),

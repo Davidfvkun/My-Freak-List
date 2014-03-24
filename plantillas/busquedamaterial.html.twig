@@ -20,6 +20,7 @@
                     <th>Año de salida</th>
                 </thead>
                 <tbody>
+                    {% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
                             <td>{{ i.nombre }}</td>
@@ -32,9 +33,13 @@
                             {% endif %}
                             <td>{{ i.anio }}</td>
                         </tr>
+                    {% set cont = cont + 1 %}
+                     {% else %}
+                     <div class="info center">No se han encontrado resultados</div>
                      {% endfor %}
                 </tbody>
             </table>
+            <div class="info center">El número de items es {{ cont }}</div>
         </div>
     </div>
 {% endblock %}

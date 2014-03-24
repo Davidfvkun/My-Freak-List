@@ -178,16 +178,15 @@ $app->map('/busquedam', function() use ($app) {
                     break;
             }
             
-            $buscaCosa = ORM::for_table('material')->select('material.nombre')->
+            $buscaCosa = ORM::for_table('material')->
+                    select_many('material.nombre','material_usuario.puntuacion',
+                            'material_usuario.vista_en','material_usuario.comentario')->
                     join('material_usuario', array('material.id','=','material_id'))->
                     join('usuario', array('usuario_id','=','usuario.id'))->
                     where('material.tipo',$idTipo)->
                     where('material_usuario.estado',$idEstado)->
-                    where('usuario.id',16)->find_many(); // Siendo 16 el usuario con el que estoy currando de momento 
-            /*foreach($buscaCosa as $i)
-            {
-                echo $i->nombre;
-            }*/
+                    where('usuario.id',1)->find_many(); // Siendo 16 el usuario con el que estoy currando de momento 
+            
             $app->render('listado.html.twig', array(
                 'datos' => $buscaCosa,
                 'cosas' => $mensajeListado));

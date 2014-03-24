@@ -21,15 +21,19 @@
                     <!-- Planteandome incluir una "Fecha de registro" -->
                 </thead>
                 <tbody>
+                    {% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
                             <td>{{ i.nick }}</td>
                             <td>{{ i.nombre }}</td>
                             <td>{{ i.apellido }}</td>
-                        </tr>
+                        {% set cont = cont + 1 %}
+                     {% else %}
+                     <div class="info center">No se han encontrado resultados</div>
                      {% endfor %}
                 </tbody>
             </table>
+            <div class="info center">El número de usuarios encontrados es {{ cont }}</div>
         </div>
     </div>
 {% endblock %}
