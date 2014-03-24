@@ -242,5 +242,7 @@ insert into capitulo (material_id, titulo)
 		values (21, 'Capitulo 3 Titulo El rey leon');
 insert into capitulo (material_id, titulo) 
 		values (21, 'Capitulo 4 Titulo El rey leon');
+
+
 		
 commit;

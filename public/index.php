@@ -136,6 +136,62 @@ $app->map('/busquedam', function() use ($app) {
             }
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
+        
+        
+/* Llamadas al listado */
+        $app->get('/listado/:idt/:ide', function($idt, $ide) use ($app) {
+            $mensajeListado = "";
+            switch($idt)
+            {
+                case "series":
+                    $idTipo = 1;
+                    $mensajeListado = "Series ";
+                    break;
+                case "animes":
+                    $idTipo = 2;
+                    $mensajeListado = "Animes ";
+                    break;
+                case "peliculas":
+                    $mensajeListado = "Peliculas ";
+                    $idTipo = 3;
+                    break;
+                default:
+                    echo "Mostrar mensaje de error o algo";
+                    break;
+            }
+            switch($ide)
+            {
+                case "vistas":
+                    $idEstado = 1;
+                    $mensajeListado = $mensajeListado."que has visto. ";
+                    break;
+                case "viendo":
+                    $mensajeListado = $mensajeListado."que estás viendo. ";
+                    $idEstado = 2;
+                    break;
+                case "pendientes":
+                    $mensajeListado = $mensajeListado."que tienes pendientes. ";
+                    $idEstado = 3;
+                    break;
+                default:
+                    echo "Mostrar mensaje de error o algo";
+                    break;
+            }
+            
+            $buscaCosa = ORM::for_table('material')->select('material.nombre')->
+                    join('material_usuario', array('material.id','=','material_id'))->
+                    join('usuario', array('usuario_id','=','usuario.id'))->
+                    where('material.tipo',$idTipo)->
+                    where('material_usuario.estado',$idEstado)->
+                    where('usuario.id',16)->find_many(); // Siendo 16 el usuario con el que estoy currando de momento 
+            /*foreach($buscaCosa as $i)
+            {
+                echo $i->nombre;
+            }*/
+            $app->render('listado.html.twig', array(
+                'datos' => $buscaCosa,
+                'cosas' => $mensajeListado));
+        });
 
 $app->run();
 ?>
