@@ -23,7 +23,7 @@
                     {% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
-                            <td>{{ i.nombre }}</td>
+                            <td><a href="/datosmaterial/{{i.id}}">{{ i.nombre }} </a></td>
                             {% if i.tipo == 1 %}
                                 <td>Serie</td>
                             {% elseif i.tipo == 2 %}

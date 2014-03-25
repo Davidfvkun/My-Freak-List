@@ -2,7 +2,7 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 	
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
-		values (1,1,1, 6, 'Vista en Random David 1', 'Comentario random David 1');
+		values (1,1,1, 7, 'Vista en Random David 1', 'Comentario random David 1');
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
 		values (1,2,2, 8, 'Vista en Random David 2', 'Comentario random David 2');
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
@@ -14,7 +14,7 @@ insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
 		values (1,6,1, 8, 'Vista en Random David 6', 'Comentario random David 6');
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
-		values (1,7,2, 7, 'Vista en Random David 7', 'Comentario random David 7');
+		values (1,7,2, 6, 'Vista en Random David 7', 'Comentario random David 7');
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 
 		values (1,8,1, 3, 'Vista en Random David 8', 'Comentario random David 8');
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario) 

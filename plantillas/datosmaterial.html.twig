@@ -12,31 +12,43 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <h1 class="center">Listado de {{ cosas }}</h1>
+        <div class="col-md-4">
+            Nombre del coso
+            Insertar una imagen debajo
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Sinopsis Sinopsis Sinopsis 
+            Año en el que salió: 2004
+            Tipo: Serie
+        </div>
+        <div class="col-md-8">
+            <h1 class="center">Listado de capítulos</h1>
             <table class="table table-hover mytable" >
                 <thead>
-                    <th>Nombre</th>
-                    <th>Puntuación</th>
-                    <th>Vista en</th>
-                    <th>Comentario</th>
+                    <th>Número</th>
+                    <th>Titulo del capitulo</th>
+                    <th>Fecha en el que salió</th>
                 </thead>
                 <tbody>
-                    {% set cont = 0 %}
+                    <!--{% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
-                            <td><a href="/datosmaterial/{{i.material_id}}">{{ i.nombre }} </a></td>
-                            <td>{{ i.puntuacion }}</td>
-                            <td>{{ i.vista_en }}</td>
-                            <td>{{ i.comentario }}</td>
+                            <td>{{ cont }}</td>
+                            <td>{{ i.titulo }}</td>
+                            <td>{{ i.fecha_salida }}</td>
                         </tr>
                         {% set cont = cont + 1 %}
                      {% else %}
-                     <div class="info center">Su lista está vacia</div>
-                     {% endfor %}
+                     <div class="info center">No tiene capítulos</div>
+                     {% endfor %}-->
                 </tbody>
-            </table>
-            <div class="info center">El número de items es {{ cont }}</div>
+             </table>
         </div>
     </div>
 

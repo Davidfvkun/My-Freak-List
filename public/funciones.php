@@ -62,7 +62,7 @@ function buscar_usuarios($busqueda, $filtrado) {
 }
 
 function buscar_material($busqueda, $V) {
-    
+
     $buscaMaterial = ORM::for_table('material');
     $consulta = "SELECT * FROM material ";
     $cadena = "";
@@ -85,14 +85,60 @@ function buscar_material($busqueda, $V) {
         else
             $cadena = $cadena . "WHERE (tipo = 3";
     }
-    if($sep)
-        $cadena = $cadena.") AND nombre like '%".$busqueda."%'";
+    if ($sep)
+        $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
     else
-        $cadena = $cadena."WHERE nombre like '%".$busqueda."%'";
-    
+        $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'";
+
     $consulta = $consulta . $cadena;
     $buscaMaterial = $buscaMaterial->raw_query($consulta)->find_many();
     return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
+}
+
+function listados($idt, $ide) {
+    switch ($idt) {
+        case "series":
+            $idTipo = 1;
+            $GLOBALS['mensaje'] = "Series ";
+            break;
+        case "animes":
+            $idTipo = 2;
+            $GLOBALS['mensaje'] = "Animes ";
+            break;
+        case "peliculas":
+            $GLOBALS['mensaje'] = "Peliculas ";
+            $idTipo = 3;
+            break;
+        default:
+            echo "Mostrar mensaje de error o algo";
+            break;
+    }
+    switch ($ide) {
+        case "vistas":
+            $idEstado = 1;
+            $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que has visto. ";
+            break;
+        case "viendo":
+            $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que estás viendo. ";
+            $idEstado = 2;
+            break;
+        case "pendientes":
+            $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que tienes pendientes. ";
+            $idEstado = 3;
+            break;
+        default:
+            echo "Mostrar mensaje de error o algo";
+            break;
+    }
+
+    $buscaCosa = ORM::for_table('material')->
+                    select_many('material.nombre', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
+                    join('material_usuario', array('material.id', '=', 'material_id'))->
+                    join('usuario', array('usuario_id', '=', 'usuario.id'))->
+                    where('material.tipo', $idTipo)->
+                    where('material_usuario.estado', $idEstado)->
+                    where('usuario.id', 1)->find_many();
+    return $buscaCosa;
 }
 
 ?>

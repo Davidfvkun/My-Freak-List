@@ -140,56 +140,24 @@ $app->map('/busquedam', function() use ($app) {
         
 /* Llamadas al listado */
         $app->get('/listado/:idt/:ide', function($idt, $ide) use ($app) {
-            $mensajeListado = "";
-            switch($idt)
-            {
-                case "series":
-                    $idTipo = 1;
-                    $mensajeListado = "Series ";
-                    break;
-                case "animes":
-                    $idTipo = 2;
-                    $mensajeListado = "Animes ";
-                    break;
-                case "peliculas":
-                    $mensajeListado = "Peliculas ";
-                    $idTipo = 3;
-                    break;
-                default:
-                    echo "Mostrar mensaje de error o algo";
-                    break;
-            }
-            switch($ide)
-            {
-                case "vistas":
-                    $idEstado = 1;
-                    $mensajeListado = $mensajeListado."que has visto. ";
-                    break;
-                case "viendo":
-                    $mensajeListado = $mensajeListado."que estás viendo. ";
-                    $idEstado = 2;
-                    break;
-                case "pendientes":
-                    $mensajeListado = $mensajeListado."que tienes pendientes. ";
-                    $idEstado = 3;
-                    break;
-                default:
-                    echo "Mostrar mensaje de error o algo";
-                    break;
-            }
-            
-            $buscaCosa = ORM::for_table('material')->
-                    select_many('material.nombre','material_usuario.puntuacion',
-                            'material_usuario.vista_en','material_usuario.comentario')->
-                    join('material_usuario', array('material.id','=','material_id'))->
-                    join('usuario', array('usuario_id','=','usuario.id'))->
-                    where('material.tipo',$idTipo)->
-                    where('material_usuario.estado',$idEstado)->
-                    where('usuario.id',1)->find_many(); // Siendo 16 el usuario con el que estoy currando de momento 
+            $GLOBALS['mensaje'] = "";
+            $listad = listados($idt,$ide);
+            $mensajeListado = $GLOBALS['mensaje'];
             
             $app->render('listado.html.twig', array(
-                'datos' => $buscaCosa,
+                'datos' => $listad,
                 'cosas' => $mensajeListado));
+        });
+        
+        $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
+            
+            $datosMaterial = ORM::for_table('material')->
+                    select_many('material.*','capitulo.*')->
+                    join('capitulo', array('material.id','=','capitulo.material_id'))->find_one($idt);
+                    
+            echo $datosMaterial->nombre;      
+                    
+            //$app->render('datosmaterial.html.twig', array());
         });
 
 $app->run();
