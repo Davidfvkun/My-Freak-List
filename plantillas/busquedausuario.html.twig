@@ -24,7 +24,7 @@
                     {% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
-                            <td>{{ i.nick }}</td>
+                            <td><a href="datosusuario/{{i.id}}">{{ i.nick }}</a></td>
                             <td>{{ i.nombre }}</td>
                             <td>{{ i.apellido }}</td>
                         {% set cont = cont + 1 %}

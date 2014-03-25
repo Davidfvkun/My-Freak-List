@@ -87,12 +87,7 @@ $app->map('/busquedausuario', function() use ($app) {
                 case "POST":
                     if (isset($_POST['buscaru'])) {
                         $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
-                        foreach($busqueda as $i)
-                        {
-                            echo $i->nick;
-                            echo $i->nombre;
-                            echo $i->apellido;
-                        }
+                        
                         $app->render('busquedausuario.html.twig', array('datos' => $busqueda));
                     }
                     break;
@@ -149,16 +144,29 @@ $app->map('/busquedam', function() use ($app) {
                 'cosas' => $mensajeListado));
         });
         
+        /* IMPORTANTE: FALTA COMPROBACIONES DE SI HAY DATOS NULOS */
+        
         $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
             
-            $datosMaterial = ORM::for_table('material')->
-                    select_many('material.*','capitulo.*')->
-                    join('capitulo', array('material.id','=','capitulo.material_id'))->find_one($idt);
-                    
-            echo $datosMaterial->nombre;      
-                    
-            //$app->render('datosmaterial.html.twig', array());
+            $datosMaterial = ORM::for_table('material')->find_one($idt);
+            $capitulosMaterial = ORM::for_table('capitulo')->
+                    where('material_id', $idt)->find_many();
+            
+            $app->render('datosmaterial.html.twig', array(
+                'datos' => $datosMaterial,
+                'datos2' => $capitulosMaterial
+            ));
         });
+        
+        $app->get('/datosusuario/:idt/', function($idt) use ($app) {
+            
+            $datosUsuario = ORM::for_table('usuario')->find_one($idt);
+            
+            $app->render('datosusuario.html.twig', array(
+                'datos' => $datosUsuario
+            ));
+        });
+        
 
 $app->run();
 ?>

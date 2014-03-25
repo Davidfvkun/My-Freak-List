@@ -12,32 +12,41 @@
         </div>
     </div>
     <div class="row">
+        <h1 class="center">{{ datos.nombre }}</h1>
         <div class="col-md-4">
-            Nombre del coso
-            Insertar una imagen debajo
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Sinopsis Sinopsis Sinopsis 
-            Año en el que salió: 2004
-            Tipo: Serie
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Insertar una imagen por aquí
+            Sinopsis: {{ datos.sinopsis }}
+            Año en el que salió: {{ datos.anio }}
+            Tipo: 
+            {% if datos.tipo == 1 %}
+            Serie
+            {% elseif datos.tipo == 2 %}
+            Anime
+            {% elseif datos.tipo == 3 %}
+            Película
+            {% endif %}
         </div>
         <div class="col-md-8">
             <h1 class="center">Listado de capítulos</h1>
             <table class="table table-hover mytable" >
                 <thead>
-                    <th>Número</th>
-                    <th>Titulo del capitulo</th>
-                    <th>Fecha en el que salió</th>
+                <th>Número</th>
+                <th>Titulo del capitulo</th>
+                <th>Fecha en el que salió</th>
                 </thead>
                 <tbody>
-                    <!--{% set cont = 0 %}
-                    {% for i in datos %}
+                    {% set cont = 0 %}
+                    {% for i in datos2 %}
                         <tr>
                             <td>{{ cont }}</td>
                             <td>{{ i.titulo }}</td>
@@ -46,9 +55,9 @@
                         {% set cont = cont + 1 %}
                      {% else %}
                      <div class="info center">No tiene capítulos</div>
-                     {% endfor %}-->
+                     {% endfor %}
                 </tbody>
-             </table>
+            </table>
         </div>
     </div>
 
