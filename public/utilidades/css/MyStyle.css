@@ -14,6 +14,19 @@
 {
     font-size: 18px;
 }
+.resalta
+{
+    font-size: 14px;
+    font-weight: bold;
+}
+.margin-right
+{
+    margin-right: 50px;
+}
+.margin-left
+{
+    margin-left: 10%;
+}
 .info
 {   
     padding-top: 5px;

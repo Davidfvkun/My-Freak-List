@@ -21,8 +21,9 @@ $view->parserExtensions = array(
     new \Slim\Views\TwigExtension(),
 );
 
-$app->map('/MyFreakZone/principal', function() use ($app) {
+session_start();
 
+$app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     /* Este caso se dará si el usuario estaba logeado y ha entrado poniendo la URL */
@@ -32,6 +33,13 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                     break;
             }
         })->name('myfreakzone')->via('GET', 'POST');
+
+/* Cerrar sesión y sacar al usuario de la aplicacion */
+$app->get('/salir', function() use ($app) {
+            unset($_SESSION['logeo']); //Revisar esto: http://www.grabthiscode.com/programacion/como-hacer-un-registro-y-login-php-con-sesiones-y-cookies/
+            session_destroy();
+            $app->render('login.html.twig', array('titulo' => 'Login'));
+        })->name('salir');
 
 /* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
 $app->map('/MyFreakZone', function() use ($app) {
@@ -87,7 +95,7 @@ $app->map('/busquedausuario', function() use ($app) {
                 case "POST":
                     if (isset($_POST['buscaru'])) {
                         $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
-                        
+
                         $app->render('busquedausuario.html.twig', array('datos' => $busqueda));
                     }
                     break;
@@ -131,42 +139,55 @@ $app->map('/busquedam', function() use ($app) {
             }
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
-        
-        
+
+
 /* Llamadas al listado */
-        $app->get('/listado/:idt/:ide', function($idt, $ide) use ($app) {
+$app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
             $GLOBALS['mensaje'] = "";
-            $listad = listados($idt,$ide);
+            $listad = listados($idt, $ide, $nicku);
             $mensajeListado = $GLOBALS['mensaje'];
-            
+
             $app->render('listado.html.twig', array(
                 'datos' => $listad,
                 'cosas' => $mensajeListado));
         });
-        
-        /* IMPORTANTE: FALTA COMPROBACIONES DE SI HAY DATOS NULOS */
-        
-        $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
-            
+
+/* IMPORTANTE: FALTA COMPROBACIONES DE SI HAY DATOS NULOS */
+
+$app->get('/datosmaterial/:idt/', function($idt) use ($app) {
+
             $datosMaterial = ORM::for_table('material')->find_one($idt);
-            $capitulosMaterial = ORM::for_table('capitulo')->
-                    where('material_id', $idt)->find_many();
             
-            $app->render('datosmaterial.html.twig', array(
-                'datos' => $datosMaterial,
-                'datos2' => $capitulosMaterial
-            ));
+            if(empty($datosMaterial))
+            {
+                echo "No existe ese anime/serie/película";
+            }
+            else
+            {
+                $capitulosMaterial = ORM::for_table('capitulo')->
+                                where('material_id', $idt)->find_many();
+
+                $app->render('datosmaterial.html.twig', array(
+                    'datos' => $datosMaterial,
+                    'datos2' => $capitulosMaterial
+                ));
+            }
         });
-        
-        $app->get('/datosusuario/:idt/', function($idt) use ($app) {
-            
-            $datosUsuario = ORM::for_table('usuario')->find_one($idt);
-            
-            $app->render('datosusuario.html.twig', array(
-                'datos' => $datosUsuario
-            ));
+
+$app->get('/datosusuario/:nicku/', function($nicku) use ($app) {
+            $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
+            if(empty($datosUsuario))
+            {
+                echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
+            }
+            else
+            {
+                $app->render('datosusuario.html.twig', array(
+                    'datos' => $datosUsuario,
+                ));
+            }
         });
-        
+
 
 $app->run();
 ?>

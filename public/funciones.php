@@ -37,7 +37,7 @@ function login($nick, $contraseña, $app) {
             'clase' => 'info error'));
         //} else if (password_verify($clave, $login->contraseña)) {
     } else if ($contraseña == $compruebaLogin->clave) {
-        // $_SESSION['loge'] = $login->id; Aun no se como mantendré el login
+        $_SESSION['logeo'] = $compruebaLogin->id; //Aun no se como mantendré el login, temporalmente queda así
         $app->render('inicio.html.twig');
     }
 }
@@ -95,7 +95,7 @@ function buscar_material($busqueda, $V) {
     return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
 }
 
-function listados($idt, $ide) {
+function listados($idt, $ide, $nicku) {
     switch ($idt) {
         case "series":
             $idTipo = 1;
@@ -130,6 +130,8 @@ function listados($idt, $ide) {
             echo "Mostrar mensaje de error o algo";
             break;
     }
+    
+    $idUsuario = ORM::for_table('usuario')->select('id')->where("nick",$nicku)->find_one();
 
     $buscaCosa = ORM::for_table('material')->
                     select_many('material.nombre', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
@@ -137,7 +139,7 @@ function listados($idt, $ide) {
                     join('usuario', array('usuario_id', '=', 'usuario.id'))->
                     where('material.tipo', $idTipo)->
                     where('material_usuario.estado', $idEstado)->
-                    where('usuario.id', 1)->find_many();
+                    where('usuario.id', $idUsuario->id)->find_many();
     return $buscaCosa;
 }
 
