@@ -18,6 +18,7 @@
                 <thead>
                     <th>Nombre</th>
                     <th>Puntuación</th>
+                    <th>Progreso</th>
                     <th>Vista en</th>
                     <th>Comentario</th>
                 </thead>
@@ -25,10 +26,35 @@
                     {% set cont = 0 %}
                     {% for i in datos %}
                         <tr>
-                            <td><a href="/datosmaterial/{{i.material_id}}">{{ i.nombre }} </a></td>
-                            <td>{{ i.puntuacion }}</td>
-                            <td>{{ i.vista_en }}</td>
-                            <td>{{ i.comentario }}</td>
+                            <td><a href="/datosmaterial/{{i['material_id']}}">{{ i['nombre'] }} </a></td>
+                             {% if i['puntuacion'] is null %}
+                             <td>Sin puntuar</td>
+                             {% else %}
+                             <td>{{ i['puntuacion'] }}</td>
+                             {% endif %}
+                             <td>
+                                {% if i['capitulo_por_el_que_vas'] is null %}
+                                ?
+                                {% else %}
+                                {{ i['capitulo_por_el_que_vas'] }}
+                                {% endif %}
+                                /
+                                {% if i['n_capitulos'] is null %}
+                                ?
+                                {% else %}
+                                {{ i['n_capitulos'] }}
+                                {% endif %}
+                             </td>
+                             {% if i['vista_en'] is null %}
+                             <td>Sin rellenar</td>
+                             {% else %}
+                             <td>{{ i['vista_en'] }}</td>
+                             {% endif %}
+                             {% if i['comentario'] is null %}
+                             <td>Sin comentario</td>
+                             {% else %}
+                             <td>{{ i['comentario'] }}</td>
+                             {% endif %}
                         </tr>
                         {% set cont = cont + 1 %}
                      {% else %}

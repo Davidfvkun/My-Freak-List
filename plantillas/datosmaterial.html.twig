@@ -25,9 +25,19 @@
             Insertar una imagen por aquí
             Insertar una imagen por aquí
             Insertar una imagen por aquí
-            Sinopsis: {{ datos.sinopsis }}
-            Año en el que salió: {{ datos.anio }}
-            Tipo: 
+            <br/>Sinopsis: 
+            {% if datos['sinopsis'] is null %}
+            Sin sinopsis
+            {% else %}
+            {{ datos['sinopsis'] }}
+            {% endif %}
+            <br/>Año en el que salió: 
+            {% if datos['anio'] is null %}
+            ????
+            {% else %}
+            {{ datos['anio'] }}
+            {% endif %}
+            <br/>Tipo: 
             {% if datos.tipo == 1 %}
             Serie
             {% elseif datos.tipo == 2 %}
@@ -50,15 +60,19 @@
                         <tr>
                             <td>{{ cont }}</td>
                             <td>{{ i.titulo }}</td>
-                            <td>{{ i.fecha_salida }}</td>
+                            {% if i['fecha_salida'] is null %}
+                            <td>????</td>
+                            {% else %}
+                            <td>{{ i['fecha_salida'] }}</td>
+                            {% endif %}
                         </tr>
                         {% set cont = cont + 1 %}
                      {% else %}
-                     <div class="info center">No tiene capítulos</div>
+                    <div class="info center">No tiene capítulos</div>
                      {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
 {% endblock %}

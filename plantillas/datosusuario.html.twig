@@ -22,9 +22,24 @@
                 <div id="datospersonales" class="col-md-3">
 
                     <h2>Datos Personales</h2>
-                    <label class="resalta">Nombre: </label>{{ datos.nombre }}<br/>
-                    <label class="resalta">Apellidos: </label> {{ datos.apellido }}<br/>
-                    <label class="resalta">Descripción: </label> {{ datos.apellido }}<br/>
+                    <label class="resalta">Nombre: </label>
+                    {% if datos['nombre'] is null %}
+                    No ha introducido nombre
+                    {% else %}
+                    {{ datos['nombre'] }}
+                    {% endif %}<br/>
+                    <label class="resalta">Apellidos: </label>
+                    {% if datos['apellido'] is null %}
+                    No ha introducido apellido
+                    {% else %}
+                    {{ datos['apellido'] }}
+                    {% endif %}<br/>
+                    <label class="resalta">Descripción: </label>
+                    {% if datos['descripción'] is null %}
+                    Sin descripción
+                    {% else %}
+                    {{ datos['descripcion'] }}
+                    {% endif %}<br/>
                     <label> Ideas próximas:
                         1. Tener una foto de perfil.
                         2. Tener unos "Favoritos" de series/animes/peliculas

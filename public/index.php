@@ -140,7 +140,6 @@ $app->map('/busquedam', function() use ($app) {
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
-
 /* Llamadas al listado */
 $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
             $GLOBALS['mensaje'] = "";

@@ -12,50 +12,50 @@ insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin
 insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
 		values ('danielnick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
 		
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (5,'Lost',1,'Sinopsis de la serie Lost','2006'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006'); 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010',3);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006',2); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004',4); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (5,'Lost',1,'Sinopsis de la serie Lost','2006',3); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004',3); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006',5); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010',4); 
 		
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (11,'Bleach',2,'Sinopsis del anime bleach','2010');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006');	
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009',3);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009',5);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (11,'Bleach',2,'Sinopsis del anime bleach','2010',4);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004',4);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006',5);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006',4);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004',6);	
 
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004');
-insert into material (id, nombre, tipo, sinopsis, anio) 
-		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009',5);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009',3);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010',4);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010',5);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4);
 		
 		/* ,2013-07-01*/
 insert into capitulo (material_id, titulo, fecha_salida) 

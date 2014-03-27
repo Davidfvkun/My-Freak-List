@@ -31,7 +31,11 @@
                             {% elseif i.tipo == 3 %}
                                 <td>Película</td>
                             {% endif %}
-                            <td>{{ i.anio }}</td>
+                            {% if i['anio'] is null %}
+                            <td>????</td>
+                            {% else %}
+                            <td>{{ i['anio'] }}</td>
+                            {% endif %}
                         </tr>
                     {% set cont = cont + 1 %}
                      {% else %}

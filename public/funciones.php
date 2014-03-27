@@ -134,7 +134,7 @@ function listados($idt, $ide, $nicku) {
     $idUsuario = ORM::for_table('usuario')->select('id')->where("nick",$nicku)->find_one();
 
     $buscaCosa = ORM::for_table('material')->
-                    select_many('material.nombre', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
+                    select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
                     join('material_usuario', array('material.id', '=', 'material_id'))->
                     join('usuario', array('usuario_id', '=', 'usuario.id'))->
                     where('material.tipo', $idTipo)->
