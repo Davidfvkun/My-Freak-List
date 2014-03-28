@@ -14,55 +14,47 @@
     <div class="row">
         <div class="col-md-12">
             <h1 class="center">Listado de {{ cosas }}</h1>
-            <table class="table table-hover mytable" >
-                <thead>
-                    <th>Nombre</th>
-                    <th>Puntuación</th>
-                    <th>Progreso</th>
-                    <th>Vista en</th>
-                    <th>Comentario</th>
-                </thead>
-                <tbody>
-                    {% set cont = 0 %}
-                    {% for i in datos %}
-                        <tr>
-                            <td><a href="/datosmaterial/{{i['material_id']}}">{{ i['nombre'] }} </a></td>
-                             {% if i['puntuacion'] is null %}
-                             <td>Sin puntuar</td>
-                             {% else %}
-                             <td>{{ i['puntuacion'] }}</td>
-                             {% endif %}
-                             <td>
-                                {% if i['capitulo_por_el_que_vas'] is null %}
-                                ?
-                                {% else %}
-                                {{ i['capitulo_por_el_que_vas'] }}
-                                {% endif %}
-                                /
-                                {% if i['n_capitulos'] is null %}
-                                ?
-                                {% else %}
-                                {{ i['n_capitulos'] }}
-                                {% endif %}
-                             </td>
-                             {% if i['vista_en'] is null %}
-                             <td>Sin rellenar</td>
-                             {% else %}
-                             <td>{{ i['vista_en'] }}</td>
-                             {% endif %}
-                             {% if i['comentario'] is null %}
-                             <td>Sin comentario</td>
-                             {% else %}
-                             <td>{{ i['comentario'] }}</td>
-                             {% endif %}
-                        </tr>
-                        {% set cont = cont + 1 %}
-                     {% else %}
-                     <div class="info center">Su lista está vacia</div>
-                     {% endfor %}
-                </tbody>
-            </table>
-            <div class="info center">El número de items es {{ cont }}</div>
+            {% for i in datos %}
+            <div class="col-md-3 cajitas">
+                <a href="/datosmaterial/{{i['material_id']}}">
+                    {{ i['nombre'] }}<br/>
+                    <img src="/utilidades/coso.png" class="imgmaterial" >
+                </a>
+                <br/><label class="resalta">Puntuación:</label>
+                {% if i['puntuacion'] is null %}
+                Sin puntuar
+                {% else %}
+                {{ i['puntuacion'] }}
+                {% endif %}
+                <br/><label class="resalta">Progreso: </label>
+                {% if i['capitulo_por_el_que_vas'] is null %}
+                ?
+                {% else %}
+                {{ i['capitulo_por_el_que_vas'] }}
+                {% endif %}
+                /
+                {% if i['n_capitulos'] is null %}
+                ?
+                {% else %}
+                {{ i['n_capitulos'] }}
+                {% endif %}
+                <br/><label class="resalta">Vista en: </label>
+                {% if i['vista_en'] is null %}
+                Sin rellenar
+                {% else %}
+                {{ i['vista_en'] }}
+                {% endif %}
+                <br/><label class="resalta">Comentario: </label>
+                {% if i['comentario'] is null %}
+                Sin comentario
+                {% else %}
+                {{ i['comentario'] }}
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="info center">Su lista está vacia</div>
+            {% endfor %}
+            
         </div>
     </div>
 

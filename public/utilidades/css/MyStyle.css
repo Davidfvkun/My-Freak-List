@@ -82,8 +82,17 @@
 {
     color: #A9E2F3;
 }
-img
+.simbol
 {
     width: 25px;
     height: 25px;
+}
+.imgmaterial
+{
+    width: 100px;
+    height: 100px;
+}
+.cajitas
+{
+    margin-top: 50px !important;
 }

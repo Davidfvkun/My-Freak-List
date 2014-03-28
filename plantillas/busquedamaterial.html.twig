@@ -13,37 +13,32 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-hover mytable" >
-                <thead>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                    <th>Año de salida</th>
-                </thead>
-                <tbody>
-                    {% set cont = 0 %}
-                    {% for i in datos %}
-                        <tr>
-                            <td><a href="/datosmaterial/{{i.id}}">{{ i.nombre }} </a></td>
-                            {% if i.tipo == 1 %}
-                                <td>Serie</td>
-                            {% elseif i.tipo == 2 %}
-                                <td>Anime</td>
-                            {% elseif i.tipo == 3 %}
-                                <td>Película</td>
-                            {% endif %}
-                            {% if i['anio'] is null %}
-                            <td>????</td>
-                            {% else %}
-                            <td>{{ i['anio'] }}</td>
-                            {% endif %}
-                        </tr>
-                    {% set cont = cont + 1 %}
-                     {% else %}
-                     <div class="info center">No se han encontrado resultados</div>
-                     {% endfor %}
-                </tbody>
-            </table>
-            <div class="info center">El número de items es {{ cont }}</div>
+            {% for i in datos %}
+               <div class="col-md-3 cajitas">
+                    <a href="/datosmaterial/{{i['id']}}">
+                        {{ i['nombre'] }}<br/>
+                        <img src="/utilidades/coso.png" class="imgmaterial" >
+                    </a>
+                    <br/><label class="resalta">Tipo: </label>
+                    {% if i.tipo == 1 %}
+                    Serie
+                    {% elseif i.tipo == 2 %}
+                    Anime
+                    {% elseif i.tipo == 3 %}
+                    Película
+                    {% endif %}
+                    <br/><label class="resalta">Año</label>
+                    {% if i['anio'] is null %}
+                    ????
+                    {% else %}
+                    {{ i['anio'] }}
+                    {% endif %}
+                </div>
+             {% else %}
+             <div class="info center">No se han encontrado datos</div>
+             {% endfor %}
+             
+               
         </div>
     </div>
 {% endblock %}

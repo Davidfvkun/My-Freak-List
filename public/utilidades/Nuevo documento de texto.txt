@@ -1,0 +1,9 @@
+1. Lo de normalizar me trae de cabeza.
+2. Meter 'generos' a las series/pelis/animes ¿como? Un varchar (?)
+3.  Mostrar 'n' capitulos en los listados.
+4. Añadir unos 'Favoritos'
+5 Incluir una imagen de perfil para usuarios y otra para materiales
+¿Usar dos campos, uno en cada tabla o hacer una tabla nueva que contenga todas?
+
+
+Tipo y Estado son arrays en un fichero de configuración
