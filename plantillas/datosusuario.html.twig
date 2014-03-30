@@ -11,81 +11,85 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-primary">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
                 <div class="panel-heading">
-                     <label class="panel-title">Datos del usuario {{ datos.nick }}</label>
+                    <label class="panel-title">Datos del usuario {{ datos.nick }}</label>
                 </div>
-            <div class="panel-body">
-                <div id="datospersonales" class="col-md-3">
-
-                    <h2>Datos Personales</h2>
-                    {% if datos['img_perfil'] is null %}
-                    <img src="/utilidades/image/perfil/default.png" class="imgmaterial" >
-                    {% else %}
-                    <img src="{{ datos['img_perfil'] }}" class="imgmaterial" >
-                    {% endif %}
-                    <br/><label class="resalta">Nombre: </label>
+                <div class="panel-body">
+                    <div id="datospersonales" class="col-md-3">
+                        <h2>Datos Personales</h2>
+                        <img src="{{ datos['img_perfil'] }}" class="imgmaterial" >
+                        <br/><label class="resalta">Nombre: </label>
                     {% if datos['nombre'] is null %}
-                    No ha introducido nombre
+                        No ha introducido nombre
                     {% else %}
                     {{ datos['nombre'] }}
                     {% endif %}<br/>
-                    <label class="resalta">Apellidos: </label>
+                        <label class="resalta">Apellidos: </label>
                     {% if datos['apellido'] is null %}
-                    No ha introducido apellido
+                        No ha introducido apellido
                     {% else %}
                     {{ datos['apellido'] }}
                     {% endif %}<br/>
-                    <label class="resalta">Descripción: </label>
+                        <label class="resalta">Descripción: </label>
                     {% if datos['descripción'] is null %}
-                    Sin descripción
+                        Sin descripción
                     {% else %}
                     {{ datos['descripcion'] }}
                     {% endif %}<br/>
-                    <label> Ideas próximas:
-                        1. Tener una foto de perfil.
-                        2. Tener unos "Favoritos" de series/animes/peliculas
-                            Como un top 10, vamos
-                     </label>
-                </div>
-                <div id="listas" class="col-md-6 margin-left">
-                    <h2>Sus listas</h2>
-                    <div class="btn-group margin-right">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Series <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/listado/series/vistas/{{ datos.nick }}">Vistas</a></li>
-                            <li><a href="/listado/series/viendo/{{ datos.nick }}">Viendo</a></li>
-                            <li><a href="/listado/series/pendientes/{{ datos.nick }}">Pendientes</a></li>
-                        </ul>
                     </div>
-                    <div class="btn-group margin-right">
-                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                            Animes <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/listado/animes/vistas/{{ datos.nick }}">Vistos</a></li>
-                            <li><a href="/listado/animes/viendo/{{ datos.nick }}">Viendo</a></li>
-                            <li><a href="/listado/animes/pendientes/{{ datos.nick }}">Pendientes</a></li>
-                        </ul>
+                    <div id="listas" class="col-md-6 margin-left">
+                        <h2>Sus listas</h2>
+                        <div class="btn-group margin-right">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                Series <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/listado/series/vistas/{{ datos.nick }}">Vistas</a></li>
+                                <li><a href="/listado/series/viendo/{{ datos.nick }}">Viendo</a></li>
+                                <li><a href="/listado/series/pendientes/{{ datos.nick }}">Pendientes</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group margin-right">
+                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                Animes <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/listado/animes/vistas/{{ datos.nick }}">Vistos</a></li>
+                                <li><a href="/listado/animes/viendo/{{ datos.nick }}">Viendo</a></li>
+                                <li><a href="/listado/animes/pendientes/{{ datos.nick }}">Pendientes</a></li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+                                Películas <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="/listado/peliculas/vistas/{{ datos.nick }}">Vistas</a></li>
+                                <li><a href="/listado/peliculas/viendo/{{ datos.nick }}">Viendo</a></li>
+                                <li><a href="/listado/peliculas/pendientes/{{ datos.nick }}">Pendientes</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-                            Películas <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/listado/peliculas/vistas/{{ datos.nick }}">Vistas</a></li>
-                            <li><a href="/listado/peliculas/viendo/{{ datos.nick }}">Viendo</a></li>
-                            <li><a href="/listado/peliculas/pendientes/{{ datos.nick }}">Pendientes</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-    </div>
+                    <div class="col-md-10 center">
+                        <h2>Favoritos</h2>
+                        {% for i in favs %}
+                                    <div class="margin-left" style="display: inline-block !important;">
+                                        <a href="/datosmaterial/{{i['id']}}">
+                                    {{ i['nombre'] }}<br/>
+                                    {% if datos['img_material'] is null %}
+                                                <img src="/utilidades/image/material/default.png" class="imgmaterial" >
+                                    {% else %}
+                                                <img src="{{ datos['img_material'] }}" class="imgmaterial" >
+                                    {% endif %}
+                                            </a>
+                                        </div>
+                        {% endfor %}
+                     </div>
+                 </div>
+              </div>
+         </div>
+</div>
 
 {% endblock %}

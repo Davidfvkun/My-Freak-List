@@ -96,3 +96,10 @@
 {
     margin-top: 50px !important;
 }
+@media all and (min-width: 30px) and (max-width: 550px) 
+{
+    .btn-group
+    {
+          margin-bottom: 50px !important;
+    }
+}

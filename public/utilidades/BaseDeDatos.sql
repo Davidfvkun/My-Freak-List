@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
   `anio` CHAR(4) NULL,
   `n_capitulos` INT NULL,
   `img_material` VARCHAR(45) NULL,
+  `genero` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -128,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material_usuario` (
   `vista_en` VARCHAR(45) NULL,
   `comentario` TEXT NULL,
   `capitulo_por_el_que_vas` INT NULL,
+  `favorito` INT NULL,
   PRIMARY KEY (`usuario_id`, `material_id`),
   INDEX `fk_usuario_has_material_material1_idx` (`material_id` ASC),
   INDEX `fk_usuario_has_material_usuario_idx` (`usuario_id` ASC),

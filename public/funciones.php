@@ -17,15 +17,19 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
             $insertarUsuario->descripcion = $descripcion;
             $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
             $insertarUsuario->es_admin = 0; // 1 es que si es admin. Solo habrá un admin para pruebas
-            if(subir_archivo($nick))
+            
+            if($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "")
             {
-                echo "Imagen subida como Ryuk manda";
+                $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
+                $insertarUsuario->save();
+            }
+            else if(subir_archivo($nick))
+            {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
                 $insertarUsuario->save();
             }
             else
             {
-                echo "Vete a hacer puñetas";
                 $dbh->rollback();
                 return false;
             }

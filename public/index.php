@@ -175,6 +175,10 @@ $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
 $app->get('/datosusuario/:nicku/', function($nicku) use ($app) {
             $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
+            $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
+                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
+                    where('material_usuario.usuario_id',$datosUsuario->id)->
+                    where('material_usuario.favorito',1)->find_many();
             if(empty($datosUsuario))
             {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
@@ -183,6 +187,7 @@ $app->get('/datosusuario/:nicku/', function($nicku) use ($app) {
             {
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,
+                    'favs' => $favs
                 ));
             }
         });
