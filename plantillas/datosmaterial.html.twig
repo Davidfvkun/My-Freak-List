@@ -14,17 +14,11 @@
     <div class="row">
         <h1 class="center">{{ datos.nombre }}</h1>
         <div class="col-md-4">
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
-            Insertar una imagen por aquí
+            {% if datos['img_material'] is null %}
+            <img src="/utilidades/image/material/default.png" class="imgmaterial" >
+            {% else %}
+            <img src="{{ datos['img_material'] }}" class="imgmaterial" >
+            {% endif %}
             <br/>Sinopsis: 
             {% if datos['sinopsis'] is null %}
             Sin sinopsis

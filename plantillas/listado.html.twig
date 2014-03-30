@@ -18,7 +18,11 @@
             <div class="col-md-3 cajitas">
                 <a href="/datosmaterial/{{i['material_id']}}">
                     {{ i['nombre'] }}<br/>
-                    <img src="/utilidades/coso.png" class="imgmaterial" >
+                    {% if i['img_material'] is null %}
+                    <img src="/utilidades/image/material/default.png" class="imgmaterial" >
+                    {% else %}
+                    <img src="{{ i['img_material'] }}" class="imgmaterial" >
+                    {% endif %}
                 </a>
                 <br/><label class="resalta">Puntuación:</label>
                 {% if i['puntuacion'] is null %}

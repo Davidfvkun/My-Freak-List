@@ -40,9 +40,9 @@ function InitPlantillaPrincipal()
             function()
             {
                 Ajax_Material(document.getElementById("inputbusqueda1").value,
-                              document.getElementById("A").checked,
-                              document.getElementById("B").checked,
-                              document.getElementById("C").checked,2); //PENDIENTE
+                        document.getElementById("A").checked,
+                        document.getElementById("B").checked,
+                        document.getElementById("C").checked, 2); //PENDIENTE
             }, false);
 }
 
@@ -87,7 +87,7 @@ function Ajax_Usuario(valor1, valor2, peticionn)
         });
     });
 }
-function Ajax_Material(valor1, valor2, valor3, valor4,  peticionn)
+function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
 {
     valor2 == true ? valor2 = 1 : valor2 = 0;
     valor3 == true ? valor3 = 1 : valor3 = 0;
@@ -107,5 +107,6 @@ function Ajax_Material(valor1, valor2, valor3, valor4,  peticionn)
         });
     });
 }
+
 
 

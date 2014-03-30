@@ -21,7 +21,12 @@
                 <div id="datospersonales" class="col-md-3">
 
                     <h2>Datos Personales</h2>
-                    <label class="resalta">Nombre: </label>
+                    {% if datos['img_perfil'] is null %}
+                    <img src="/utilidades/image/perfil/default.png" class="imgmaterial" >
+                    {% else %}
+                    <img src="{{ datos['img_perfil'] }}" class="imgmaterial" >
+                    {% endif %}
+                    <br/><label class="resalta">Nombre: </label>
                     {% if datos['nombre'] is null %}
                     No ha introducido nombre
                     {% else %}

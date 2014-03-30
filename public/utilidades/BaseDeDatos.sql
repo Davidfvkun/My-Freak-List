@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`usuario` (
   `descripcion` TEXT NULL,
   `clave` VARCHAR(255) NOT NULL,
   `es_admin` INT NOT NULL,
+  `img_perfil` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -31,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
   `sinopsis` TEXT NULL,
   `anio` CHAR(4) NULL,
   `n_capitulos` INT NULL,
-  `genero` TEXT NULL,
+  `img_material` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

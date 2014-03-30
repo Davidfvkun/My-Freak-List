@@ -16,8 +16,19 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
             $insertarUsuario->email = $email;
             $insertarUsuario->descripcion = $descripcion;
             $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
-            $insertarUsuario->es_admin = 1; // 1 es que si es admin. Solo habrá un admin para pruebas
-            $insertarUsuario->save();
+            $insertarUsuario->es_admin = 0; // 1 es que si es admin. Solo habrá un admin para pruebas
+            if(subir_archivo($nick))
+            {
+                echo "Imagen subida como Ryuk manda";
+                $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
+                $insertarUsuario->save();
+            }
+            else
+            {
+                echo "Vete a hacer puñetas";
+                $dbh->rollback();
+                return false;
+            }
             $ok = true;
             $dbh->commit();
         } catch (\PDOException $e) {
@@ -26,6 +37,36 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
         }
     }
     return $ok;
+}
+
+function subir_archivo($nickp) {
+    $uploadedfileload = "true";
+    //echo $_FILES['uploadedfile']['name'];
+    //$msg = "";
+    if ($_FILES['uploadedfile']['size'] > 200000) {
+        //$msg = $msg . "El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo<BR>";
+        $uploadedfileload = "false";
+    }
+
+    if (!($_FILES['uploadedfile']['type'] == "image/jpeg" OR $_FILES['uploadedfile']['type'] == "image/png")) {
+        //$msg = $msg . " Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos<BR>";
+        $uploadedfileload = "false";
+    }
+
+    //$file_name = $_FILES['uploadedfile']['name'];
+    $add = "utilidades/image/perfil/".$nickp.".jpg";
+    if ($uploadedfileload == "true") {
+        if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
+            //echo " Ha sido subido satisfactoriamente";
+            return true;
+        } else {
+            //echo "Error al subir el archivo";
+            return false;
+        }
+    } else {
+        return true;
+        //echo $msg;
+    }
 }
 
 function login($nick, $contraseña, $app) {
@@ -130,8 +171,8 @@ function listados($idt, $ide, $nicku) {
             echo "Mostrar mensaje de error o algo";
             break;
     }
-    
-    $idUsuario = ORM::for_table('usuario')->select('id')->where("nick",$nicku)->find_one();
+
+    $idUsuario = ORM::for_table('usuario')->select('id')->where("nick", $nicku)->find_one();
 
     $buscaCosa = ORM::for_table('material')->
                     select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
