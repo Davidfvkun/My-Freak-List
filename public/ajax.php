@@ -41,5 +41,12 @@ switch ($_REQUEST['peticion']) {
         }
         print_r(json_encode($arr));
         break;
+    case 3: // Caso de comprobación de que ese nick no esté ocupado
+        $ocupado = comprueba_nick_existente($_GET['val1']);
+        if($ocupado)
+            echo "error";
+        else
+            echo "ok";
+        break;
 }
 ?>

@@ -10,7 +10,7 @@ function init()
             'blur',
             function()
             {
-                CompruebaCampo('nickR', /^[a-zA-Z0-9]{1,50}$/);
+                CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,50}$/, 3);
             }, false);
     document.getElementById("claveR").addEventListener(
             'blur',
@@ -42,32 +42,74 @@ function InitPlantillaPrincipal()
                 Ajax_Material(document.getElementById("inputbusqueda1").value,
                         document.getElementById("A").checked,
                         document.getElementById("B").checked,
-                        document.getElementById("C").checked, 2); //PENDIENTE
+                        document.getElementById("C").checked, 2);
             }, false);
 }
 
-function CompruebaCampo(id, expresionRegular)
+function CompruebaCampo(id, expresionRegular, casoNick)
 {
     valor = document.getElementById(id).value;
-    if (!expresionRegular.test(valor))
-    {
-        document.getElementById(id + "div").className = "form-group has-error";
-    }
-    else
-    {
-        document.getElementById(id + "div").className = "form-group has-success";
-    }
+    
+        if (casoNick == 3) // En el caso del nick hay que comprobar que no esté ocupado
+        {
+            CompruebaNick(id, casoNick, expresionRegular, valor);
+        }
+        else
+        {
+            if (!expresionRegular.test(valor))
+            {
+                document.getElementById(id + "div").className = "form-group has-error";
+            }
+            else
+            {
+                document.getElementById(id + "div").className = "form-group has-success";
+            }
+        }
+        if (document.getElementById("claveRdiv").className != "form-group has-success" ||
+                document.getElementById("emaildiv").className != "form-group has-success" ||
+                    document.getElementById("nickRdiv").className != "form-group has-success")
+        {
+            document.getElementById("registrarse").disabled = true;
+        }
+        else
+        {
+            document.getElementById("registrarse").disabled = false;
+        }
+}
 
-    if (document.getElementById("nickRdiv").className != "form-group has-success" ||
-            document.getElementById("claveRdiv").className != "form-group has-success" ||
-            document.getElementById("emaildiv").className != "form-group has-success")
+function CompruebaNick(id, peticionn, expresionRegular1, valor1)
+{
+    var request;
+    request = $.ajax({
+        url: "/ajax.php",
+        type: "GET",
+        data: {val1: document.getElementById(id).value, peticion: peticionn}
+    });
+
+    request.done(function(response, textStatus, jqXHR)
     {
-        document.getElementById("registrarse").disabled = true;
-    }
-    else
-    {
-        document.getElementById("registrarse").disabled = false;
-    }
+        coso = response;
+        if (coso.indexOf("error") != -1)
+        {
+            document.getElementById("nickRlabel").innerHTML = "El nick ya está ocupado";
+            document.getElementById("nickRdiv").className = "form-group has-error";
+            return false;
+        }
+        else
+        {
+            if(!expresionRegular1.test(valor1))
+            {
+                document.getElementById("nickRdiv").className = "form-group has-error";
+                document.getElementById("nickRlabel").innerHTML = "El nick contiene caracteres incorrectos";
+            }
+            else
+            {
+                document.getElementById("nickRdiv").className = "form-group has-success";
+                document.getElementById("nickRlabel").innerHTML = "";
+            }
+            return true;
+        }
+    });
 }
 
 function Ajax_Usuario(valor1, valor2, peticionn)

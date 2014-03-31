@@ -4,10 +4,13 @@ include "../vendor/autoload.php";
 require_once "../config.php";
 
 function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripcion) {
-    $dbh = \ORM::getDb();
-    $dbh->beginTransaction();
+    
     $ok = false;
-    if ($nick != "" && $nick != null && $contraseña != "" && $contraseña != null && $email != "" && $email != null) {
+    if ($nick != "" && $nick != null && $contraseña != "" && 
+            $contraseña != null && $email != "" && $email != null &&
+            comprueba_nick_existente($nick) == false) {
+        $dbh = \ORM::getDb();
+        $dbh->beginTransaction();
         try {
             $insertarUsuario = ORM::for_table('usuario')->create();
             $insertarUsuario->nick = $nick;
@@ -41,6 +44,16 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
         }
     }
     return $ok;
+}
+
+function comprueba_nick_existente($nicki)
+{
+    $check = ORM::for_table('usuario')->where('nick',$nicki)->find_many();
+    if(!empty($check)){
+        return true;
+    }// Quiere decir que ya hay un usuario con ese nick
+    else
+        return false;
 }
 
 function subir_archivo($nickp) {
