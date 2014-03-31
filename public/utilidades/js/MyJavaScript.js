@@ -144,6 +144,7 @@ function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
     request.done(function(response, textStatus, jqXHR)
     {
         coso = JSON.parse(response);
+        //alert(coso)
         $("#inputbusqueda1").autocomplete({
             source: coso
         });

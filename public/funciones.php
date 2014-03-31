@@ -122,34 +122,39 @@ function buscar_usuarios($busqueda, $filtrado) {
 function buscar_material($busqueda, $V) {
 
     $buscaMaterial = ORM::for_table('material');
-    $consulta = "SELECT * FROM material ";
     $cadena = "";
+    $arr = array();
     $sep = false;
     if ($V[0] == 1) {
-        $cadena = $cadena . "WHERE (tipo = 1 ";
+        $cadena = $cadena . "(`tipo` = ? ";
+        $arr[count($arr)] = 1;
         $sep = true;
     }
     if ($V[1] == 1) {
         $sep = true;
         if ($cadena != "")
-            $cadena = $cadena . "OR tipo = 2 ";
+            $cadena = $cadena . "OR `tipo` = ? ";
         else
-            $cadena = $cadena . "WHERE (tipo = 2 ";
+            $cadena = $cadena . "(`tipo` = ? ";
+        $arr[count($arr)] = 2;
     }
     if ($V[2] == 1) {
         $sep = true;
         if ($cadena != "")
-            $cadena = $cadena . "OR tipo = 3";
+            $cadena = $cadena . "OR `tipo` = ?";
         else
-            $cadena = $cadena . "WHERE (tipo = 3";
+            $cadena = $cadena . "`tipo` = ?";
+        
+        $arr[count($arr)] = 3;
     }
-    if ($sep)
+    $cadena = $cadena.")";
+    $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre','%' . $busqueda . '%');
+    /*if ($sep)
         $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
     else
-        $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'";
+        $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'";*/
 
-    $consulta = $consulta . $cadena;
-    $buscaMaterial = $buscaMaterial->raw_query($consulta)->find_many();
+    //$consulta = $consulta . $cadena;
     return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
 }
 

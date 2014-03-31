@@ -29,7 +29,9 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                     /* Este caso se dará si el usuario estaba logeado y ha entrado poniendo la URL */
                     /* Por tanto aquí irá un "if logeado { accede } else { vete pa afuera } */
                     //$app->render('MyFreakZone.html.twig');
-                    $app->render('inicio.html.twig');
+                    $app->render('inicio.html.twig', array(
+                        'generos' => $GLOBALS['generos'],
+                        'N' => count($GLOBALS['generos'])));
                     break;
             }
         })->name('myfreakzone')->via('GET', 'POST');
@@ -122,19 +124,39 @@ $app->map('/busquedam', function() use ($app) {
                     if (isset($_POST['buscarm'])) {
 
                         $busqueda = buscar_material($_POST['buscaanime'], $V);
-
-                        $app->render('busquedamaterial.html.twig', array('datos' => $busqueda));
+                        $busqueda = $busqueda->find_many();
                     } else if (isset($_POST['buscarma'])) {
-                        if (isset($_POST['incluir'])) {
-                            //$busqueda = funcionbusquedaavanzadaaunsinhacer($_POST['buscaanime'], $V);
+                        if (isset($_POST['incluir'])) 
+                        {
+                            $busqueda = buscar_material($_POST['buscaanime'], $V);
+                            if(isset($_POST['geneross']) && $_POST['geneross'] != "No filtrar")
+                            {
+                                //echo "Hola";
+                                $busqueda = $busqueda->where_like('genero', '%'.$_POST['geneross'].'%');
+                            }
+                            if(isset($_POST['fech']) && $_POST['fech'] != "")
+                            {
+                               // echo "Holi";
+                                $busqueda = $busqueda->where('anio', $_POST['fech']);
+                            }
+                            
+                            $busqueda = $busqueda->find_many();
+                            
                         } else {
-                            //$busqueda = funcionbusquedaavanzadaaunsinhacer($_POST['buscaanime'], $V);
+                            $busqueda = ORM::for_table('material');
+                            if(isset($_POST['geneross']) && $_POST['geneross'] != "No filtrar")
+                            {
+                                $busqueda = $busqueda->where_like('genero', '%'.$_POST['geneross'].'%');
+                            }
+                            if(isset($_POST['fech']) && $_POST['fech'] != "")
+                            {
+                                $busqueda = $busqueda->where('anio', $_POST['fech']);
+                            }
+                            
+                            $busqueda = $busqueda->find_many();
                         }
-                        /* foreach ($busqueda as $i) {
-                          echo $i->nombre;
-                          } */
-                        echo "Nada";
                     }
+                    $app->render('busquedamaterial.html.twig', array('datos' => $busqueda));
                     break;
             }
         })->name('busquedam')->via('GET', 'POST');

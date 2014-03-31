@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row">
-        <h2 style="margin-left: 10px">Busqueda de animes/series/películas</h2>
+        <h2 style="margin-left: 13px">Busqueda de animes/series/películas</h2>
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -61,14 +61,17 @@
                                 <div class="form-group">
                                     <label for="inputgenero" class="col-lg-2 control-label">Género</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" >
+                                        <select class="form-control" name="geneross" >
+                                            {% for i in 0..N-1 %}
+                                                <option value="{{ generos[i] }}">{{ generos[i] }}</option>
+                                            {% endfor %}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputfecha" class="col-lg-2 control-label">Fecha de estreno</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" placeholder="Introducir año">
+                                        <input type="text" name="fech" class="form-control" placeholder="Introducir año">
                                     </div>
                                 </div>
                                 <div class="checkbox">

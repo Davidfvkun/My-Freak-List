@@ -31,8 +31,12 @@ switch ($_REQUEST['peticion']) {
         break;
     // FIN DEL CASO DE LAS BUSQUEDAS DE USUARIOS
     case 2: // Caso de busqueda de animes 
-        $arri = array($_GET['val2'], $_GET['val3'], $_GET['val4']);
+        if($_GET['val2'] == 0 && $_GET['val3'] == 0 && $_GET['val4'] == 0)
+            $arri = array(1,1,1);
+        else
+            $arri = array($_GET['val2'], $_GET['val3'], $_GET['val4']);
         $busqueda = buscar_material($_GET['val1'], $arri);
+        $busqueda = $busqueda->find_many();
         $i = 0;
         $arr = array();
         foreach ($busqueda as $j) {
