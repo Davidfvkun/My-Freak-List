@@ -17,18 +17,18 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs panel-title">
-                        <li><a href="#tab1" data-toggle="tab">Busqueda normal</a></li>
+                        <li><a href="#tab1" data-toggle="tab" class="active">Busqueda normal</a></li>
                         <li><a href="#tab2" data-toggle="tab">Busqueda avanzada</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ urlFor("busquedam") }}">
                         <div class="tab-content">
-                            <div id="tab1" class="tab-pane fade">
+                            <div id="tab1" class="tab-pane active">
                                 <div class="form-group">
                                     <label for="inputBusqueda" class="col-lg-2 control-label">Buscar</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="buscaanime" id="inputbusqueda1">
+                                        <input type="text" class="form-control" name="buscaanime" id="inputbusqueda1" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="tab2" class="tab-pane fade">
+                            <div id="tab2" class="tab-pane">
                                 <div class="form-group">
                                     <label for="inputgenero" class="col-lg-2 control-label">Género</label>
                                     <div class="col-lg-10">
@@ -100,7 +100,8 @@
                         <div class="form-group">
                             <label for="busquedausuario" class="col-lg-2 control-label">Buscar usuario</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" name="busquedausuario" id="inputbusqueda" placeholder="Introduce el X del usuario">
+                                <input type="text" class="form-control" name="busquedausuario" id="inputbusqueda" 
+                                       placeholder="Introduce el X del usuario" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group">

@@ -11,38 +11,56 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            {% for i in datos %}
-               <div class="col-md-3 cajitas">
-                    <a href="/datosmaterial/{{i['id']}}">
-                        {{ i['nombre'] }}<br/>
-                        {% if datos['img_material'] is null %}
-                        <img src="/utilidades/image/material/default.png" class="imgmaterial" >
-                        {% else %}
-                        <img src="{{ datos['img_material'] }}" class="imgmaterial" >
-                        {% endif %}
-                    </a>
-                    <br/><label class="resalta">Tipo: </label>
-                    {% if i.tipo == 1 %}
-                    Serie
-                    {% elseif i.tipo == 2 %}
-                    Anime
-                    {% elseif i.tipo == 3 %}
-                    Película
+        <div class="row">
+            {% set cont = 0 %}
+            {% set cont2 = 2 %}
+            <div class="tab-content">
+                <div id="tab1" class="tab-pane active">
+                {% for i in datos %}
+                    {% if cont == 10 %}
+                        </div>
+                        <div id="tab{{cont2}}" class="tab-pane">
+                         {% set cont = 0 %}
+                        {% set cont2 = cont2 + 1 %}
                     {% endif %}
-                    <br/><label class="resalta">Año</label>
-                    {% if i['anio'] is null %}
-                    ????
-                    {% else %}
-                    {{ i['anio'] }}
-                    {% endif %}
-                </div>
-             {% else %}
-             <div class="info center">No se han encontrado datos</div>
-             {% endfor %}
-             
-               
-        </div>
+                    {% set cont = cont + 1 %}
+                        <div class="col-md-3 cajitas">
+                             <a href="/datosmaterial/{{i['id']}}">
+                                 {{ i['nombre'] }}<br/>
+                                 {% if datos['img_material'] is null %}
+                                 <img src="/utilidades/image/material/default.png" class="imgmaterial" >
+                                 {% else %}
+                                 <img src="{{ datos['img_material'] }}" class="imgmaterial" >
+                                 {% endif %}
+                             </a>
+                             <br/><label class="resalta">Tipo: </label>
+                             {% if i.tipo == 1 %}
+                             Serie
+                             {% elseif i.tipo == 2 %}
+                             Anime
+                             {% elseif i.tipo == 3 %}
+                             Película
+                             {% endif %}
+                             <br/><label class="resalta">Año</label>
+                             {% if i['anio'] is null %}
+                             ????
+                             {% else %}
+                             {{ i['anio'] }}
+                             {% endif %}
+                         </div>
+                 {% else %}
+                 <div class="info center">No se han encontrado datos</div>
+                 {% endfor %}
+             </div>
+        </div>     
+        <div class="row">
+            <div class="col-md-12">
+            <ul class="nav nav-tabs">  
+                {% for i in 1..(cont2-1) %}
+                   <li><a href="#tab{{i}}" data-toggle="tab" class="active">{{i}}</a></li>
+                {% endfor %}
+              </ul>
+           </div>
+         </div>
     </div>
 {% endblock %}

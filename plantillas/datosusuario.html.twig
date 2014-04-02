@@ -1,18 +1,25 @@
 {% extends "base2.html.twig" %}
 {% block contenido2 %}
-<div class="container margintop">
-    <div class="row">
-        <div class="col-lg-2">
-            <label class="minibuttons flatly" onClick="CambiaEstilos('Flatly')">&#9679;</label>
-            <label class="minibuttons readable" onClick="CambiaEstilos('Readable')">&#9679;</label>
-            <label class="minibuttons cosmo" onClick="CambiaEstilos('Cosmo')">&#9679;</label>
-            <label class="minibuttons cerulean" onClick="CambiaEstilos('Cerulean')">&#9679;</label>
-            <label class="minibuttons cyborg" onClick="CambiaEstilos('Cyborg')">&#9679;</label>
-            <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
+<script type="text/JavaScript">
+    $(document).ready(function() {
+        $('.carousel').carousel({
+            interval: 7000
+        });
+    });
+</script>
+    <div class="container margintop">
+        <div class="row">
+            <div class="col-lg-2">
+                <label class="minibuttons flatly" onClick="CambiaEstilos('Flatly')">&#9679;</label>
+                <label class="minibuttons readable" onClick="CambiaEstilos('Readable')">&#9679;</label>
+                <label class="minibuttons cosmo" onClick="CambiaEstilos('Cosmo')">&#9679;</label>
+                <label class="minibuttons cerulean" onClick="CambiaEstilos('Cerulean')">&#9679;</label>
+                <label class="minibuttons cyborg" onClick="CambiaEstilos('Cyborg')">&#9679;</label>
+                <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
+            </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <div class="panel panel-primary">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <label class="panel-title">Datos del usuario {{ datos.nick }}</label>
                 </div>
@@ -71,25 +78,49 @@
                                 <li><a href="/listado/peliculas/pendientes/{{ datos.nick }}">Pendientes</a></li>
                             </ul>
                         </div>
+                        <h2>Favoritos</h2>
+                        <div id="slider">
+                            <div id="myCarousel" class="carousel slide">
+                                <ol class="carousel-indicators">
+                                 {% set cont = 0 %}
+                                 {% for i in favs %}
+                                    {% if cont == 0 %}
+                                    <li data-target="#myCarousel" data-slide-to="{{ cont }}" class="active"></li>
+                                    {% else %}
+                                    <li data-target="#myCarousel" data-slide-to="{{ cont }}"></li>
+                                    {% endif %}
+                                    {% set cont = cont + 1 %}
+                                 {% endfor %}
+                                </ol>
+                                <div class="carousel-inner">
+                                    {% set cont = 0 %}
+                                    {% for i in favs %}
+                                    {% if cont == 0 %}
+                                    <div class="active item">
+                                    {% else %}
+                                    <div class="item">     
+                                    {% endif %}
+                                        {% if datos['img_material'] is null %}
+                                            <img src="/utilidades/image/material/default.png" alt="banner{{cont}}" >
+                                        {% else %}
+                                           <img src="{{ datos['img_material'] }}" alt="banner{{cont}}" >
+                                        {% endif %}
+                                        <div class="carousel-caption" style="color: cyan;">{{ i['nombre'] }}</div>
+                                        {% set cont = cont + 1 %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                                <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                     <div class="col-md-10 center">
-                        <h2>Favoritos</h2>
-                        {% for i in favs %}
-                                    <div class="margin-left" style="display: inline-block !important;">
-                                        <a href="/datosmaterial/{{i['id']}}">
-                                    {{ i['nombre'] }}<br/>
-                                    {% if datos['img_material'] is null %}
-                                                <img src="/utilidades/image/material/default.png" class="imgmaterial" >
-                                    {% else %}
-                                                <img src="{{ datos['img_material'] }}" class="imgmaterial" >
-                                    {% endif %}
-                                            </a>
-                                        </div>
-                        {% endfor %}
-                     </div>
-                 </div>
-              </div>
-         </div>
-</div>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

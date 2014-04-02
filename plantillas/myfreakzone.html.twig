@@ -41,13 +41,13 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <ul class="nav nav-tabs panel-title">
-                        <li><a href="#tab1" data-toggle="tab">Login</a></li>
+                        <li><a href="#tab1" data-toggle="tab" class="active">Login</a></li>
                         <li><a href="#tab2" data-toggle="tab">Registrate</a></li>
                     </ul>
                 </div>
                 <div class="panel-body">
                     <div class="tab-content">
-                        <div id="tab1" class="tab-pane fade">
+                        <div id="tab1" class="tab-pane active">
                             <form class="form-horizontal" method="POST" action="{{ urlFor('login') }}">
                                 <div class="form-group" id="nickdiv">
                                     <label for="inputnick" class="col-lg-2 control-label">Nick</label>
@@ -68,7 +68,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div id="tab2" class="tab-pane fade">
+                        <div id="tab2" class="tab-pane">
                             <form enctype="multipart/form-data" class="form-horizontal" method="POST" action="{{ urlFor("registro")}}">
                                 <div class="form-group" id="nickRdiv">
                                     <label for="nick" class="col-lg-2 control-label">Nick *</label>
