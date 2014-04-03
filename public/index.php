@@ -199,7 +199,7 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             
             switch ($app->request()->getMethod()) {
                 case "GET":
-                    if($modo == 'e'/* Y es el usuario logeado */)
+                    if($modo == 'e' && usuario_logeado($nicku))
                     {
                         $caso = 'editar';
                     }
@@ -224,6 +224,12 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             
             // Tendría que hacer algo para que si el usuario coincide con la variable de session 
             //  pueda editar y si no no. Pendiente para mas adelante
+            
+            if(usuario_logeado($nicku))
+                $soyyo = 'si';
+            else
+                $soyyo = 'no';
+                
             if(empty($datosUsuario))
             {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
@@ -233,7 +239,8 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,
                     'favs' => $favs,
-                    'caso' => $caso
+                    'caso' => $caso,
+                    'soyyo' => $soyyo
                 ));
             }
         })->name('datosusuario')->via('GET', 'POST');

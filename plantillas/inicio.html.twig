@@ -34,20 +34,17 @@
                                 <div class="form-group">
                                     <label class="col-lg-2 control-label">Tipo</label>
                                     <div class="col-lg-10">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="cbmaterial[]" id="A" value='0'> Serie
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="cbmaterial[]" id="B" value='1' > Anime
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="cbmaterial[]" id="C" value='2' > Película
-                                            </label>
+                                        <div>
+                                            <input id="A" type="checkbox" class="css-checkbox" name="cbmaterial[]"  value='0'>
+                                            <label for="A" class="css-label">Serie </label>
+                                        </div><br/>
+                                        <div>
+                                            <input id="B" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='1' >
+                                            <label for="B" class="css-label">Anime </label>
+                                        </div><br/>
+                                        <div>
+                                            <input id="C" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='2' >
+                                            <label for="C" class="css-label">Pelicula </label>
                                         </div>
                                     </div>
                                 </div>
@@ -76,9 +73,13 @@
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="incluir" > Incluir los datos de la busqueda normal
+                                        <input type="checkbox" name="incluir" class="css-checkbox" > 
                                     </label>
                                 </div>
+                               <div>
+                                    <input id="D" type="checkbox" class="css-checkbox" name="incluir" >
+                                    <label for="D" class="css-label">Incluir los datos de la busqueda normal</label>
+                               </div><br/>
                                 <div class="form-group">
                                     <div class="center" class="col-lg-10">
                                         <button type="submit" class="btn btn-primary" name="buscarma">Buscar</button>
@@ -110,7 +111,6 @@
                                 <select class="form-control" id="selectfiltrausuarios" name="filtrado">
                                     <option value="1">Nombre</option>
                                     <option value="2">Nick</option>
-                                    <option value="3">Material</option>
                                 </select>
                             </div>
                         </div>

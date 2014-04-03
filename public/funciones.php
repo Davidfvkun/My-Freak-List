@@ -4,9 +4,9 @@ include "../vendor/autoload.php";
 require_once "../config.php";
 
 function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripcion) {
-    
+
     $ok = false;
-    if ($nick != "" && $nick != null && $contraseña != "" && 
+    if ($nick != "" && $nick != null && $contraseña != "" &&
             $contraseña != null && $email != "" && $email != null &&
             comprueba_nick_existente($nick) == false) {
         $dbh = \ORM::getDb();
@@ -20,19 +20,14 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
             $insertarUsuario->descripcion = $descripcion;
             $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
             $insertarUsuario->es_admin = 0; // 1 es que si es admin. Solo habrá un admin para pruebas
-            
-            if($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "")
-            {
+
+            if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
                 $insertarUsuario->save();
-            }
-            else if(subir_archivo($nick))
-            {
-                $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
+            } else if (subir_archivo($nick)) {
+                $insertarUsuario->img_perfil = "/utilidades/image/perfil/" . $nick . ".jpg";
                 $insertarUsuario->save();
-            }
-            else
-            {
+            } else {
                 $dbh->rollback();
                 return false;
             }
@@ -46,10 +41,9 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
     return $ok;
 }
 
-function comprueba_nick_existente($nicki)
-{
-    $check = ORM::for_table('usuario')->where('nick',$nicki)->find_many();
-    if(!empty($check)){
+function comprueba_nick_existente($nicki) {
+    $check = ORM::for_table('usuario')->where('nick', $nicki)->find_many();
+    if (!empty($check)) {
         return true;
     }// Quiere decir que ya hay un usuario con ese nick
     else
@@ -71,7 +65,7 @@ function subir_archivo($nickp) {
     }
 
     //$file_name = $_FILES['uploadedfile']['name'];
-    $add = "utilidades/image/perfil/".$nickp.".jpg";
+    $add = "utilidades/image/perfil/" . $nickp . ".jpg";
     if ($uploadedfileload == "true") {
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
             //echo " Ha sido subido satisfactoriamente";
@@ -109,9 +103,6 @@ function buscar_usuarios($busqueda, $filtrado) {
         case "2":
             $buscaUsuario = $buscaUsuario->where_like("nick", "%" . $busqueda . "%");
             break;
-        case "3":
-            // Esta es la consulta mas complicada, de momento la obviaré.
-            break;
         default:
             break;
     }
@@ -144,15 +135,15 @@ function buscar_material($busqueda, $V) {
             $cadena = $cadena . "OR `tipo` = ?";
         else
             $cadena = $cadena . "`tipo` = ?";
-        
+
         $arr[count($arr)] = 3;
     }
-    $cadena = $cadena.")";
-    $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre','%' . $busqueda . '%');
-    /*if ($sep)
-        $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
-    else
-        $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'";*/
+    $cadena = $cadena . ")";
+    $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
+    /* if ($sep)
+      $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
+      else
+      $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'"; */
 
     //$consulta = $consulta . $cadena;
     return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
@@ -206,15 +197,21 @@ function listados($idt, $ide, $nicku) {
     return $buscaCosa;
 }
 
-function editar_usuario($nombre, $apellido, $descripcion)
-{
-    $editarUsuario = ORM::for_table('usuario')->where('nick','davidnick')->find_one();
-    
+function editar_usuario($nombre, $apellido, $descripcion) {
+    $editarUsuario = ORM::for_table('usuario')->where('nick', 'davidnick')->find_one();
+
     $editarUsuario->nombre = $nombre;
     $editarUsuario->apellido = $apellido;
     $editarUsuario->descripcion = $descripcion;
     $editarUsuario->save();
     return true;
+}
+
+function usuario_logeado($elNick) {
+    if (isset($_SESSION[$elNick]) && $_SESSION[$elNick] = $elNick)
+        return true;
+    else
+        return false;
 }
 
 ?>
