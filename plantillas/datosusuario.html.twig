@@ -18,33 +18,63 @@
                 <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
             </div>
         </div>
-        <div class="col-md-12">
+       <div class="row">
+        <div class="{{ clase }}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <label class="panel-title">Datos del usuario {{ datos.nick }}</label>
                 </div>
                 <div class="panel-body">
-                    <div id="datospersonales" class="col-md-3">
+                    <div id="datospersonales" class="col-md-4">
                         <h2>Datos Personales</h2>
-                        <img src="{{ datos['img_perfil'] }}" class="imgmaterial" >
-                        <br/><label class="resalta">Nombre: </label>
-                    {% if datos['nombre'] is null %}
-                        No ha introducido nombre
-                    {% else %}
-                    {{ datos['nombre'] }}
-                    {% endif %}<br/>
-                        <label class="resalta">Apellidos: </label>
-                    {% if datos['apellido'] is null %}
-                        No ha introducido apellido
-                    {% else %}
-                    {{ datos['apellido'] }}
-                    {% endif %}<br/>
-                        <label class="resalta">Descripción: </label>
-                    {% if datos['descripción'] is null %}
-                        Sin descripción
-                    {% else %}
-                    {{ datos['descripcion'] }}
-                    {% endif %}<br/>
+                        <img src="{{ datos['img_perfil'] }}" class="imgmaterial" ><br/>
+                        {% if caso == 'editar' %}
+                        <form method="POST" action="/datosusuario/{{ datos['nick']}}/e" class="form-horizontal" >
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <label for="cnombre" >Nombre: </label>
+                                    <input type="text" class="form-control" name="cnombre" value="{{ datos['nombre'] }}" />
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                <div class="col-lg-10">
+                                    <label for="capellido" >Apellidos: </label>
+                                    <input type="text" class="form-control" name="capellido" value="{{ datos['apellido'] }}" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <label for="cdescripcion" >Descripcion </label>
+                                   <textarea rows="5" class="form-control"  type="text" name="cdescripcion" value={{ datos['descripcion'] }} ></textarea>
+                                </div>
+                            </div>
+                            <div class="center">
+                                  <button name="guardar" class="btn btn-success">Guardar</button>
+                            </div>
+                        </form>
+                        {% else %}
+                            <label class="resalta">Nombre: </label>
+                            {% if datos['nombre'] is null %}
+                            No ha introducido nombre
+                            {% else %}
+                            {{ datos['nombre'] }}<br/>
+                            {% endif %}
+                            <label class="resalta">Apellido </label>
+                            {% if datos['apellido'] is null %}
+                            No ha introducido apellido
+                            {% else %}
+                            {{ datos['apellido'] }}<br/>
+                            {% endif %}
+                            <label class="resalta">Descripcion: </label>
+                            {% if datos['descripcion'] is null %}
+                            No ha introducido descripcion
+                            {% else %}
+                            {{ datos['descripcion'] }}
+                            {% endif %}
+                            <div class="center">
+                                  <a href="/datosusuario/{{ datos['nick']}}/e" class="btn btn-success">Editar</a>
+                            </div>
+                        {% endif %}<br/>
                     </div>
                     <div id="listas" class="col-md-6 margin-left">
                         <h2>Sus listas</h2>
@@ -115,12 +145,10 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-                    <div class="col-md-10 center">
-                        
-                </div>
+                 </div>
             </div>
         </div>
     </div>
+  </div>
 
 {% endblock %}

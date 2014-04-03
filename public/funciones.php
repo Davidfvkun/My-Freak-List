@@ -95,7 +95,7 @@ function login($nick, $contraseña, $app) {
             'clase' => 'info error'));
         //} else if (password_verify($clave, $login->contraseña)) {
     } else if ($contraseña == $compruebaLogin->clave) {
-        $_SESSION['logeo'] = $compruebaLogin->id; //Aun no se como mantendré el login, temporalmente queda así
+        $_SESSION[$compruebaLogin->nick] = $compruebaLogin->nick;
         $app->render('inicio.html.twig');
     }
 }
@@ -204,6 +204,17 @@ function listados($idt, $ide, $nicku) {
                     where('material_usuario.estado', $idEstado)->
                     where('usuario.id', $idUsuario->id)->find_many();
     return $buscaCosa;
+}
+
+function editar_usuario($nombre, $apellido, $descripcion)
+{
+    $editarUsuario = ORM::for_table('usuario')->where('nick','davidnick')->find_one();
+    
+    $editarUsuario->nombre = $nombre;
+    $editarUsuario->apellido = $apellido;
+    $editarUsuario->descripcion = $descripcion;
+    $editarUsuario->save();
+    return true;
 }
 
 ?>

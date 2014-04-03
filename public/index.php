@@ -40,7 +40,7 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
 $app->get('/salir', function() use ($app) {
             unset($_SESSION['logeo']); //Revisar esto: http://www.grabthiscode.com/programacion/como-hacer-un-registro-y-login-php-con-sesiones-y-cookies/
             session_destroy();
-            $app->render('login.html.twig', array('titulo' => 'Login'));
+            $app->render('myfreakzone.html.twig', array('titulo' => 'Login'));
         })->name('salir');
 
 /* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
@@ -195,12 +195,35 @@ $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
             }
         });
 
-$app->get('/datosusuario/:nicku/', function($nicku) use ($app) {
+$app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
+            
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    if($modo == 'e'/* Y es el usuario logeado */)
+                    {
+                        $caso = 'editar';
+                    }
+                    else 
+                    {
+                        $caso = 'mostrar';
+                    }
+                    break;
+                case "POST":
+                    if(isset($_POST['guardar']))
+                    {
+                        $caso = 'mostrar';
+                        editar_usuario($_POST['cnombre'], $_POST['capellido'], $_POST['cdescripcion']);
+                    }
+                    break;
+            }
             $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
             $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
                     join('material_usuario', array('material.id','=','material_usuario.material_id'))->
                     where('material_usuario.usuario_id',$datosUsuario->id)->
                     where('material_usuario.favorito',1)->find_many();
+            
+            // Tendría que hacer algo para que si el usuario coincide con la variable de session 
+            //  pueda editar y si no no. Pendiente para mas adelante
             if(empty($datosUsuario))
             {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
@@ -209,10 +232,11 @@ $app->get('/datosusuario/:nicku/', function($nicku) use ($app) {
             {
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,
-                    'favs' => $favs
+                    'favs' => $favs,
+                    'caso' => $caso
                 ));
             }
-        });
+        })->name('datosusuario')->via('GET', 'POST');
 
 
 $app->run();

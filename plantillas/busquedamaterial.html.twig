@@ -27,10 +27,10 @@
                         <div class="col-md-3 cajitas">
                              <a href="/datosmaterial/{{i['id']}}">
                                  {{ i['nombre'] }}<br/>
-                                 {% if datos['img_material'] is null %}
+                                 {% if i['img_material'] is null %}
                                  <img src="/utilidades/image/material/default.png" class="imgmaterial" >
                                  {% else %}
-                                 <img src="{{ datos['img_material'] }}" class="imgmaterial" >
+                                 <img src="{{ i['img_material'] }}" class="imgmaterial" >
                                  {% endif %}
                              </a>
                              <br/><label class="resalta">Tipo: </label>

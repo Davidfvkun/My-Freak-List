@@ -12,36 +12,53 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <table class="table table-hover mytable" >
-                <thead>
-                <th>Nick</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <!-- Planteandome incluir una "Fecha de registro" -->
-                </thead>
-                <tbody>
-                    {% set cont = 0 %}
-                    {% for i in datos %}
-                        <tr>
-                            <td><a href="datosusuario/{{i.nick}}">{{ i.nick }}</a></td>
-                            {% if i['nombre'] is null %}
-                            <td>No ha introducido nombre</td>
-                            {% else %}
-                            <td>{{ i['nombre'] }}</td>
-                            {% endif %}
-                            {% if i['apellido'] is null %}
-                            <td>No ha introducido apellido</td>
-                            {% else %}
-                            <td>{{ i['apellido'] }}</td>
-                            {% endif %}
-                        {% set cont = cont + 1 %}
-                     {% else %}
-                        <div class="info center">No se han encontrado resultados</div>
-                     {% endfor %}
-                        </tbody>
-                    </table>
-                    <div class="info center">El número de usuarios encontrados es {{ cont }}</div>
-                </div>
-            </div>
+        {% set cont = 0 %}
+            {% set cont2 = 2 %}
+            <div class="tab-content">
+                <div id="tab1" class="tab-pane active">
+                {% for i in datos %}
+                    {% if cont == 2 %}
+                        </div>
+                        <div id="tab{{cont2}}" class="tab-pane">
+                         {% set cont = 0 %}
+                        {% set cont2 = cont2 + 1 %}
+                    {% endif %}
+                    {% set cont = cont + 1 %}
+                        <div class="col-md-3 cajitas">
+                             <a href="/datosusuario/{{i['nick']}}/m">
+                                 {{ i['nick'] }}<br/>
+                                 {% if i['img_perfil'] is null %}
+                                 <img src="/utilidades/image/perfil/default.png" class="imgmaterial" >
+                                 {% else %}
+                                 <img src="{{ i['img_perfil'] }}" class="imgmaterial" >
+                                 {% endif %}
+                             </a>
+                             <br/><label class="resalta">Nombre: </label>
+                             {% if i['nombre'] is null %}
+                             No ha introducido nombre
+                             {% else %}
+                             {{ i['nombre'] }}
+                             {% endif %}
+                             <br/><label class="resalta">Apellido: </label>
+                             {% if i['apellido'] is null %}
+                             No ha introducido apellido
+                             {% else %}
+                             {{ i['apellido'] }}
+                             {% endif %}
+                         </div>
+                 {% else %}
+                 <div class="info center">No se han encontrado datos</div>
+                 {% endfor %}
+             </div>
+        </div>     
+        <div class="row">
+            <div class="col-md-12">
+            <ul class="nav nav-tabs">  
+                {% for i in 1..(cont2-1) %}
+                   <li><a href="#tab{{i}}" data-toggle="tab" class="active">{{i}}</a></li>
+                {% endfor %}
+              </ul>
+           </div>
+         </div>
+    </div>
 {% endblock %}
