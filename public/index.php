@@ -178,7 +178,9 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
 $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
             $datosMaterial = ORM::for_table('material')->find_one($idt);
-            
+            $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
+                    where('usuario_id',1)->find_one();
+            empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
                 echo "No existe ese anime/serie/película";
@@ -190,7 +192,8 @@ $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
                 $app->render('datosmaterial.html.twig', array(
                     'datos' => $datosMaterial,
-                    'datos2' => $capitulosMaterial
+                    'datos2' => $capitulosMaterial,
+                    'lotengo' => $check
                 ));
             }
         });

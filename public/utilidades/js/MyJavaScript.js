@@ -49,32 +49,32 @@ function InitPlantillaPrincipal()
 function CompruebaCampo(id, expresionRegular, casoNick)
 {
     valor = document.getElementById(id).value;
-    
-        if (casoNick == 3) // En el caso del nick hay que comprobar que no esté ocupado
+
+    if (casoNick == 3) // En el caso del nick hay que comprobar que no esté ocupado
+    {
+        CompruebaNick(id, casoNick, expresionRegular, valor);
+    }
+    else
+    {
+        if (!expresionRegular.test(valor))
         {
-            CompruebaNick(id, casoNick, expresionRegular, valor);
+            document.getElementById(id + "div").className = "form-group has-error";
         }
         else
         {
-            if (!expresionRegular.test(valor))
-            {
-                document.getElementById(id + "div").className = "form-group has-error";
-            }
-            else
-            {
-                document.getElementById(id + "div").className = "form-group has-success";
-            }
+            document.getElementById(id + "div").className = "form-group has-success";
         }
-        if (document.getElementById("claveRdiv").className != "form-group has-success" ||
-                document.getElementById("emaildiv").className != "form-group has-success" ||
-                    document.getElementById("nickRdiv").className != "form-group has-success")
-        {
-            document.getElementById("registrarse").disabled = true;
-        }
-        else
-        {
-            document.getElementById("registrarse").disabled = false;
-        }
+    }
+    if (document.getElementById("claveRdiv").className != "form-group has-success" ||
+            document.getElementById("emaildiv").className != "form-group has-success" ||
+            document.getElementById("nickRdiv").className != "form-group has-success")
+    {
+        document.getElementById("registrarse").disabled = true;
+    }
+    else
+    {
+        document.getElementById("registrarse").disabled = false;
+    }
 }
 
 function CompruebaNick(id, peticionn, expresionRegular1, valor1)
@@ -97,7 +97,7 @@ function CompruebaNick(id, peticionn, expresionRegular1, valor1)
         }
         else
         {
-            if(!expresionRegular1.test(valor1))
+            if (!expresionRegular1.test(valor1))
             {
                 document.getElementById("nickRdiv").className = "form-group has-error";
                 document.getElementById("nickRlabel").innerHTML = "El nick contiene caracteres incorrectos";
@@ -150,6 +150,5 @@ function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
         });
     });
 }
-
 
 
