@@ -207,6 +207,17 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     return true;
 }
 
+function actualiza_material($variabl,$estado,$puntuacion,$progreso,$vista_en,$comentario)
+{
+    $variabl->estado = $estado;
+    $variabl->puntuacion = $puntuacion;
+    $variabl->capitulo_por_el_que_vas = $progreso;
+    $variabl->vista_en = $vista_en;
+    $variabl->comentario = $comentario;
+    return $variabl;
+    
+}
+
 function usuario_logeado($elNick) {
     if (isset($_SESSION[$elNick]) && $_SESSION[$elNick] = $elNick)
         return true;

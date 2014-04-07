@@ -29,6 +29,7 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                     /* Este caso se dará si el usuario estaba logeado y ha entrado poniendo la URL */
                     /* Por tanto aquí irá un "if logeado { accede } else { vete pa afuera } */
                     //$app->render('MyFreakZone.html.twig');
+                    
                     $app->render('inicio.html.twig', array(
                         'generos' => $GLOBALS['generos'],
                         'N' => count($GLOBALS['generos'])));
@@ -173,8 +174,6 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
                 'cosas' => $mensajeListado));
         });
 
-/* IMPORTANTE: FALTA COMPROBACIONES DE SI HAY DATOS NULOS */
-
 $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
             $datosMaterial = ORM::for_table('material')->find_one($idt);
@@ -193,7 +192,8 @@ $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
                 $app->render('datosmaterial.html.twig', array(
                     'datos' => $datosMaterial,
                     'datos2' => $capitulosMaterial,
-                    'lotengo' => $check
+                    'lotengo' => $check,
+                    'datospropios' => $loTengo
                 ));
             }
         });
@@ -248,6 +248,69 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             }
         })->name('datosusuario')->via('GET', 'POST');
 
+$app->post('/actualizamaterial', function() use ($app) 
+{
+    $idt = $_POST['id'];
+    $material = ORM::for_table('material_usuario')->where('material_id',$idt)->find_one();
+    if(isset($_POST['editarmaterial']))
+    {
+        if(empty($material))
+        {
+            $mensaje = "Ocurrió algún error inespetado";
+            $clase = "info error";
+        }
+        else
+        {
+            $material = actualiza_material($material, 
+                    $_POST['estado'],$_POST['puntuacion'],
+                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
+            $material->save();
+            $mensaje = "Se ha agregado correctamente";
+            $clase = "info";
+        }
+    }
+    else if(isset($_POST['agregarmaterial']))
+    {
+        if(!empty($material))
+        {
+            $mensaje = "Ya está agregado a la lista";
+            $clase = "info error";
+        }
+        else{
+            $material = ORM::for_table('material_usuario')->create();
+            $material = actualiza_material($material, 
+                    $_POST['estado'],$_POST['puntuacion'],
+                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
+            $material->material_id = $idt;
+            $material->usuario_id = 1;
+            $material->save();
+            $mensaje = "Se ha agregado correctamente";
+            $clase = "info";
+        }
+    }
+    
+            $datosMaterial = ORM::for_table('material')->find_one($idt);
+            $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
+                    where('usuario_id',1)->find_one();
+            empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
+            if(empty($datosMaterial))
+            {
+                echo "No existe ese anime/serie/película";
+            }
+            else
+            {
+                $capitulosMaterial = ORM::for_table('capitulo')->
+                                where('material_id', $idt)->find_many();
 
+                $app->render('datosmaterial.html.twig', array(
+                    'datos' => $datosMaterial,
+                    'datos2' => $capitulosMaterial,
+                    'lotengo' => $check,
+                    'datospropios' => $loTengo,
+                    'clase' => $clase,
+                    'info' => $mensaje
+                ));
+            }
+})->name('actualizamaterial');
 $app->run();
 ?>
