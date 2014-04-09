@@ -104,8 +104,8 @@ function login($nick, $contraseña, $app) {
             'clase' => 'info error'));
         //} else if (password_verify($clave, $login->contraseña)) {
     } else if ($contraseña == $compruebaLogin->clave) {
-        $_SESSION[$compruebaLogin->nick] = $compruebaLogin->nick;
-        $app->render('inicio.html.twig');
+        $_SESSION['logeo'] = $compruebaLogin->nick;
+        $app->render('inicio.html.twig', array('usuario' => $_SESSION['logeo']));
     }
 }
 
@@ -213,7 +213,7 @@ function listados($idt, $ide, $nicku) {
 }
 
 function editar_usuario($nombre, $apellido, $descripcion) {
-    $editarUsuario = ORM::for_table('usuario')->where('nick', 'davidnick')->find_one();
+    $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
 
     $editarUsuario->nombre = $nombre;
     $editarUsuario->apellido = $apellido;
@@ -234,7 +234,7 @@ function actualiza_material($variabl,$estado,$puntuacion,$progreso,$vista_en,$co
 }
 
 function usuario_logeado($elNick) {
-    if (isset($_SESSION[$elNick]) && $_SESSION[$elNick] = $elNick)
+    if (isset($_SESSION['logeo']) && $_SESSION['logeo'] == $elNick)
         return true;
     else
         return false;

@@ -23,22 +23,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myfreakzone`.`material`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `tipo` INT NOT NULL COMMENT 'Tipo. 1 = Serie, 2 = Anime, 3 = Pelicula',
-  `sinopsis` TEXT NULL,
-  `anio` CHAR(4) NULL,
-  `n_capitulos` INT NULL,
-  `img_material` VARCHAR(45) NULL,
-  `genero` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `myfreakzone`.`noticia`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfreakzone`.`noticia` (
@@ -46,16 +30,10 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`noticia` (
   `noticia` TEXT NOT NULL,
   `fecha_publicado` DATE NOT NULL,
   `fuente` TEXT NULL,
-  `material_id` INT NOT NULL,
   `usuario_id` INT NOT NULL,
+  `etiquetas` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_noticias_material1_idx` (`material_id` ASC),
   INDEX `fk_noticias_usuario1_idx` (`usuario_id` ASC),
-  CONSTRAINT `fk_noticias_material1`
-    FOREIGN KEY (`material_id`)
-    REFERENCES `myfreakzone`.`material` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_noticias_usuario1`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `myfreakzone`.`usuario` (`id`)
@@ -86,6 +64,22 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`comentario` (
     REFERENCES `myfreakzone`.`noticia` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `myfreakzone`.`material`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `tipo` INT NOT NULL COMMENT 'Tipo. 1 = Serie, 2 = Anime, 3 = Pelicula',
+  `sinopsis` TEXT NULL,
+  `anio` CHAR(4) NULL,
+  `n_capitulos` INT NULL,
+  `img_material` VARCHAR(45) NULL,
+  `genero` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 

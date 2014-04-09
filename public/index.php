@@ -41,22 +41,19 @@ session_start();
 
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
-                case "GET":
-                    /* Este caso se dará si el usuario estaba logeado y ha entrado poniendo la URL */
-                    /* Por tanto aquí irá un "if logeado { accede } else { vete pa afuera } */
-                    //$app->render('MyFreakZone.html.twig');
-                    
+                case "GET":                    
                     $app->render('inicio.html.twig', array(
                         'generos' => $GLOBALS['generos'],
-                        'N' => count($GLOBALS['generos'])));
+                        'N' => count($GLOBALS['generos']),
+                        'usuario' => $_SESSION['logeo']));
                     break;
             }
         })->name('myfreakzone')->via('GET', 'POST');
 
 /* Cerrar sesión y sacar al usuario de la aplicacion */
 $app->get('/salir', function() use ($app) {
-            unset($_SESSION['logeo']); //Revisar esto: http://www.grabthiscode.com/programacion/como-hacer-un-registro-y-login-php-con-sesiones-y-cookies/
-            session_destroy();
+            unset($_SESSION['logeo']);
+            //session_destroy();
             $app->render('myfreakzone.html.twig', array('titulo' => 'Login'));
         })->name('salir');
 
@@ -97,6 +94,7 @@ $app->map('/login', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['entrar'])) {
+                        echo "pr";
                         login($_POST['nick'], $_POST['clave'], $app);
                     }
                     break;
@@ -115,7 +113,9 @@ $app->map('/busquedausuario', function() use ($app) {
                     if (isset($_POST['buscaru'])) {
                         $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
 
-                        $app->render('busquedausuario.html.twig', array('datos' => $busqueda));
+                        $app->render('busquedausuario.html.twig', array(
+                            'datos' => $busqueda, 
+                            'usuario' => $_SESSION['logeo']));
                     }
                     break;
             }
@@ -173,7 +173,9 @@ $app->map('/busquedam', function() use ($app) {
                             $busqueda = $busqueda->find_many();
                         }
                     }
-                    $app->render('busquedamaterial.html.twig', array('datos' => $busqueda));
+                    $app->render('busquedamaterial.html.twig', array(
+                        'datos' => $busqueda,
+                        'usuario' => $_SESSION['logeo']));
                     break;
             }
         })->name('busquedam')->via('GET', 'POST');
@@ -187,14 +189,15 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
 
             $app->render('listado.html.twig', array(
                 'datos' => $listad,
-                'cosas' => $mensajeListado));
+                'cosas' => $mensajeListado,
+                'usuario' => $_SESSION['logeo']));
         });
 
 $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
             $datosMaterial = ORM::for_table('material')->find_one($idt);
             $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
-                    where('usuario_id',1)->find_one();
+                    where('usuario_id',$_SESSION['logeo'])->find_one();
             empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
@@ -209,7 +212,8 @@ $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
                     'datos' => $datosMaterial,
                     'datos2' => $capitulosMaterial,
                     'lotengo' => $check,
-                    'datospropios' => $loTengo
+                    'datospropios' => $loTengo,
+                    'usuario' => $_SESSION['logeo']
                 ));
             }
         });
@@ -259,15 +263,18 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     'datos' => $datosUsuario,
                     'favs' => $favs,
                     'caso' => $caso,
-                    'soyyo' => $soyyo
+                    'soyyo' => $soyyo,
+                    'usuario' => $_SESSION['logeo']
                 ));
             }
+            
         })->name('datosusuario')->via('GET', 'POST');
 
 $app->post('/actualizamaterial', function() use ($app) 
 {
     $idt = $_POST['id'];
-    $material = ORM::for_table('material_usuario')->where('material_id',$idt)->find_one();
+    $material = ORM::for_table('material_usuario')->where('material_id',$idt)->
+            where('usuario_id',$_SESSION['logeo'])->find_one();
     if(isset($_POST['editarmaterial']))
     {
         if(empty($material))
@@ -298,7 +305,8 @@ $app->post('/actualizamaterial', function() use ($app)
                     $_POST['estado'],$_POST['puntuacion'],
                     $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
             $material->material_id = $idt;
-            $material->usuario_id = 1;
+            $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+            $material->usuario_id = $iden->id;
             $material->save();
             $mensaje = "Se ha agregado correctamente";
             $clase = "info";
@@ -307,7 +315,7 @@ $app->post('/actualizamaterial', function() use ($app)
     
             $datosMaterial = ORM::for_table('material')->find_one($idt);
             $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
-                    where('usuario_id',1)->find_one();
+                    where('usuario_id',$_SESSION['logeo'])->find_one();
             empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
@@ -324,7 +332,8 @@ $app->post('/actualizamaterial', function() use ($app)
                     'lotengo' => $check,
                     'datospropios' => $loTengo,
                     'clase' => $clase,
-                    'info' => $mensaje
+                    'info' => $mensaje,
+                    'usuario' => $_SESSION['logeo']
                 ));
             }
 })->name('actualizamaterial');
