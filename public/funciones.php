@@ -118,6 +118,11 @@ function buscar_usuarios($busqueda, $filtrado) {
         case "2":
             $buscaUsuario = $buscaUsuario->where_like("nick", "%" . $busqueda . "%");
             break;
+        case "3":
+            $idMaterial = ORM::for_table("material")->where_like("nombre", "%" . $busqueda . "%")->find_one();
+            $buscaUsuario = $buscaUsuario->
+                join("material_usuario", array("usuario.id","=","material_usuario.usuario_id"))->
+                where('material_usuario.material_id',$idMaterial->id);
         default:
             break;
     }
@@ -154,7 +159,14 @@ function buscar_material($busqueda, $V) {
         $arr[count($arr)] = 3;
     }
     $cadena = $cadena . ")";
-    $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
+    if(strlen($busqueda) > 2)
+    {
+        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
+    }
+    else
+    {
+        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%');
+    }
     /* if ($sep)
       $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
       else
