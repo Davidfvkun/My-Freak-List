@@ -252,4 +252,31 @@ function usuario_logeado($elNick) {
         return false;
 }
 
+function publicar_noticia($titulo,$noticia,$fuente,$tags){
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    try{
+            $insertarNoticia = ORM::for_table('noticia')->create();
+            $insertarNoticia->titulo = $titulo;
+            $insertarNoticia->fecha_publicado = date("Y/m/d");
+            $insertarNoticia->noticia = $noticia;
+            $insertarNoticia->fuente = $fuente;
+            $insertarNoticia->etiquetas = $tags;
+            $id = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one(); 
+            $insertarNoticia->usuario_id = $id->id;
+            $insertarNoticia->save();
+            $ok = true;
+            $dbh->commit();
+    }catch (\PDOException $e) {
+        var_dump($e);
+         $dbh->rollback();
+         $ok = false;
+    }
+    return $ok;
+}
+
+function buscar_noticia($busqueda,$filtrado){
+    
+}
+
 ?>

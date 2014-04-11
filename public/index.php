@@ -17,7 +17,6 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/]. */
 
 include "../vendor/autoload.php";
-include "../vendor/password.php";
 include "funciones.php";
 require_once "../config.php";
 $app = new \Slim\Slim(
@@ -182,10 +181,10 @@ $app->map('/busquedam', function() use ($app) {
                             $busqueda = $busqueda->find_many();
                         }
                     }
-                    $app->render('busquedamaterial.html.twig', array(
-                        'datos' => $busqueda,
-                        'usuario' => $_SESSION['logeo']));
-                    break;
+                        $app->render('busquedamaterial.html.twig', array(
+                            'datos' => $busqueda,
+                            'usuario' => $_SESSION['logeo']));
+                        break;
             }
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
@@ -205,8 +204,10 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
 $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
 
             $datosMaterial = ORM::for_table('material')->find_one($idt);
+            $idUsuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
             $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
-                    where('usuario_id',$_SESSION['logeo'])->find_one();
+                    where('usuario_id',$idUsuario->id)->find_one();
+           
             empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
@@ -323,8 +324,10 @@ $app->post('/actualizamaterial', function() use ($app)
     }
     
             $datosMaterial = ORM::for_table('material')->find_one($idt);
+            $idUsuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
             $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
-                    where('usuario_id',$_SESSION['logeo'])->find_one();
+                    where('usuario_id',$idUsuario->id)->find_one();
+            
             empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
@@ -347,10 +350,42 @@ $app->post('/actualizamaterial', function() use ($app)
             }
 })->name('actualizamaterial');
 
-$app->get('/publicanoticia', function() use ($app) 
+/* Esto no está incluido en el ultimo commit */
+$app->get('/publicabuscanoticias', function() use ($app) 
 {
     $app->render('publicanoticia.html.twig');
-})->name('publicanoticia');
+})->name('publicabuscanoticias');
+
+$app->post('/publicarnoticia', function() use ($app) 
+{
+    if(isset($_POST['publicar']))
+    {
+        $publicarNoticia = publicar_noticia($_POST['titulonoticia'],
+                $_POST['noticia'],$_POST['fuentenoticia'], $_POST['tags']);
+        
+        if($publicarNoticia)
+        {
+            $mensaje = "Noticia publicada correctamente.";
+            $enlace = "InsertarAquiEnlaceDeLaNoticia";
+        }
+        else
+        {
+            $mensaje = "Ha ocurrido algún error";
+        }
+        echo $mensaje;
+        /*$app->render('publicanoticia.html.twig',array(
+            'mensaje' => $mensaje
+        ));*/
+    }        
+})->name('publicarnoticia');
+
+$app->post('/buscarnoticia', function() use ($app) 
+{
+    if(isset($_POST['buscarnoticia']))
+    {
+        $datosNoticias = buscar_noticias($_POST['inputbuscarnoticias'],$_POST['filtradonoticia']);
+    }
+})->name('buscarnoticia');
 
 $app->run();
 ?>

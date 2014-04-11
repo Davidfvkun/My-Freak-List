@@ -33,28 +33,28 @@
                         <h3 class="panel-title">Publicar noticia</h3>
                     </div>
                     <div class="panel panel-body">
-                        <form class="form-horizontal" method="POST" action="">
+                        <form class="form-horizontal" method="POST" action="{{ urlFor('publicarnoticia')}}">
                             <div class="form-group">
-                                <label for="inputBusqueda" class="col-lg-2 control-label">Titulo de la noticia *</label>
+                                <label for=titulonoticia" class="col-lg-2 control-label">Titulo de la noticia *</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" name="introducenoticia">
+                                    <input type="text" class="form-control" name="titulonoticia">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputBusqueda" class="col-lg-2 control-label">Datos de la noticia *</label>
+                                <label for="noticia" class="col-lg-2 control-label">Datos de la noticia *</label>
                                 <div class="col-lg-10">
                                     <textarea rows="15" type="text"class="form-control" name="noticia"
                                                   placeholder="Pon aquí la noticia"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputBusqueda" class="col-lg-2 control-label">Fuente</label>
+                                <label for="fuentenoticia" class="col-lg-2 control-label">Fuente</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" name="fuentenoticia">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputBusqueda" class="col-lg-2 control-label">Tags *</label>
+                                <label for="tags" class="col-lg-2 control-label">Tags *</label>
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" name="tags" placeholder="Palabras clave que identifiquen tu noticia">
                                     <label>Escribe las palabras separadas por comas</label>
@@ -73,17 +73,17 @@
                         <h3 class="panel-title"> Buscar noticia</h3>
                     </div>
                     <div class="panel panel-body">
-                        <form class="form-horizontal" method="POST" action="">
+                        <form class="form-horizontal" method="POST" action="{{ urlFor('buscarnoticia')}}">
                         <div class="form-group">
-                            <label for="busquedausuario" class="col-lg-2 control-label">Buscar usuario</label>
+                            <label for="inputbuscarnoticias" class="col-lg-2 control-label">Buscar Noticia</label>
                             <div class="col-lg-10">
                                 <input type="text" class="form-control" name="inputbuscarnoticias">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="select" class="col-lg-2 control-label">Filtrar por</label>
+                            <label for="filtradonoticia" class="col-lg-2 control-label">Filtrar por</label>
                             <div class="col-lg-10">
-                                <select class="form-control" id="selectfiltranoticias" name="filtrado">
+                                <select class="form-control" name="filtradonoticia">
                                     <option value="1">Nick</option>
                                     <option value="2">Tags</option>
                                     <option value="3">Contenido</option>

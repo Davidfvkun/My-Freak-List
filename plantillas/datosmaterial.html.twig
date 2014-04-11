@@ -112,6 +112,7 @@
                             <div class="center">
                                 <button name="agregarmaterial" class="btn btn-success" >Agregar</button>
                             </div>
+                            <input type="hidden" value="{{datos.id}}" name="id" />
                     {% elseif lotengo == 'Editar' %}
                             <div class="form-group">
                                 <label for="select" class="col-lg-3 control-label">Estado</label> 
@@ -162,6 +163,7 @@
                                 <div class="center">
                                     <button name="editarmaterial" class="btn btn-success" >Editar</button>
                                 </div>
+                            <input type="hidden" value="{{datos.id}}" name="id" />
                     {% endif %}
                             </form>
                         </div>
