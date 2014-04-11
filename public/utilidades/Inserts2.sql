@@ -37,5 +37,7 @@ insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_
 		values (1,17,2, 7, 'Vista en Random David 17', 'Comentario random David 17', 1);
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario, capitulo_por_el_que_vas) 
 		values (1,18,1, 8, 'Vista en Random David 18', 'Comentario random David 18', 1);
+		
+
 
 commit;

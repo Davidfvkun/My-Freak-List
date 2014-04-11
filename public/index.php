@@ -383,7 +383,7 @@ $app->post('/buscarnoticia', function() use ($app)
 {
     if(isset($_POST['buscarnoticia']))
     {
-        $datosNoticias = buscar_noticias($_POST['inputbuscarnoticias'],$_POST['filtradonoticia']);
+        $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'],$_POST['filtradonoticia']);
     }
 })->name('buscarnoticia');
 
