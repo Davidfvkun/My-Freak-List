@@ -346,5 +346,11 @@ $app->post('/actualizamaterial', function() use ($app)
                 ));
             }
 })->name('actualizamaterial');
+
+$app->get('/publicanoticia', function() use ($app) 
+{
+    $app->render('publicanoticia.html.twig');
+})->name('publicanoticia');
+
 $app->run();
 ?>
