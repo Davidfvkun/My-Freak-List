@@ -26,6 +26,7 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
         </div>
     </div>
+        <div class="{{ clase }}">{{ mensaje }}</div>
     <div class="row">
         <div class="col-md-7">
             <div class="panel panel-primary">
@@ -34,30 +35,33 @@
                     </div>
                     <div class="panel panel-body">
                         <form class="form-horizontal" method="POST" action="{{ urlFor('publicarnoticia')}}">
-                            <div class="form-group">
+                            <div class="form-group" id="titulonoticiadiv">
                                 <label for=titulonoticia" class="col-lg-2 control-label">Titulo de la noticia *</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" name="titulonoticia">
+                                    <input type="text" class="form-control" id="titulonoticia" name="titulonoticia">
+                                    <label>Título de la noticia. Mínimo 4 caracteres, máximo 200</label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="noticiadiv">
                                 <label for="noticia" class="col-lg-2 control-label">Datos de la noticia *</label>
                                 <div class="col-lg-10">
-                                    <textarea rows="15" type="text"class="form-control" name="noticia"
-                                                  placeholder="Pon aquí la noticia"></textarea>
+                                    <textarea rows="15" type="text"class="form-control" id="noticia" name="noticia"
+                                                  placeholder="Pon aquí la noticia."></textarea>
+                                    <label>La noticia debe tener mínimo 100 caracteres, máximo 100.000</label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="fuentenoticiadiv">
                                 <label for="fuentenoticia" class="col-lg-2 control-label">Fuente</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" name="fuentenoticia">
+                                    <input type="text" class="form-control" id="fuentenoticia" name="fuentenoticia">
+                                    <label>Lugar del que sacaste la noticia. Puede ir en blanco</label>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="tagsdiv">
                                 <label for="tags" class="col-lg-2 control-label">Tags *</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" name="tags" placeholder="Palabras clave que identifiquen tu noticia">
-                                    <label>Escribe las palabras separadas por comas</label>
+                                    <input type="text" class="form-control" id="tags" name="tags" placeholder="Palabras clave que identifiquen tu noticia">
+                                    <label>Escribe las palabras separadas por comas. Minimo 10 caracteres, máximo 200</label>
                                 </div>
                             </div>
                                 <div class="center">
@@ -99,4 +103,7 @@
          </div>
     </div>
 </div>
+<script type="text/JavaScript">
+    window.onload = InitPublicaNoticia();
+</script>
 {% endblock %}

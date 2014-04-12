@@ -256,7 +256,10 @@ function usuario_logeado($elNick) {
 function publicar_noticia($titulo,$noticia,$fuente,$tags){
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    try{
+    if(CompruebaLongitud($titulo, 200, 4) == true && 
+            CompruebaLongitud($noticia, 100000, 100) == true
+               && CompruebaLongitud($tags, 200, 10) == true){
+        try{
             $insertarNoticia = ORM::for_table('noticia')->create();
             $insertarNoticia->titulo = $titulo;
             $insertarNoticia->fecha_publicado = date("Y/m/d");
@@ -268,12 +271,15 @@ function publicar_noticia($titulo,$noticia,$fuente,$tags){
             $insertarNoticia->save();
             $ok = true;
             $dbh->commit();
-    }catch (\PDOException $e) {
-        var_dump($e);
+        }catch (\PDOException $e) {
          $dbh->rollback();
          $ok = false;
+        }
     }
-    return $ok;
+    else{
+        $ok = false;
+    }
+        return $ok;
 }
 
 function buscar_noticia($busqueda,$filtrado){
@@ -320,6 +326,14 @@ function buscar_noticia($busqueda,$filtrado){
         return $mensajeError;*/
     foreach($buscarNoticias as $cos)
         echo $cos->titulo;
+}
+
+function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima)
+{
+    if(strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
+        return false;
+    else
+        return true;
 }
 
 ?>

@@ -69,7 +69,7 @@ $app->map('/MyFreakZone', function() use ($app) {
                             $mensaje = "Se ha registrado correctamente";
                             $clase = "info";
                         } else if ($registra == false) {
-                            $mensaje = "Ha ocurrido un fallo inesperado";
+                            $mensaje = "Algún campo es incorrecto";
                             $clase = "info error";
                         } else {
                             $mensaje = $registra;
@@ -366,16 +366,19 @@ $app->post('/publicarnoticia', function() use ($app)
         if($publicarNoticia)
         {
             $mensaje = "Noticia publicada correctamente.";
+            $clase = "info";
             $enlace = "InsertarAquiEnlaceDeLaNoticia";
         }
         else
         {
-            $mensaje = "Ha ocurrido algún error";
+            $clase = "info error";
+            $mensaje = "Alguno de los campos es incorrecto";
         }
         echo $mensaje;
-        /*$app->render('publicanoticia.html.twig',array(
-            'mensaje' => $mensaje
-        ));*/
+        $app->render('publicanoticia.html.twig',array(
+            'mensaje' => $mensaje,
+            'clase' => $clase
+        ));
     }        
 })->name('publicarnoticia');
 

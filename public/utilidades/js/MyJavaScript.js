@@ -64,6 +64,41 @@ function InitPlantillaPrincipal()
             }, false);
 }
 
+function InitPublicaNoticia()
+{
+    document.getElementById("titulonoticia").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('titulonoticia', 200,4);
+            }, false);
+    document.getElementById("noticia").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('noticia', 100000,100);
+            }, false);
+     document.getElementById("tags").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('tags',200,10);
+            }, false);
+}
+
+function CamposLongitud(id, longitudmaxima, longitudminima)
+{
+    valor = document.getElementById(id).value;
+    if (valor.length > longitudmaxima || valor.length < longitudminima)
+    {
+        document.getElementById(id + "div").className = "form-group has-error";
+    }
+    else
+    {
+          document.getElementById(id + "div").className = "form-group has-success";  
+    }
+}
+
 function CompruebaCampo(id, expresionRegular, casoNick)
 {
     valor = document.getElementById(id).value;
@@ -83,7 +118,7 @@ function CompruebaCampo(id, expresionRegular, casoNick)
             document.getElementById(id + "div").className = "form-group has-success";
         }
     }
-    if (document.getElementById("claveRdiv").className != "form-group has-success" ||
+    /*if (document.getElementById("claveRdiv").className != "form-group has-success" ||
             document.getElementById("emaildiv").className != "form-group has-success" ||
             document.getElementById("nickRdiv").className != "form-group has-success")
     {
@@ -92,7 +127,7 @@ function CompruebaCampo(id, expresionRegular, casoNick)
     else
     {
         document.getElementById("registrarse").disabled = false;
-    }
+    }*/
 }
 
 function CompruebaNick(id, peticionn, expresionRegular1, valor1)
@@ -163,11 +198,11 @@ function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
     {
         coso = JSON.parse(response);
         /*mostrar = new Array();
-        for (i = 0; i <= 6; i++)
-        {
-            mostrar[i] = coso[i];
-        }
-        alert(mostrar);*/
+         for (i = 0; i <= 6; i++)
+         {
+         mostrar[i] = coso[i];
+         }
+         alert(mostrar);*/
         $("#inputbusqueda1").autocomplete({
             source: coso
         });
