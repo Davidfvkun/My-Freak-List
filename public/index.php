@@ -388,6 +388,9 @@ $app->post('/buscarnoticia', function() use ($app)
     {
         $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'],$_POST['filtradonoticia']);
     }
+    $app->render('busquedanoticias.html.twig',array(
+            'datos' => $datosNoticias
+        ));
 })->name('buscarnoticia');
 
 $app->run();

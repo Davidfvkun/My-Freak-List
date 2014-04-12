@@ -320,12 +320,12 @@ function buscar_noticia($busqueda,$filtrado){
             break;
         default:
     }
-    /*if($mensajeError == null)
+    if($mensajeError == null)
         return $buscarNoticias;
     else
-        return $mensajeError;*/
-    foreach($buscarNoticias as $cos)
-        echo $cos->titulo;
+        return $mensajeError;
+    /*foreach($buscarNoticias as $cos)
+        echo $cos->titulo;*/
 }
 
 function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima)
