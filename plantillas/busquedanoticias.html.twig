@@ -32,7 +32,7 @@
             <div class="tab-content">
                 <div id="tab1" class="tab-pane active">
                 {% for i in datos %}
-                    {% if cont == 2 %}
+                    {% if cont == 6 %}
                         </div>
                         <div id="tab{{cont2}}" class="tab-pane">
                          {% set cont = 0 %}
@@ -40,7 +40,10 @@
                     {% endif %}
                     {% set cont = cont + 1 %}
                         <div class="col-md-3 cajitas">
-                             {{ i['titulo'] }}
+                            <h2><a href="noticia/{{i['id']}}"> 
+                            {{ i['titulo'] }}
+                            </a></h2>
+                            <p> {{ i['noticia']|striptags|slice(0, 150)}}</p>
                          </div>
                  {% else %}
                  <div class="info center">No se han encontrado datos</div>
