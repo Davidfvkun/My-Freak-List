@@ -393,23 +393,69 @@ $app->post('/buscarnoticia', function() use ($app)
         ));
 })->name('buscarnoticia');
 
+$app->post('/publicacomentario', function() use ($app) 
+{
+    $mensajeError = null;
+    if(isset($_POST['comentar']))
+    {
+        $existeNoticia = ORM::for_table('noticia')->where('id',$_POST['id'])->find_one();
+        if(!empty($existeNoticia))
+        {
+            $mensaje = publica_comentario($_POST['comentario'], $_POST['id']);
+            
+            if($mensaje == false)
+            {
+                $mensaje = "Ha ocurrido algún error al enviar el comentario";
+                $clase = "info error";
+            }
+            else
+                $clase = "info";
+            
+            $comentarios = ORM::for_table('comentario')->
+            select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
+            join('usuario',array('comentario.usuario_id','=','usuario.id'))->
+            where('noticias_id', $existeNoticia->id)->find_many();
+            $nombreUsuario = ORM::for_table("usuario")->where('id',$existeNoticia->usuario_id)->find_one();
+            $app->render('noticia.html.twig', array(
+            'datos' => $existeNoticia,
+            'autor' => $nombreUsuario->nick,
+            'coments' => $comentarios,
+            'mensaje' => $mensaje,
+            'clase' => $clase
+            ));
+        }
+        else
+        {
+            echo "Ha ocurrido algún error al enviar el comentario";
+        }
+        
+    }
+    
+})->name('publicacomentario');
+
 $app->get('/noticia/:idt', function($idt) use ($app) 
 {
     $datosNoticia = ORM::for_table('noticia')->where('id',$idt)->find_one();
-    $comentarios = ORM::for_table('comentario')->where('noticias_id', $datosNoticia->id)->find_many();
+    
     if(empty($datosNoticia))
     {
         echo "No existe esa noticia";
     }
     else
     {
+        $comentarios = ORM::for_table('comentario')->
+            select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
+            join('usuario',array('comentario.usuario_id','=','usuario.id'))->
+            where('noticias_id', $datosNoticia->id)->find_many();
         $nombreUsuario = ORM::for_table("usuario")->where('id',$datosNoticia->usuario_id)->find_one();
-    }
-    $app->render('noticia.html.twig', array(
+        $app->render('noticia.html.twig', array(
         'datos' => $datosNoticia,
         'autor' => $nombreUsuario->nick,
         'coments' => $comentarios
-    ));
+        ));
+        
+    }
+    
 })->name('noticia');
 
 $app->run();

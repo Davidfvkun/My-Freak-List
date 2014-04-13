@@ -37,7 +37,7 @@
                         <h2><div class="center">{{ datos['titulo'] }}</div></h2>
                         <div>{{ datos['noticia'] }}</div>
                         <br/>
-                        <label>Noticia publicada por <a href="datosusuario/{{ autor }}">{{ autor }}</a></label>
+                        <label>Noticia publicada por <a href="/datosusuario/{{ autor }}/m">{{ autor }}</a></label>
                         <br/><label>Fuente: 
                         {% if datos['fuente'] is null or datos['fuente'] == "" %}
                         Desconocida
@@ -54,10 +54,12 @@
                         <h3 class="panel-title">Comentarios</h3>
                     </div>
                     <div class="panel panel-body">
-                      <form class="form-horizontal" method="POST" action="">
+                      <form class="form-horizontal" method="POST" action="{{ urlFor('publicacomentario') }}">
                         <div id="comentarios">
                         {% for i in coments %}
-                          {{ i['comentario'] }}
+                          <div>{{ i['comentario'] }}</div>
+                          <br/>Escrito por <a href="/datosusuario/{{i['nick']}}/m">{{ i['nick'] }}</a>, en la fecha {{ i['fecha_publicad'] }}
+                          <hr/>
                         {% else %}
                         <div class="info">No hay comentarios en esta noticia</div>
                         {% endfor %}
@@ -69,8 +71,9 @@
                           </div>
                        </div>
                        <div class="center">
-                           <button type="submit" class="btn btn-primary" name="comentar">Enviar comentario</button>
+                           <button type="submit" class="btn btn-success" name="comentar">Enviar comentario</button>
                        </div>
+                         <input type="hidden" value="{{ datos['id'] }}" name="id" />
                         </form>
                     </div>
              </div>

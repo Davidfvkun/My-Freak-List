@@ -324,6 +324,11 @@ function buscar_noticia($busqueda,$filtrado){
         return $buscarNoticias;
 }
 
+function publica_comentario($comentario, $idNoticia)
+{
+    return "Comentario publicado";
+}
+
 function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima)
 {
     if(strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
