@@ -393,5 +393,23 @@ $app->post('/buscarnoticia', function() use ($app)
         ));
 })->name('buscarnoticia');
 
+$app->get('/noticia/:idt', function($idt) use ($app) 
+{
+    $datosNoticia = ORM::for_table('noticia')->where('id',$idt)->find_one();
+    
+    if(empty($datosNoticia))
+    {
+        echo "No existe esa noticia";
+    }
+    else
+    {
+        $nombreUsuario = ORM::for_table("usuario")->where('id',$datosNoticia->usuario_id)->find_one();
+    }
+    $app->render('noticia.html.twig', array(
+        'datos' => $datosNoticia,
+        'autor' => $nombreUsuario->nick
+    ));
+})->name('noticia');
+
 $app->run();
 ?>

@@ -1,0 +1,63 @@
+{# My Freak Zone - My Freak List - Web application for films, series and animes (Japanase Animation)
+  Copyright (C) 2014: David Femenía Vázquez
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see [http://www.gnu.org/licenses/]. #}
+{% extends "base2.html.twig" %}
+{% block contenido2 %}
+<div class="container margintop">
+    <div class="row">
+        <div class="col-lg-2">
+            <label class="minibuttons flatly" onClick="CambiaEstilos('Flatly')">&#9679;</label>
+            <label class="minibuttons readable" onClick="CambiaEstilos('Readable')">&#9679;</label>
+            <label class="minibuttons cosmo" onClick="CambiaEstilos('Cosmo')">&#9679;</label>
+            <label class="minibuttons cerulean" onClick="CambiaEstilos('Cerulean')">&#9679;</label>
+            <label class="minibuttons cyborg" onClick="CambiaEstilos('Cyborg')">&#9679;</label>
+            <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
+        </div>
+    </div>
+        <div class="{{ clase }}">{{ mensaje }}</div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Noticia</h3>
+                    </div>
+                    <div class="panel panel-body">
+                        <h2><div class="center">{{ datos['titulo'] }}</div></h2>
+                        <div>{{ datos['noticia'] }}</div>
+                        <br/>
+                        <label>Noticia publicada por <a href="datosusuario/{{ autor }}">{{ autor }}</a></label>
+                        <br/><label>Fuente: 
+                        {% if datos['fuente'] is null or datos['fuente'] == "" %}
+                        Desconocida
+                        {% else %}
+                        {{ datos['fuente'] }}
+                        {% endif %}
+                        </label>
+                    </div>
+             </div>
+         </div>
+         <div class="col-md-5">
+            <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Comentarios</h3>
+                    </div>
+                    <div class="panel panel-body">
+                        
+                    </div>
+             </div>
+         </div>
+    </div>
+</div>
+{% endblock %}

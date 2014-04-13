@@ -70,19 +70,19 @@
                         </form>
                         {% else %}
                             <label class="resalta">Nombre: </label>
-                            {% if datos['nombre'] is null %}
+                            {% if datos['nombre'] is null or datos['nombre'] == "" %}
                             No ha introducido nombre
                             {% else %}
                             {{ datos['nombre'] }}<br/>
                             {% endif %}
                             <label class="resalta">Apellido </label>
-                            {% if datos['apellido'] is null %}
+                            {% if datos['apellido'] is null or datos['apellido'] == "" %}
                             No ha introducido apellido
                             {% else %}
                             {{ datos['apellido'] }}<br/>
                             {% endif %}
                             <label class="resalta">Descripcion: </label>
-                            {% if datos['descripcion'] is null %}
+                            {% if datos['descripcion'] is null or datos['descripcion'] == "" %}
                             No ha introducido descripcion
                             {% else %}
                             {{ datos['descripcion'] }}

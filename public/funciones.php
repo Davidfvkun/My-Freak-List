@@ -284,20 +284,21 @@ function publicar_noticia($titulo,$noticia,$fuente,$tags){
 
 function buscar_noticia($busqueda,$filtrado){
     $buscarNoticias = ORM::for_table("noticia");
-    $mensajeError = null;
+    //$mensajeError = null;
     switch($filtrado)
     {
         case 1:
             $idUsuario = ORM::for_table('usuario')->where("nick",$busqueda)->find_one();
             if(empty($idUsuario))
             {
-                $mensajeError = "No existe usuario con ese nick";
+                //$mensajeError = "No existe usuario con ese nick";
+                $buscarNoticias = null;
             }
             else
             {
                 $buscarNoticias = $buscarNoticias->where('usuario_id',$idUsuario->id)->find_many();
-                if(empty($buscarNoticias))
-                    $mensajeError = "Ese usuario no ha publicado ninguna noticia";
+                /*if(empty($buscarNoticias))
+                    $mensajeError = "Ese usuario no ha publicado ninguna noticia";*/
             }
             break;
         case 2:
@@ -310,22 +311,17 @@ function buscar_noticia($busqueda,$filtrado){
                 $datosConsulta = array_merge($datosConsulta,$consultaSimple);
             }
             $buscarNoticias = $datosConsulta;
-            if(empty($buscarNoticias))
-                $mensajeError = "No existen noticias con esos tags";
+           /*if(empty($buscarNoticias))
+                $mensajeError = "No existen noticias con esos tags";*/
             break;
         case 3:
             $buscarNoticias = $buscarNoticias->where_like('noticia','%'.$busqueda.'%')->find_many();
-            if(empty($buscarNoticias))
-                $mensajeError = "No existen noticias con ese contenido";
+            /*if(empty($buscarNoticias))
+                $mensajeError = "No existen noticias con ese contenido";*/
             break;
         default:
     }
-    if($mensajeError == null)
         return $buscarNoticias;
-    else
-        return $mensajeError;
-    /*foreach($buscarNoticias as $cos)
-        echo $cos->titulo;*/
 }
 
 function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima)
