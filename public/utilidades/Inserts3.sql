@@ -9,5 +9,8 @@ insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, tit
 		values ('Noticia numero 4', '2014/02/03', 'fuente numero 3', 1, 'pepita, coso, otro', 'Titulo 4');
 insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
 		values ('Noticia numero 5', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5');
-		
+
+insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values
+            ('Comentario 1', '2014/02/03',1,1);
+
 commit;

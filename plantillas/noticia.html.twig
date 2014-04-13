@@ -54,7 +54,24 @@
                         <h3 class="panel-title">Comentarios</h3>
                     </div>
                     <div class="panel panel-body">
-                        
+                      <form class="form-horizontal" method="POST" action="">
+                        <div id="comentarios">
+                        {% for i in coments %}
+                          {{ i['comentario'] }}
+                        {% else %}
+                        <div class="info">No hay comentarios en esta noticia</div>
+                        {% endfor %}
+                        </div>
+                       <div class="form-group center">
+                          <div class="col-lg-10">
+                            <label>Deja un comentario en la noticia</label>
+                            <textarea class="form-control" type="text" name="comentario"></textarea>
+                          </div>
+                       </div>
+                       <div class="center">
+                           <button type="submit" class="btn btn-primary" name="comentar">Enviar comentario</button>
+                       </div>
+                        </form>
                     </div>
              </div>
          </div>
