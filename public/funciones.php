@@ -168,13 +168,7 @@ function buscar_material($busqueda, $V) {
     {
         $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%');
     }
-    /* if ($sep)
-      $cadena = $cadena . ") AND nombre like '%" . $busqueda . "%'";
-      else
-      $cadena = $cadena . "WHERE nombre like '%" . $busqueda . "%'"; */
-
-    //$consulta = $consulta . $cadena;
-    return $buscaMaterial; // Primero haré unos inserts SQL para poder probar esto.
+    return $buscaMaterial;
 }
 
 function listados($idt, $ide, $nicku) {
@@ -192,7 +186,7 @@ function listados($idt, $ide, $nicku) {
             $idTipo = 3;
             break;
         default:
-            echo "Mostrar mensaje de error o algo";
+            echo "La página a la que intentas acceder no existe";
             break;
     }
     switch ($ide) {
@@ -209,19 +203,23 @@ function listados($idt, $ide, $nicku) {
             $idEstado = 3;
             break;
         default:
-            echo "Mostrar mensaje de error o algo";
+            echo "La página a la que intentas acceder no existe";
             break;
     }
 
     $idUsuario = ORM::for_table('usuario')->select('id')->where("nick", $nicku)->find_one();
-
-    $buscaCosa = ORM::for_table('material')->
+    if(!empty($idUsuario))
+    {
+        $buscaCosa = ORM::for_table('material')->
                     select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
                     join('material_usuario', array('material.id', '=', 'material_id'))->
                     join('usuario', array('usuario_id', '=', 'usuario.id'))->
                     where('material.tipo', $idTipo)->
                     where('material_usuario.estado', $idEstado)->
                     where('usuario.id', $idUsuario->id)->find_many();
+    }
+    else
+        $buscaCosa = -1;
     return $buscaCosa;
 }
 

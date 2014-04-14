@@ -110,8 +110,12 @@ $app->map('/busquedausuario', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['buscaru'])) {
-                        $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
-
+                        if(strlen($_POST['busquedausuario']) > 0)// Comprobación de que introduces al menos una letra
+                        {
+                            $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
+                        }
+                        else
+                            $busqueda = null;
                         $app->render('busquedausuario.html.twig', array(
                             'datos' => $busqueda, 
                             'usuario' => $_SESSION['logeo']));
@@ -194,11 +198,16 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
             $GLOBALS['mensaje'] = "";
             $listad = listados($idt, $ide, $nicku);
             $mensajeListado = $GLOBALS['mensaje'];
-
-            $app->render('listado.html.twig', array(
+            
+            if($listad != -1)
+            {
+                $app->render('listado.html.twig', array(
                 'datos' => $listad,
                 'cosas' => $mensajeListado,
                 'usuario' => $_SESSION['logeo']));
+            }
+            else
+                echo "No existe ese usuario";
         });
 
 $app->get('/datosmaterial/:idt/', function($idt) use ($app) {
@@ -250,14 +259,7 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     break;
             }
             $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
-            $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
-                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
-                    where('material_usuario.usuario_id',$datosUsuario->id)->
-                    where('material_usuario.favorito',1)->find_many();
-            
-            // Tendría que hacer algo para que si el usuario coincide con la variable de session 
-            //  pueda editar y si no no. Pendiente para mas adelante
-            
+                        
             if(usuario_logeado($nicku))
                 $soyyo = 'si';
             else
@@ -269,6 +271,10 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             }
             else
             {
+                $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
+                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
+                    where('material_usuario.usuario_id',$datosUsuario->id)->
+                    where('material_usuario.favorito',1)->find_many();
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,
                     'favs' => $favs,
