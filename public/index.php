@@ -254,7 +254,10 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     if(isset($_POST['guardar']))
                     {
                         $caso = 'mostrar';
-                        editar_usuario($_POST['cnombre'], $_POST['capellido'], $_POST['cdescripcion']);
+                        if(isset($_POST['cnombre']) && isset($_POST['capellido']) && isset($_POST['cdescripcion']))
+                            $edit = editar_usuario($_POST['cnombre'], $_POST['capellido'], $_POST['cdescripcion']);
+                        else
+                            $edit = false;
                     }
                     break;
             }
@@ -269,6 +272,8 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
             }
+            else if(isset($edit) && $edit == false)
+                echo "Ha ocurrido algún error al editar los datos";
             else
             {
                 $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
@@ -288,24 +293,49 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
 
 $app->post('/actualizamaterial', function() use ($app) 
 {
-    $idt = $_POST['id'];
+    $ok = true;
+    $idt = -1;
+    if(isset($_POST['id'])){
+        $idt = $_POST['id'];
+    }
+    else{
+        $ok = false;
+    }
+    
+    $usuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
     $material = ORM::for_table('material_usuario')->where('material_id',$idt)->
-            where('usuario_id',$_SESSION['logeo'])->find_one();
+            where('usuario_id',$usuario->id)->find_one();
     if(isset($_POST['editarmaterial']))
     {
         if(empty($material))
         {
             $mensaje = "Ocurrió algún error inespetado";
             $clase = "info error";
+            $ok = false;
         }
         else
         {
-            $material = actualiza_material($material, 
+            if(isset($_POST['estado']) && isset($_POST['puntuacion']) && isset($_POST['progreso']) && isset($_POST['vista_en']) && isset($_POST['comentario']))
+            {
+                $material = actualiza_material($material, 
                     $_POST['estado'],$_POST['puntuacion'],
                     $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
-            $material->save();
-            $mensaje = "Se ha agregado correctamente";
-            $clase = "info";
+                if($material == false)
+                    $ok = false;
+            }
+            else
+            {
+                $ok = false;
+            }
+            if($ok == true){
+                $mensaje = "Se ha actualizado correctamente";
+                $clase = "info";
+            }
+            else{
+                $mensaje = "Ha ocurrido algún error";
+                $clase = "info error";
+            }
+                
         }
     }
     else if(isset($_POST['agregarmaterial']))
@@ -317,30 +347,40 @@ $app->post('/actualizamaterial', function() use ($app)
         }
         else{
             $material = ORM::for_table('material_usuario')->create();
-            $material = actualiza_material($material, 
+            
+            if(isset($_POST['estado']) && isset($_POST['puntuacion']) && isset($_POST['progreso']) && isset($_POST['vista_en']) && isset($_POST['comentario']))
+            {
+            $material = agrega_material($material, 
                     $_POST['estado'],$_POST['puntuacion'],
-                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
-            $material->material_id = $idt;
-            $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
-            $material->usuario_id = $iden->id;
-            $material->save();
-            $mensaje = "Se ha agregado correctamente";
-            $clase = "info";
+                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario'], $idt);
+            }
+            else{ 
+                $material = false;
+            }            
+            if($material == true){
+                $mensaje = "Se ha actualizado correctamente";
+                $clase = "info";
+            }
+            else{
+                $mensaje = "Ha ocurrido algún error";
+                $clase = "info error";
+            }
         }
     }
     
             $datosMaterial = ORM::for_table('material')->find_one($idt);
-            $idUsuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
-            $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
-                    where('usuario_id',$idUsuario->id)->find_one();
             
-            empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if(empty($datosMaterial))
             {
                 echo "No existe ese anime/serie/película";
             }
             else
             {
+                $idUsuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+                $loTengo = ORM::for_table('material_usuario')->where('material_id',$idt)->
+                        where('usuario_id',$idUsuario->id)->find_one();
+
+                empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
                 $capitulosMaterial = ORM::for_table('capitulo')->
                                 where('material_id', $idt)->find_many();
 

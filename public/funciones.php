@@ -1,4 +1,5 @@
 <?php
+
 /*  My Freak Zone - My Freak List - Web application for films, series and animes (Japanase Animation)
   Copyright (C) 2014: David Femenía Vázquez
 
@@ -121,8 +122,8 @@ function buscar_usuarios($busqueda, $filtrado) {
         case "3":
             $idMaterial = ORM::for_table("material")->where_like("nombre", "%" . $busqueda . "%")->find_one();
             $buscaUsuario = $buscaUsuario->
-                join("material_usuario", array("usuario.id","=","material_usuario.usuario_id"))->
-                where('material_usuario.material_id',$idMaterial->id);
+                    join("material_usuario", array("usuario.id", "=", "material_usuario.usuario_id"))->
+                    where('material_usuario.material_id', $idMaterial->id);
         default:
             $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%"); // Si alguien cambia el value de ese select aplicamos case 1
             break;
@@ -160,12 +161,9 @@ function buscar_material($busqueda, $V) {
         $arr[count($arr)] = 3;
     }
     $cadena = $cadena . ")";
-    if(strlen($busqueda) > 2)
-    {
+    if (strlen($busqueda) > 2) {
         $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
-    }
-    else
-    {
+    } else {
         $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%');
     }
     return $buscaMaterial;
@@ -208,15 +206,14 @@ function listados($idt, $ide, $nicku) {
     }
 
     $idUsuario = ORM::for_table('usuario')->select('id')->where("nick", $nicku)->find_one();
-    if(!empty($idUsuario))
-    {
+    if (!empty($idUsuario)) {
         $buscaCosa = ORM::for_table('material')->
-                    select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
-                    join('material_usuario', array('material.id', '=', 'material_id'))->
-                    join('usuario', array('usuario_id', '=', 'usuario.id'))->
-                    where('material.tipo', $idTipo)->
-                    where('material_usuario.estado', $idEstado)->
-                    where('usuario.id', $idUsuario->id)->find_many();
+                        select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
+                        join('material_usuario', array('material.id', '=', 'material_id'))->
+                        join('usuario', array('usuario_id', '=', 'usuario.id'))->
+                        where('material.tipo', $idTipo)->
+                        where('material_usuario.estado', $idEstado)->
+                        where('usuario.id', $idUsuario->id)->find_many();
     }
     else
         $buscaCosa = -1;
@@ -224,25 +221,76 @@ function listados($idt, $ide, $nicku) {
 }
 
 function editar_usuario($nombre, $apellido, $descripcion) {
-    $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    $ok = false;
+    try {
+        $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
 
-    $editarUsuario->nombre = $nombre;
-    $editarUsuario->apellido = $apellido;
-    $editarUsuario->descripcion = $descripcion;
-    $editarUsuario->save();
-    return true;
+        $editarUsuario->nombre = $nombre;
+        $editarUsuario->apellido = $apellido;
+        $editarUsuario->descripcion = $descripcion;
+        $editarUsuario->save();
+        $ok = true;
+        $dbh->commit();
+    } catch (\PDOException $e) {
+        $dbh->rollback();
+        $ok = false;
+    }
+
+    return $ok;
 }
 
-function actualiza_material($variabl,$estado,$puntuacion,$progreso,$vista_en,$comentario)
-{
-    $variabl->estado = $estado;
-    $variabl->puntuacion = $puntuacion;
-    $variabl->capitulo_por_el_que_vas = $progreso;
-    $variabl->vista_en = $vista_en;
-    $variabl->comentario = $comentario;
-    return $variabl;
-    
+function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario) {
+    $ok = false;
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    try{
+        $variabl->estado = $estado;
+        $variabl->puntuacion = $puntuacion;
+        $variabl->capitulo_por_el_que_vas = $progreso;
+        $variabl->vista_en = $vista_en;
+        $variabl->comentario = $comentario;
+        $variabl->save();
+        $ok = true;
+        $dbh->commit();
+    }catch (\PDOException $e) {
+        $dbh->rollback();
+        $ok = false;
+    }
+    return $ok;
 }
+
+function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $idt) {
+    $ok = false;
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    try{
+        $variabl->estado = $estado;
+        $variabl->puntuacion = $puntuacion;
+        $variabl->capitulo_por_el_que_vas = $progreso;
+        $variabl->vista_en = $vista_en;
+        $variabl->comentario = $comentario;
+        if($idt != -1)
+        {
+            $variabl->material_id = $idt;
+            $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+            $variabl->usuario_id = $iden->id;
+            $variabl->save();
+            $ok = true;
+            $dbh->commit();
+        }
+        else{
+            $ok = false;
+            $dbh->rollback();
+        }
+    }catch (\PDOException $e) {
+        $dbh->rollback();
+        $ok = false;
+    }
+    return $ok;
+}
+
 
 function usuario_logeado($elNick) {
     if (isset($_SESSION['logeo']) && $_SESSION['logeo'] == $elNick)
@@ -251,85 +299,76 @@ function usuario_logeado($elNick) {
         return false;
 }
 
-function publicar_noticia($titulo,$noticia,$fuente,$tags){
+function publicar_noticia($titulo, $noticia, $fuente, $tags) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if(CompruebaLongitud($titulo, 200, 4) == true && 
-            CompruebaLongitud($noticia, 100000, 100) == true
-               && CompruebaLongitud($tags, 200, 10) == true){
-        try{
+    if (CompruebaLongitud($titulo, 200, 4) == true &&
+            CompruebaLongitud($noticia, 100000, 100) == true && CompruebaLongitud($tags, 200, 10) == true) {
+        try {
             $insertarNoticia = ORM::for_table('noticia')->create();
             $insertarNoticia->titulo = $titulo;
             $insertarNoticia->fecha_publicado = date("Y/m/d");
             $insertarNoticia->noticia = $noticia;
             $insertarNoticia->fuente = $fuente;
             $insertarNoticia->etiquetas = $tags;
-            $id = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one(); 
+            $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
             $insertarNoticia->usuario_id = $id->id;
             $insertarNoticia->save();
             $ok = true;
             $dbh->commit();
-        }catch (\PDOException $e) {
-         $dbh->rollback();
-         $ok = false;
+        } catch (\PDOException $e) {
+            $dbh->rollback();
+            $ok = false;
         }
-    }
-    else{
+    } else {
         $ok = false;
     }
-        return $ok;
+    return $ok;
 }
 
-function buscar_noticia($busqueda,$filtrado){
+function buscar_noticia($busqueda, $filtrado) {
     $buscarNoticias = ORM::for_table("noticia");
     //$mensajeError = null;
-    switch($filtrado)
-    {
+    switch ($filtrado) {
         case 1:
-            $idUsuario = ORM::for_table('usuario')->where("nick",$busqueda)->find_one();
-            if(empty($idUsuario))
-            {
+            $idUsuario = ORM::for_table('usuario')->where("nick", $busqueda)->find_one();
+            if (empty($idUsuario)) {
                 //$mensajeError = "No existe usuario con ese nick";
                 $buscarNoticias = null;
-            }
-            else
-            {
-                $buscarNoticias = $buscarNoticias->where('usuario_id',$idUsuario->id)->find_many();
-                /*if(empty($buscarNoticias))
-                    $mensajeError = "Ese usuario no ha publicado ninguna noticia";*/
+            } else {
+                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id)->find_many();
+                /* if(empty($buscarNoticias))
+                  $mensajeError = "Ese usuario no ha publicado ninguna noticia"; */
             }
             break;
         case 2:
             $datosBusqueda = explode(",", $busqueda);
             $datosConsulta = array();
-            
-            for($i = 0; $i < count($datosBusqueda); $i++)
-            {
-                $consultaSimple = $buscarNoticias->where_like('etiquetas','%'.$datosBusqueda[$i].'%')->find_many();
-                $datosConsulta = array_merge($datosConsulta,$consultaSimple);
+
+            for ($i = 0; $i < count($datosBusqueda); $i++) {
+                $consultaSimple = $buscarNoticias->where_like('etiquetas', '%' . $datosBusqueda[$i] . '%')->find_many();
+                $datosConsulta = array_merge($datosConsulta, $consultaSimple);
             }
             $buscarNoticias = $datosConsulta;
-           /*if(empty($buscarNoticias))
-                $mensajeError = "No existen noticias con esos tags";*/
+            /* if(empty($buscarNoticias))
+              $mensajeError = "No existen noticias con esos tags"; */
             break;
         case 3:
-            $buscarNoticias = $buscarNoticias->where_like('noticia','%'.$busqueda.'%')->find_many();
-            /*if(empty($buscarNoticias))
-                $mensajeError = "No existen noticias con ese contenido";*/
+            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%')->find_many();
+            /* if(empty($buscarNoticias))
+              $mensajeError = "No existen noticias con ese contenido"; */
             break;
         default:
     }
-        return $buscarNoticias;
+    return $buscarNoticias;
 }
 
-function publica_comentario($comentario, $idNoticia)
-{
+function publica_comentario($comentario, $idNoticia) {
     return "Comentario publicado";
 }
 
-function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima)
-{
-    if(strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
+function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima) {
+    if (strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
         return false;
     else
         return true;
