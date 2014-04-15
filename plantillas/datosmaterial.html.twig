@@ -83,29 +83,29 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="puntuaciondiv">
                                 <label for="puntuacion" class="col-lg-3 control-label">Puntuación: </label>
                                 <div class="col-lg-8">
-                                    <input type="number" class="form-control" name="puntuacion" >
+                                    <input type="number" class="form-control" id="puntuacion" name="puntuacion" >
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="progresodiv">
                                 <label for="progreso" class="col-lg-3 control-label">Progreso: </label>
                                 <div class="col-lg-8">
-                                    <input type="number" class="form-control" name="progreso" >
+                                    <input type="number" class="form-control" id="progreso" name="progreso" >
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="vista_endiv">
                                 <label for="vista_en" class="col-lg-3 control-label">Vista en: </label>
                                 <div class="col-lg-8">
-                                    <textarea rows="5" type="text" class="form-control" name="vista_en"
+                                    <textarea rows="5" type="text" id="vista_en" class="form-control" name="vista_en"
                                               placeholder="Máximo 50 caracteres"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="comentariodiv">
                                 <label for="comentario" class="col-lg-3 control-label">Comentario: </label>
                                 <div class="col-lg-8">
-                                    <textarea rows="5" type="text" class="form-control" name="comentario"
+                                    <textarea rows="5" type="text" id="comentario" class="form-control" name="comentario"
                                               placeholder="Máximo 200 caracteres"></textarea>
                                 </div>
                             </div>
@@ -134,29 +134,29 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="puntuaciondiv">
                                     <label for="puntuacion" class="col-lg-3 control-label">Puntuación: </label>
                                     <div class="col-lg-8">
-                                        <input type="number" value="{{datospropios['puntuacion']}}" class="form-control" name="puntuacion" >
+                                        <input type="number" id="puntuacion" value="{{datospropios['puntuacion']}}" class="form-control" name="puntuacion" >
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="progresodiv">
                                     <label for="progreso" class="col-lg-3 control-label">Progreso: </label>
                                     <div class="col-lg-8">
-                                        <input type="number" value="{{ datospropios['capitulo_por_el_que_vas']}}" class="form-control" name="progreso" >
+                                        <input type="number" id="progreso" value="{{ datospropios['capitulo_por_el_que_vas']}}" class="form-control" name="progreso" >
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="vista_endiv">
                                     <label for="vista_en" class="col-lg-3 control-label">Vista en: </label>
                                     <div class="col-lg-8">
-                                        <textarea rows="5" type="text" class="form-control" name="vista_en"
+                                        <textarea rows="5" id="vista_en" type="text" class="form-control" name="vista_en"
                                                   placeholder="Máximo 50 caracteres">{{datospropios['vista_en']}}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="comentariodiv">
                                     <label for="comentario" class="col-lg-3 control-label">Comentario: </label>
                                     <div class="col-lg-8">
-                                        <textarea rows="5" type="text" class="form-control" name="comentario"
+                                        <textarea rows="5" id="comentario" type="text" class="form-control" name="comentario"
                                                   placeholder="Máximo 200 caracteres"> {{ datospropios['comentario']}} </textarea>
                                     </div>
                                 </div>
@@ -199,4 +199,7 @@
                         </div>
                     </div>
                 </div>
+<script type="text/JavaScript">
+    window.onload = InitMaterial();
+</script>
 {% endblock %}

@@ -102,6 +102,47 @@ function InitNoticiasComentarios()
             }, false);
 }
 
+function InitMaterial()
+{
+    document.getElementById("vista_en").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('vista_en', 100,-1);
+            }, false);
+    document.getElementById("comentario").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('comentario', 200,-1);
+            }, false);
+    /*document.getElementById("puntuacion").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposNumericos('puntuacion', 10,0);
+            }, false);
+     document.getElementById("progreso").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposNumericos('progreso',30000,0);
+            }, false);*/
+}
+
+/*function CamposNumericos(id,max,min)
+{
+    valor = document.getElementById(id).value;
+    if (valor > max || valor < min)
+    {
+        document.getElementById(id + "div").className = "form-group has-error";
+    }
+    else
+    {
+          document.getElementById(id + "div").className = "form-group has-success";  
+    }
+}*/
+
 function CamposLongitud(id, longitudmaxima, longitudminima)
 {
     valor = document.getElementById(id).value;

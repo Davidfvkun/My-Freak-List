@@ -245,19 +245,25 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    try{
-        $variabl->estado = $estado;
-        $variabl->puntuacion = $puntuacion;
-        $variabl->capitulo_por_el_que_vas = $progreso;
-        $variabl->vista_en = $vista_en;
-        $variabl->comentario = $comentario;
-        $variabl->save();
-        $ok = true;
-        $dbh->commit();
-    }catch (\PDOException $e) {
-        $dbh->rollback();
-        $ok = false;
+    if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+            CompruebaLongitud($vista_en, 100, -1) == true && CompruebaLongitud($vista_en, 500, -1) == true)
+    {
+        try{
+            $variabl->estado = $estado;
+            $variabl->puntuacion = $puntuacion;
+            $variabl->capitulo_por_el_que_vas = $progreso;
+            $variabl->vista_en = $vista_en;
+            $variabl->comentario = $comentario;
+            $variabl->save();
+            $ok = true;
+            $dbh->commit();
+        }catch (\PDOException $e) {
+            $dbh->rollback();
+            $ok = false;
+        }
     }
+    else
+        $ok = false;
     return $ok;
 }
 
@@ -265,29 +271,35 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    try{
-        $variabl->estado = $estado;
-        $variabl->puntuacion = $puntuacion;
-        $variabl->capitulo_por_el_que_vas = $progreso;
-        $variabl->vista_en = $vista_en;
-        $variabl->comentario = $comentario;
-        if($idt != -1)
-        {
-            $variabl->material_id = $idt;
-            $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
-            $variabl->usuario_id = $iden->id;
-            $variabl->save();
-            $ok = true;
-            $dbh->commit();
-        }
-        else{
-            $ok = false;
+    if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+            CompruebaLongitud($vista_en, 100, -1) == true && CompruebaLongitud($vista_en, 500, -1) == true)
+    {
+        try{
+            $variabl->estado = $estado;
+            $variabl->puntuacion = $puntuacion;
+            $variabl->capitulo_por_el_que_vas = $progreso;
+            $variabl->vista_en = $vista_en;
+            $variabl->comentario = $comentario;
+            if($idt != -1)
+            {
+                $variabl->material_id = $idt;
+                $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+                $variabl->usuario_id = $iden->id;
+                $variabl->save();
+                $ok = true;
+                $dbh->commit();
+            }
+            else{
+                $ok = false;
+                $dbh->rollback();
+            }
+        }catch (\PDOException $e) {
             $dbh->rollback();
+            $ok = false;
         }
-    }catch (\PDOException $e) {
-        $dbh->rollback();
-        $ok = false;
     }
+    else
+        $ok = false;
     return $ok;
 }
 
