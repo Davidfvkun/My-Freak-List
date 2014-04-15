@@ -303,7 +303,8 @@ function publicar_noticia($titulo, $noticia, $fuente, $tags) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     if (CompruebaLongitud($titulo, 200, 4) == true &&
-            CompruebaLongitud($noticia, 100000, 100) == true && CompruebaLongitud($tags, 200, 10) == true) {
+            CompruebaLongitud($noticia, 100000, 100) == true && CompruebaLongitud($tags, 200, 10) == true &&
+            CompruebaLongitud($fuente, 200, -1) == true) {
         try {
             $insertarNoticia = ORM::for_table('noticia')->create();
             $insertarNoticia->titulo = $titulo;

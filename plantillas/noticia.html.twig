@@ -64,10 +64,11 @@
                         <div class="info">No hay comentarios en esta noticia</div>
                         {% endfor %}
                         </div>
-                       <div class="form-group center">
+                       <div class="form-group center" id="comentariodiv">
                           <div class="col-lg-10">
                             <label>Deja un comentario en la noticia</label>
-                            <textarea class="form-control" type="text" name="comentario"></textarea>
+                            <textarea class="form-control" type="text" id="comentario" name="comentario"></textarea>
+                            <label>Comentarios minimo 10 caracteres, máximo 500</label>
                           </div>
                        </div>
                        <div class="center">
@@ -80,4 +81,7 @@
          </div>
     </div>
 </div>
+<script type="text/JavaScript">
+    window.onload = InitNoticiasComentarios();
+</script>
 {% endblock %}

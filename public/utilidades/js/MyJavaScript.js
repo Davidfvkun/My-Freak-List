@@ -72,6 +72,12 @@ function InitPublicaNoticia()
             {
                 CamposLongitud('titulonoticia', 200,4);
             }, false);
+    document.getElementById("fuentenoticia").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('fuentenoticia', 200,-1);
+            }, false);
     document.getElementById("noticia").addEventListener(
             'keypress',
             function()
@@ -83,6 +89,16 @@ function InitPublicaNoticia()
             function()
             {
                 CamposLongitud('tags',200,10);
+            }, false);
+}
+
+function InitNoticiasComentarios()
+{
+    document.getElementById("comentario").addEventListener(
+            'keypress',
+            function()
+            {
+                CamposLongitud('comentario',500,10);
             }, false);
 }
 

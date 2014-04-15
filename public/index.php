@@ -406,8 +406,14 @@ $app->post('/publicarnoticia', function() use ($app)
 {
     if(isset($_POST['publicar']))
     {
-        $publicarNoticia = publicar_noticia($_POST['titulonoticia'],
+        if(isset($_POST['titulonoticia']) && isset($_POST['noticia']) 
+                && isset($_POST['fuentenoticia']) && isset($_POST['tags']))
+        {
+            $publicarNoticia = publicar_noticia($_POST['titulonoticia'],
                 $_POST['noticia'],$_POST['fuentenoticia'], $_POST['tags']);
+        }
+        else 
+            $publicarNoticia = false;
         
         if($publicarNoticia)
         {
