@@ -453,6 +453,7 @@ $app->post('/publicacomentario', function() use ($app)
         $existeNoticia = ORM::for_table('noticia')->where('id',$_POST['id'])->find_one();
         if(!empty($existeNoticia))
         {
+            if(isset($_POST['comentario']) && isset($_POST['id']))
             $mensaje = publica_comentario($_POST['comentario'], $_POST['id']);
             
             if($mensaje == false)
@@ -466,7 +467,7 @@ $app->post('/publicacomentario', function() use ($app)
             $comentarios = ORM::for_table('comentario')->
             select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
             join('usuario',array('comentario.usuario_id','=','usuario.id'))->
-            where('noticias_id', $existeNoticia->id)->find_many();
+            where('noticias_id', $existeNoticia->id)->order_by_asc('fecha_publicad')->find_many();
             $nombreUsuario = ORM::for_table("usuario")->where('id',$existeNoticia->usuario_id)->find_one();
             $app->render('noticia.html.twig', array(
             'datos' => $existeNoticia,
@@ -498,7 +499,7 @@ $app->get('/noticia/:idt', function($idt) use ($app)
         $comentarios = ORM::for_table('comentario')->
             select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
             join('usuario',array('comentario.usuario_id','=','usuario.id'))->
-            where('noticias_id', $datosNoticia->id)->find_many();
+            where('noticias_id', $datosNoticia->id)->order_by_asc('fecha_publicad')->find_many();
         $nombreUsuario = ORM::for_table("usuario")->where('id',$datosNoticia->usuario_id)->find_one();
         $app->render('noticia.html.twig', array(
         'datos' => $datosNoticia,

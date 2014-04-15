@@ -365,7 +365,33 @@ function buscar_noticia($busqueda, $filtrado) {
 }
 
 function publica_comentario($comentario, $idNoticia) {
-    return "Comentario publicado";
+    $dbh = \ORM::getDb();
+        $dbh->beginTransaction();
+        if(CompruebaLongitud($comentario,500,10) == true)
+        {
+            try 
+            {
+                
+                $insertarComentario = ORM::for_table('comentario')->create();
+                $insertarComentario->comentario = $comentario;
+                $insertarComentario->fecha_publicad = date("Y/m/d");
+                $insertarComentario->noticias_id = $idNoticia;
+                $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
+                $insertarComentario->usuario_id = $id->id;
+                $insertarComentario->save();
+                $ok = true;
+                $dbh->commit();
+            } catch (\PDOException $e) {
+                $dbh->rollback();
+                $ok = false;
+            }
+        }
+        else
+        {
+            $ok = false;
+           
+        }
+     return $ok;
 }
 
 function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima) {
