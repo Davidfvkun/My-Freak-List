@@ -29,10 +29,10 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`noticia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `noticia` TEXT NOT NULL,
   `fecha_publicado` DATE NOT NULL,
-  `fuente` TEXT NULL,
+  `fuente` VARCHAR(200) NULL,
   `usuario_id` INT NOT NULL,
-  `etiquetas` VARCHAR(255) NOT NULL,
-  `titulo` VARCHAR(45) NOT NULL,
+  `etiquetas` VARCHAR(200) NOT NULL,
+  `titulo` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_noticias_usuario1_idx` (`usuario_id` ASC),
   CONSTRAINT `fk_noticias_usuario1`
@@ -101,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`capitulo` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `myfreakzone`.`mensaje`
 -- -----------------------------------------------------
@@ -123,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material_usuario` (
   `material_id` INT NOT NULL,
   `estado` INT NOT NULL COMMENT 'Estado: 1 = Visto, 2 = Viendo, 3 = Pendiente, 4 = Borrada',
   `puntuacion` INT NULL,
-  `vista_en` VARCHAR(45) NULL,
-  `comentario` TEXT NULL,
+  `vista_en` VARCHAR(200) NULL,
+  `comentario` VARCHAR(200) NULL,
   `capitulo_por_el_que_vas` INT NULL,
   `favorito` INT NULL,
   PRIMARY KEY (`id`, `usuario_id`, `material_id`),

@@ -245,5 +245,4 @@ insert into capitulo (material_id, titulo, fecha_salida)
 		values (21, 'Capitulo 4 Titulo El rey leon','2009-04-04');
 
 
-		
 commit;
