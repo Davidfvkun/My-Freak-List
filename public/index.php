@@ -319,9 +319,13 @@ $app->post('/actualizamaterial', function() use ($app)
         {
             if(isset($_POST['estado']) && isset($_POST['puntuacion']) && isset($_POST['progreso']) && isset($_POST['vista_en']) && isset($_POST['comentario']))
             {
+                if(isset($_POST['favorito']))
+                    $fav = 1;
+                else
+                    $fav = 0;
                 $material = actualiza_material($material, 
                     $_POST['estado'],$_POST['puntuacion'],
-                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario']);
+                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario'], $fav);
                 if($material == false)
                     $ok = false;
             }
@@ -352,9 +356,15 @@ $app->post('/actualizamaterial', function() use ($app)
             
             if(isset($_POST['estado']) && isset($_POST['puntuacion']) && isset($_POST['progreso']) && isset($_POST['vista_en']) && isset($_POST['comentario']))
             {
+                if(isset($_POST['fav'])){
+                    $fav = 1;
+                }
+                else
+                    $fav = 0;
+                
             $material = agrega_material($material, 
                     $_POST['estado'],$_POST['puntuacion'],
-                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario'], $idt);
+                    $_POST['progreso'],$_POST['vista_en'],$_POST['comentario'], $idt, $fav);
             }
             else{ 
                 $material = false;

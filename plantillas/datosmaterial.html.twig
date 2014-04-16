@@ -109,6 +109,13 @@
                                               placeholder="Máximo 200 caracteres"></textarea>
                                 </div>
                             </div>
+                            <label class="col-lg-2 control-label"></label>
+                            <div class="col-lg-10">
+                                <div>
+                                   <input id="fav" type="checkbox" class="css-checkbox" name="fav">
+                                   <label for="fav" class="css-label">Marcar como favorito </label>
+                                 </div><br/>
+                             </div>
                             <div class="center">
                                 <button name="agregarmaterial" class="btn btn-success" >Agregar</button>
                             </div>
@@ -160,6 +167,17 @@
                                                   placeholder="Máximo 200 caracteres"> {{ datospropios['comentario']}} </textarea>
                                     </div>
                                 </div>
+                                <label class="col-lg-2 control-label"></label>
+                                    <div class="col-lg-10">
+                                        <div>
+                                            {% if datospropios['favorito'] == 1 %}
+                                            <input id="fav" type="checkbox" class="css-checkbox" name="fav" checked>
+                                            {% else %} 
+                                            <input id="fav" type="checkbox" class="css-checkbox" name="fav">
+                                            {% endif %}
+                                            <label for="fav" class="css-label">Marcar como favorito </label>
+                                        </div><br/>
+                                    </div>
                                 <div class="center">
                                     <button name="editarmaterial" class="btn btn-success" >Actualizar</button>
                                 </div>

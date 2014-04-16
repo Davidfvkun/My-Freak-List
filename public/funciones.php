@@ -241,7 +241,7 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     return $ok;
 }
 
-function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario) {
+function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $fav) {
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -254,6 +254,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
             $variabl->capitulo_por_el_que_vas = $progreso;
             $variabl->vista_en = $vista_en;
             $variabl->comentario = $comentario;
+            $variabl->favorito = $fav;
             $variabl->save();
             $ok = true;
             $dbh->commit();
@@ -267,7 +268,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     return $ok;
 }
 
-function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $idt) {
+function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $idt, $fav) {
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -280,6 +281,7 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
             $variabl->capitulo_por_el_que_vas = $progreso;
             $variabl->vista_en = $vista_en;
             $variabl->comentario = $comentario;
+            $variabl->favorito = $fav;
             if($idt != -1)
             {
                 $variabl->material_id = $idt;
