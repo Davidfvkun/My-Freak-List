@@ -130,7 +130,9 @@ $app->map('/busquedausuario', function() use ($app) {
 $app->map('/busquedam', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
-                    $app->render('myfreakzone.html.twig');
+                    $app->render('myfreakzone.html.twig', array(
+                        'usuario' => $_SESSION['logeo']
+                    ));
                     break;
                 case "POST":
                     $V = array(0, 0, 0);
@@ -429,7 +431,8 @@ $app->post('/publicarnoticia', function() use ($app)
         echo $mensaje;
         $app->render('publicanoticia.html.twig',array(
             'mensaje' => $mensaje,
-            'clase' => $clase
+            'clase' => $clase,
+            'usuario' => $_SESSION['logeo']
         ));
     }        
 })->name('publicarnoticia');
@@ -441,7 +444,8 @@ $app->post('/buscarnoticia', function() use ($app)
         $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'],$_POST['filtradonoticia']);
     }
     $app->render('busquedanoticias.html.twig',array(
-            'datos' => $datosNoticias
+            'datos' => $datosNoticias,
+            'usuario' => $_SESSION['logeo']
         ));
 })->name('buscarnoticia');
 
@@ -465,7 +469,7 @@ $app->post('/publicacomentario', function() use ($app)
                 $clase = "info";
             
             $comentarios = ORM::for_table('comentario')->
-            select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
+            select_many('comentario.id','comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
             join('usuario',array('comentario.usuario_id','=','usuario.id'))->
             where('noticias_id', $existeNoticia->id)->order_by_asc('fecha_publicad')->find_many();
             $nombreUsuario = ORM::for_table("usuario")->where('id',$existeNoticia->usuario_id)->find_one();
@@ -474,7 +478,8 @@ $app->post('/publicacomentario', function() use ($app)
             'autor' => $nombreUsuario->nick,
             'coments' => $comentarios,
             'mensaje' => $mensaje,
-            'clase' => $clase
+            'clase' => $clase,
+            'usuario' => $_SESSION['logeo']
             ));
         }
         else
@@ -497,19 +502,68 @@ $app->get('/noticia/:idt', function($idt) use ($app)
     else
     {
         $comentarios = ORM::for_table('comentario')->
-            select_many('comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
+            select_many('comentario.id','comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
             join('usuario',array('comentario.usuario_id','=','usuario.id'))->
             where('noticias_id', $datosNoticia->id)->order_by_asc('fecha_publicad')->find_many();
         $nombreUsuario = ORM::for_table("usuario")->where('id',$datosNoticia->usuario_id)->find_one();
         $app->render('noticia.html.twig', array(
         'datos' => $datosNoticia,
         'autor' => $nombreUsuario->nick,
-        'coments' => $comentarios
+        'coments' => $comentarios,
+        'usuario' => $_SESSION['logeo']
         ));
         
     }
     
 })->name('noticia');
+
+$app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) 
+{
+    $datosNoticia = ORM::for_table('noticia')->where('id',$idt)->find_one();
+    
+    if(empty($datosNoticia))
+    {
+        echo "<br/><br/><br/><br/><br/>No existe esa noticia";
+    }
+    else
+    {
+        $comentarioBorrar = ORM::for_table('comentario')->where('id',$idc)->find_one();
+        if(!empty($comentarioBorrar))
+        {
+            $user = ORM::for_table('usuario')->where('id',$comentarioBorrar->usuario_id)->find_one();
+            if($user->nick != $_SESSION['logeo'])
+            {
+                $mensaje = "No puedes borrar un comentario que no es tuyo";
+                $clase = "info error";
+            }
+            else
+            {
+                $comentarioBorrar->delete();
+            }
+        }
+        else
+        {
+            $mensaje = "No puedes borrar un comentario que no es tuyo";
+            $clase = "info error";
+        }
+        
+        $comentarios = ORM::for_table('comentario')->
+            select_many('comentario.id','comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
+            join('usuario',array('comentario.usuario_id','=','usuario.id'))->
+            where('noticias_id', $datosNoticia->id)->order_by_asc('fecha_publicad')->find_many();
+        $nombreUsuario = ORM::for_table("usuario")->where('id',$datosNoticia->usuario_id)->find_one();
+        $app->render('noticia.html.twig', array(
+        'datos' => $datosNoticia,
+        'autor' => $nombreUsuario->nick,
+        'coments' => $comentarios,
+        'mensaje' => $mensaje,
+        'clase' => $clase,
+        'usuario' => $_SESSION['logeo']
+        ));
+        
+    }
+    
+})->name('borrar');
 
 $app->run();
 ?>

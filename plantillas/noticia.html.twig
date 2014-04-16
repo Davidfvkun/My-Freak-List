@@ -59,6 +59,9 @@
                         {% for i in coments %}
                           <div>{{ i['comentario'] }}</div>
                           <br/>Escrito por <a href="/datosusuario/{{i['nick']}}/m">{{ i['nick'] }}</a>, en la fecha {{ i['fecha_publicad'] }}
+                          <br/>{% if i['nick'] == usuario %}
+                          <a href="/borrar/{{ i['id']}}/{{datos['id']}}">Eliminar</a>
+                          {% endif %}
                           <hr/>
                         {% else %}
                         <div class="info">No hay comentarios en esta noticia</div>
