@@ -154,7 +154,8 @@
                                         {% else %}
                                            <img src="{{ datos['img_material'] }}" alt="banner{{cont}}" >
                                         {% endif %}
-                                        <div class="carousel-caption" style="color: cyan;">{{ i['nombre'] }}</div>
+                                        <div class="carousel-caption" style="color: cyan;">
+                                            <a href="/datosmaterial/{{i['id']}}">{{ i['nombre'] }}</a></div>
                                         {% set cont = cont + 1 %}
                                     </div>
                                     {% endfor %}

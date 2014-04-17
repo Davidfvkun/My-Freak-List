@@ -388,7 +388,7 @@ function publica_comentario($comentario, $idNoticia) {
                 
                 $insertarComentario = ORM::for_table('comentario')->create();
                 $insertarComentario->comentario = $comentario;
-                $insertarComentario->fecha_publicad = date("Y/m/d");
+                $insertarComentario->fecha_publicad = date("Y/m/d H:i:s");
                 $insertarComentario->noticias_id = $idNoticia;
                 $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
                 $insertarComentario->usuario_id = $id->id;

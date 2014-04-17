@@ -40,7 +40,7 @@ session_start();
 
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
-                case "GET":                    
+                case "GET":              
                     $app->render('inicio.html.twig', array(
                         'generos' => $GLOBALS['generos'],
                         'N' => count($GLOBALS['generos']),
@@ -293,16 +293,16 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             
         })->name('datosusuario')->via('GET', 'POST');
 
-$app->post('/actualizamaterial', function() use ($app) 
+$app->post('/datosmaterial/:idt/', function($idt) use ($app) 
 {
     $ok = true;
-    $idt = -1;
+    /*$idt = -1;
     if(isset($_POST['id'])){
         $idt = $_POST['id'];
     }
     else{
         $ok = false;
-    }
+    }*/
     
     $usuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
     $material = ORM::for_table('material_usuario')->where('material_id',$idt)->
@@ -475,8 +475,10 @@ $app->post('/publicacomentario', function() use ($app)
                 $mensaje = "Ha ocurrido algún error al enviar el comentario";
                 $clase = "info error";
             }
-            else
-                $clase = "info";
+            else{
+                $mensaje = null;
+                $clase = null;
+            }
             
             $comentarios = ORM::for_table('comentario')->
             select_many('comentario.id','comentario.comentario', 'comentario.fecha_publicad','usuario.nick')->
