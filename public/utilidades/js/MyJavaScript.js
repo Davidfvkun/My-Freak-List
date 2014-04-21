@@ -28,7 +28,7 @@ function init()
             'keypress',
             function()
             {
-                CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,50}$/, 3);
+                CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,30}$/, 3);
             }, false);
     document.getElementById("claveR").addEventListener(
             'keypress',

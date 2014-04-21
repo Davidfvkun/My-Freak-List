@@ -38,7 +38,7 @@
                             <div class="form-group" id="titulonoticiadiv">
                                 <label for=titulonoticia" class="col-lg-2 control-label">Titulo de la noticia *</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="titulonoticia" name="titulonoticia">
+                                    <input type="text" value="{{ datosBorrador[0] }}" class="form-control" id="titulonoticia" name="titulonoticia">
                                     <label>Título de la noticia. Mínimo 4 caracteres, máximo 200</label>
                                 </div>
                             </div>
@@ -46,21 +46,21 @@
                                 <label for="noticia" class="col-lg-2 control-label">Datos de la noticia *</label>
                                 <div class="col-lg-10">
                                     <textarea rows="15" type="text"class="form-control" id="noticia" name="noticia"
-                                                  placeholder="Pon aquí la noticia."></textarea>
+                                                  placeholder="Pon aquí la noticia.">{{ datosBorrador[1] }}</textarea>
                                     <label>La noticia debe tener mínimo 100 caracteres, máximo 100.000</label>
                                 </div>
                             </div>
                             <div class="form-group" id="fuentenoticiadiv">
                                 <label for="fuentenoticia" class="col-lg-2 control-label">Fuente</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="fuentenoticia" name="fuentenoticia">
+                                    <input type="text" value="{{ datosBorrador[2] }}" class="form-control" id="fuentenoticia" name="fuentenoticia">
                                     <label>Lugar del que sacaste la noticia. Puede ir en blanco (Max 200 caracteres)</label>
                                 </div>
                             </div>
                             <div class="form-group" id="tagsdiv">
                                 <label for="tags" class="col-lg-2 control-label">Tags *</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="tags" name="tags" placeholder="Palabras clave que identifiquen tu noticia">
+                                    <input type="text" class="form-control" value="{{ datosBorrador[3] }}" id="tags" name="tags" placeholder="Palabras clave que identifiquen tu noticia">
                                     <label>Escribe las palabras separadas por comas. Minimo 10 caracteres, máximo 200</label>
                                 </div>
                             </div>

@@ -421,14 +421,24 @@ $app->post('/publicarnoticia', function() use ($app)
         if(isset($_POST['titulonoticia']) && isset($_POST['noticia']) 
                 && isset($_POST['fuentenoticia']) && isset($_POST['tags']))
         {
-            $publicarNoticia = publicar_noticia($_POST['titulonoticia'],
-                $_POST['noticia'],$_POST['fuentenoticia'], $_POST['tags']);
+            $titulo = $_POST['titulonoticia'];
+            $noticia = $_POST['noticia'];
+            $fuente = $_POST['fuentenoticia'];
+            $tags = $_POST['tags'];
+            $publicarNoticia = publicar_noticia($titulo,$noticia,$fuente,$tags);
         }
         else 
+        {
+            $titulo = "";
+            $noticia = "";
+            $fuente = "";
+            $tags = "";
             $publicarNoticia = false;
+        }
         
         if($publicarNoticia)
         {
+            $datosBorrador = array("","","","");
             $mensaje = "Noticia publicada correctamente.";
             $clase = "info";
             $enlace = "InsertarAquiEnlaceDeLaNoticia";
@@ -437,12 +447,14 @@ $app->post('/publicarnoticia', function() use ($app)
         {
             $clase = "info error";
             $mensaje = "Alguno de los campos es incorrecto";
+            $datosBorrador = array($titulo,$noticia,$fuente,$tags);
         }
         echo $mensaje;
         $app->render('publicanoticia.html.twig',array(
             'mensaje' => $mensaje,
             'clase' => $clase,
-            'usuario' => $_SESSION['logeo']
+            'usuario' => $_SESSION['logeo'],
+            'datosBorrador' => $datosBorrador,
         ));
     }        
 })->name('publicarnoticia');
