@@ -89,7 +89,7 @@
                                 <div class="form-group" id="nickRdiv">
                                     <label for="nick" class="col-lg-2 control-label">Nick *</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="nickR" name="nick" placeholder="Nick (Solo caracteres Alfanumericos)">
+                                        <input type="text" value="{{ datosBorrador[0] }}" class="form-control" id="nickR" name="nick" placeholder="Nick (Solo caracteres Alfanumericos)">
                                         <label style="color: red;" id="nickRlabel"></label>
                                     </div>
                                 </div>
@@ -109,26 +109,26 @@
                                 <div class="form-group" id="emaildiv">
                                     <label for="email" class="col-lg-2 control-label">Email *</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email (valido)">
+                                        <input type="text" value="{{ datosBorrador[2] }}" class="form-control" id="email" name="email" placeholder="Email (valido)">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre" class="col-lg-2 control-label">Nombre</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control"  name="nombre" placeholder="Nombre">
+                                        <input type="text" value="{{ datosBorrador[3] }}" class="form-control"  name="nombre" placeholder="Nombre">
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label for="apellido" class="col-lg-2 control-label">Apellido</label>
                                     <div class="col-lg-10">
-                                        <input type="text" class="form-control" name="apellido" placeholder="Apellido">
+                                        <input type="text" value="{{ datosBorrador[4] }}" class="form-control" name="apellido" placeholder="Apellido">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="descripcion" class="col-lg-2 control-label">Algo sobre ti</label>
                                     <div class="col-lg-10">
                                         <textarea rows="15" type="text"class="form-control" name="descripcion"
-                                                  placeholder="Introduce aquí lo que quieras contar sobre ti"></textarea>
+                                                  placeholder="Introduce aquí lo que quieras contar sobre ti">{{ datosBorrador[5] }}</textarea>
                                     </div>
                                 </div>
                                 <div class="center" class="col-lg-2 control-label">

@@ -65,21 +65,31 @@ $app->map('/MyFreakZone', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['registrarse'])) {
-                        $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
-                        if ($registra == true) {
-                            $mensaje = "Se ha registrado correctamente";
-                            $clase = "info";
-                        } else if ($registra == false) {
+                        if( isset($_POST['nick']) && isset($_POST['clave']) && isset($_POST['email']) 
+                                && isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['descripcion']))
+                        {
+                            $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                            if ($registra == true) {
+                                $mensaje = "Se ha registrado correctamente";
+                                $clase = "info";
+                                $datosBorrador = array("","","","","","");
+                            } else if ($registra == false) {
+                                $mensaje = "Algún campo es incorrecto";
+                                $clase = "info error";
+                                $datosBorrador = array($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                            }
+                                
+                        }
+                        else
+                        {
                             $mensaje = "Algún campo es incorrecto";
-                            $clase = "info error";
-                        } else {
-                            $mensaje = $registra;
                             $clase = "info error";
                         }
                         $app->render('myfreakzone.html.twig', array(
-                            'clase' => $clase,
-                            'mensaje' => $mensaje
-                        ));
+                                'clase' => $clase,
+                                'mensaje' => $mensaje,
+                                'datosBorrador' => $datosBorrador
+                            ));
                     }
                     break;
             }
@@ -563,6 +573,8 @@ $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app)
             else
             {
                 $comentarioBorrar->delete();
+                $mensaje = "";
+                $clase = "";
             }
         }
         else
