@@ -1,17 +1,6 @@
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('davidnick', 'davidnombre', 'davidapellido', 'davidemail@hotmail.com', 'descripcion david', 'oretaniadavid',1);
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('pepenick', 'pepenombre', 'pepeapellido', 'pepeemail@hotmail.com', 'descripcion pepe', 'oretaniapepe',0);
-insert into usuario (nick, email, descripcion, clave, es_admin) 
-		values ('lauranick','lauraemail@hotmail.com', 'descripcion laura', 'oretanialaura',0);
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('alvaronick', 'alvaronombre', 'alvaroapellido', 'alvaroemail@hotmail.com', 'descripcion alvaro', 'oretaniaalvaro',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('danielnick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-		
 insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
 		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3);
 insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)

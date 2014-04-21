@@ -34,8 +34,8 @@ function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripci
             $insertarUsuario->apellido = $apellido;
             $insertarUsuario->email = $email;
             $insertarUsuario->descripcion = $descripcion;
-            $insertarUsuario->clave = $contraseña; // A pelo de momento, luego se hará encriptación
-            $insertarUsuario->es_admin = 0; // 1 es que si es admin. Solo habrá un admin para pruebas
+            $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT); 
+            $insertarUsuario->es_admin = 0; 
 
             if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
@@ -98,13 +98,12 @@ function subir_archivo($nickp) {
 
 function login($nick, $contraseña, $app) {
     $compruebaLogin = ORM::for_table('usuario')->where("nick", $nick)->find_one();
-    //if ($login === false || !password_verify($clave, $login->contraseña)) {
-    if ($compruebaLogin === false || $contraseña != $compruebaLogin->clave) {
+    if ($compruebaLogin === false || !password_verify($contraseña, $compruebaLogin->clave)) {
         $app->render('myfreakzone.html.twig', array(
             'mensaje' => 'Usuario y/o contraseña incorrectos',
             'clase' => 'info error'));
-        //} else if (password_verify($clave, $login->contraseña)) {
-    } else if ($contraseña == $compruebaLogin->clave) {
+        
+    } else if (password_verify($contraseña,$compruebaLogin->clave)) {
         $_SESSION['logeo'] = $compruebaLogin->nick;
         $app->render('inicio.html.twig', array('usuario' => $_SESSION['logeo']));
     }

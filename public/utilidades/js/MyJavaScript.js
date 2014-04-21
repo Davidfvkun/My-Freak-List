@@ -25,19 +25,19 @@ function CambiaEstilos(style)
 function init()
 {
     document.getElementById("nickR").addEventListener(
-            'blur',
+            'keypress',
             function()
             {
                 CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,50}$/, 3);
             }, false);
     document.getElementById("claveR").addEventListener(
-            'blur',
+            'keypress',
             function()
             {
                 CompruebaCampo('claveR', /^[a-zA-Z0-9_]{8,20}$/);
             }, false);
     document.getElementById("email").addEventListener(
-            'blur',
+            'keypress',
             function()
             {
                 CompruebaCampo('email', /[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/);

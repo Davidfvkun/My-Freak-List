@@ -17,6 +17,7 @@
   along with this program.  If not, see [http://www.gnu.org/licenses/]. */
 
 include "../vendor/autoload.php";
+include "../vendor/password.php";
 include "funciones.php";
 require_once "../config.php";
 $app = new \Slim\Slim(
@@ -93,7 +94,6 @@ $app->map('/login', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['entrar'])) {
-                        echo "pr";
                         login($_POST['nick'], $_POST['clave'], $app);
                     }
                     break;
