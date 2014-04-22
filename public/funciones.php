@@ -98,14 +98,16 @@ function subir_archivo($nickp) {
 function login($nick, $contraseña, $app) {
     $compruebaLogin = ORM::for_table('usuario')->where("nick", $nick)->find_one();
     if ($compruebaLogin === false || !password_verify($contraseña, $compruebaLogin->clave)) {
-        $app->render('myfreakzone.html.twig', array(
-            'mensaje' => 'Usuario y/o contraseña incorrectos',
-            'clase' => 'info error'));
-        
+        return false;        
     } else if (password_verify($contraseña,$compruebaLogin->clave)) {
-        $_SESSION['logeo'] = $compruebaLogin->nick;
-        $app->render('inicio.html.twig', array('usuario' => $_SESSION['logeo']));
+       return true;
     }
+}
+
+function ultimas_noticias()
+{
+    $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(2)->find_many();
+    return $ultimasNoticias;
 }
 
 function buscar_usuarios($busqueda, $filtrado) {

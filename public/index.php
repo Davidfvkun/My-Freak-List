@@ -45,8 +45,10 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                     $app->render('inicio.html.twig', array(
                         'generos' => $GLOBALS['generos'],
                         'N' => count($GLOBALS['generos']),
+                        'ultimasNoticias' => ultimas_noticias(),
                         'usuario' => $_SESSION['logeo']));
                     break;
+                    
             }
         })->name('myfreakzone')->via('GET', 'POST');
 
@@ -88,6 +90,7 @@ $app->map('/MyFreakZone', function() use ($app) {
                         $app->render('myfreakzone.html.twig', array(
                                 'clase' => $clase,
                                 'mensaje' => $mensaje,
+                                'ultimasNoticias' => ultimas_noticias(),
                                 'datosBorrador' => $datosBorrador
                             ));
                     }
@@ -104,7 +107,18 @@ $app->map('/login', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['entrar'])) {
-                        login($_POST['nick'], $_POST['clave'], $app);
+                        if(login($_POST['nick'], $_POST['clave']) == false)
+                        {
+                            $app->render('myfreakzone.html.twig', array(
+                            'mensaje' => 'Usuario y/o contraseña incorrectos',
+                            'clase' => 'info error'));
+                        }
+                        else{
+                             $app->render('inicio.html.twig', array(
+                                'generos' => $GLOBALS['generos'],
+                                'N' => count($GLOBALS['generos']),
+                                'usuario' => $_SESSION['logeo']));
+                        }
                     }
                     break;
             }
