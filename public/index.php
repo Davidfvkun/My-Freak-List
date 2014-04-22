@@ -275,10 +275,14 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             }
             $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
                         
-            if(usuario_logeado($nicku))
+            if(usuario_logeado($nicku)){
                 $soyyo = 'si';
-            else
+                $clase = array('col-md-9','col-md-3');
+            }
+            else{
                 $soyyo = 'no';
+                $clase = array('col-md-12','col-md-4');
+            }
                 
             if(empty($datosUsuario))
             {
@@ -297,6 +301,7 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     'favs' => $favs,
                     'caso' => $caso,
                     'soyyo' => $soyyo,
+                    'clase' => $clase,
                     'usuario' => $_SESSION['logeo']
                 ));
             }
