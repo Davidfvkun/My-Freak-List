@@ -133,7 +133,7 @@
                             </div>
                         </div>
                         <div class="col-lg-10 center">
-                            <button type="submit" class="btn btn-primary" name="buscaru">Buscar</button>
+                            <button type="submit" class="btn btn-success" name="buscaru">Buscar</button>
                         </div>
                     </form>
                 </div>
@@ -149,7 +149,7 @@
                 <div class="panel panel-body">
                     {% for i in ultimasNoticias %}
                         <div class="col-md-5">
-                            <h2><a href="noticia/{{i['id']}}"> 
+                            <h2><a href="/noticia/{{i['id']}}"> 
                             {{ i['titulo'] }}
                             </a></h2>
                             <p> {{ i['noticia']|striptags|slice(0, 150)}}</p>

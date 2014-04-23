@@ -42,6 +42,62 @@ function init()
             {
                 CompruebaCampo('email', /[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/);
             }, false);
+   document.getElementById("claveR").addEventListener(
+            'blur',
+            function()
+            {
+               CompruebaClaves(0);
+            }, false);        
+   document.getElementById("claveRR").addEventListener(
+            'blur',
+            function()
+            {
+                CompruebaClaves(1);
+            }, false);
+            
+}
+
+function CompruebaClaves(check)
+{
+    valor1 = document.getElementById('claveR').value;
+    valor2 = document.getElementById('claveRR').value;
+    if(check == 1)
+    {
+        if(valor1 == valor2)
+        {
+            document.getElementById("claveRRdiv").className = "form-group has-success";
+            document.getElementById("claveRlabel").innerHTML = "";
+            if(CompruebaCampo('claveRR', /^[a-zA-Z0-9_]{8,20}$/))
+            {
+                 document.getElementById("claveRRdiv").className = "form-group has-success";
+            }
+        }
+        else
+        {
+            document.getElementById("claveRRdiv").className = "form-group has-error";
+            document.getElementById("claveRlabel").innerHTML = "Las contraseñas no coinciden";
+        }
+    }
+    else
+    {
+         if(valor2 != "" && valor2 != null && valor1 != valor2)
+         {
+            document.getElementById("claveRdiv").className = "form-group has-error";
+            document.getElementById("claveRlabel").innerHTML = "Las contraseñas no coinciden";
+         }
+         else
+         {
+             document.getElementById("claveRdiv").className = "form-group has-success";
+             document.getElementById("claveRlabel").innerHTML = "";
+             if(CompruebaCampo('claveR', /^[a-zA-Z0-9_]{8,20}$/))
+             {
+                document.getElementById("claveRdiv").className = "form-group has-success";
+             }
+         }
+    }
+    
+            
+        
 }
 
 function InitPlantillaPrincipal()
@@ -169,10 +225,12 @@ function CompruebaCampo(id, expresionRegular, casoNick)
         if (!expresionRegular.test(valor))
         {
             document.getElementById(id + "div").className = "form-group has-error";
+            return false;
         }
         else
         {
             document.getElementById(id + "div").className = "form-group has-success";
+            return true;
         }
     }
     /*if (document.getElementById("claveRdiv").className != "form-group has-success" ||

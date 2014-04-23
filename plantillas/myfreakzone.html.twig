@@ -16,13 +16,7 @@
   
 {% extends "base.html.twig" %}
 {% block contenido2 %}
-<!--
-    Cosas pendientes de esta plantilla.
-    1. Enviar un correo a la dirección de email introducida para confirmar el registro *(Ni idea de como hacerlo aun)
-    2 ?¿?¿ (De momento creo que nada mas)
--->
-
-       
+    
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -103,7 +97,13 @@
                                     <label for="clave" class="col-lg-2 control-label">Clave *</label>
                                     <div class="col-lg-10">
                                         <input type="password" class="form-control" id="claveR" name="clave" placeholder="Contraseña (Min 8 caracteres, Max 20)">
-                                         
+                                    </div>
+                                </div>
+                                <div class="form-group" id="claveRRdiv">
+                                    <label for="clave" class="col-lg-2 control-label">Repite clave *</label>
+                                    <div class="col-lg-10">
+                                        <input type="password" class="form-control" id="claveRR" name="clave2" placeholder="Contraseña (Min 8 caracteres, Max 20)">
+                                        <label style="color: red;" id="claveRlabel"></label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="emaildiv">

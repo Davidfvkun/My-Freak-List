@@ -98,8 +98,6 @@ $app->map('/MyFreakZone', function() use ($app) {
             }
         })->name('registro')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
-
-/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
 $app->map('/login', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
@@ -117,6 +115,7 @@ $app->map('/login', function() use ($app) {
                              $app->render('inicio.html.twig', array(
                                 'generos' => $GLOBALS['generos'],
                                 'N' => count($GLOBALS['generos']),
+                                'ultimasNoticias' => ultimas_noticias(),
                                 'usuario' => $_SESSION['logeo']));
                         }
                     }
@@ -153,11 +152,11 @@ $app->map('/busquedausuario', function() use ($app) {
 
 $app->map('/busquedam', function() use ($app) {
             switch ($app->request()->getMethod()) {
-                case "GET":
+                /*case "GET":
                     $app->render('myfreakzone.html.twig', array(
                         'usuario' => $_SESSION['logeo']
                     ));
-                    break;
+                    break;*/
                 case "POST":
                     $V = array(0, 0, 0);
                     if (isset($_POST['cbmaterial'])) {

@@ -95,11 +95,12 @@ function subir_archivo($nickp) {
     }
 }
 
-function login($nick, $contraseña, $app) {
+function login($nick, $contraseña) {
     $compruebaLogin = ORM::for_table('usuario')->where("nick", $nick)->find_one();
     if ($compruebaLogin === false || !password_verify($contraseña, $compruebaLogin->clave)) {
         return false;        
     } else if (password_verify($contraseña,$compruebaLogin->clave)) {
+       $_SESSION['logeo'] = $compruebaLogin->nick;
        return true;
     }
 }
