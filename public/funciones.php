@@ -19,11 +19,12 @@
 include "../vendor/autoload.php";
 require_once "../config.php";
 
-function registrarse($nick, $contraseña, $email, $nombre, $apellido, $descripcion) {
+function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
     if (CompruebaLongitud($nick, 30, 1) && CompruebaLongitud($nick, 20, 8) && 
-            preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/",$email) && comprueba_nick_existente($nick) == false) {
+            preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/",$email) && 
+            comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
         $dbh = \ORM::getDb();
         $dbh->beginTransaction();
         try {

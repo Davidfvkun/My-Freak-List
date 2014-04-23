@@ -25,19 +25,19 @@ function CambiaEstilos(style)
 function init()
 {
     document.getElementById("nickR").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,30}$/, 3);
             }, false);
     document.getElementById("claveR").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CompruebaCampo('claveR', /^[a-zA-Z0-9_]{8,20}$/);
             }, false);
     document.getElementById("email").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CompruebaCampo('email', /[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/);
@@ -123,25 +123,25 @@ function InitPlantillaPrincipal()
 function InitPublicaNoticia()
 {
     document.getElementById("titulonoticia").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('titulonoticia', 200,4);
             }, false);
     document.getElementById("fuentenoticia").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('fuentenoticia', 200,-1);
             }, false);
     document.getElementById("noticia").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('noticia', 100000,100);
             }, false);
      document.getElementById("tags").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('tags',200,10);
@@ -161,13 +161,13 @@ function InitNoticiasComentarios()
 function InitMaterial()
 {
     document.getElementById("vista_en").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('vista_en', 100,-1);
             }, false);
     document.getElementById("comentario").addEventListener(
-            'keypress',
+            'blur',
             function()
             {
                 CamposLongitud('comentario', 200,-1);

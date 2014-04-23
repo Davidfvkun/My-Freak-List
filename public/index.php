@@ -67,10 +67,10 @@ $app->map('/MyFreakZone', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['registrarse'])) {
-                        if( isset($_POST['nick']) && isset($_POST['clave']) && isset($_POST['email']) 
+                        if( isset($_POST['nick']) && isset($_POST['clave']) && isset($_POST['clave2']) && isset($_POST['email']) 
                                 && isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['descripcion']))
                         {
-                            $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                            $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['clave2'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
                             if ($registra == true) {
                                 $mensaje = "Se ha registrado correctamente";
                                 $clase = "info";
