@@ -288,15 +288,7 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
             }
             $datosUsuario = ORM::for_table('usuario')->where('nick',$nicku)->find_one();
                         
-            if(usuario_logeado($nicku)){
-                $soyyo = 'si';
-                $clase = array('col-md-9','col-md-3');
-            }
-            else{
-                $soyyo = 'no';
-                $clase = array('col-md-12','col-md-4');
-            }
-                
+            
             if(empty($datosUsuario))
             {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
@@ -305,15 +297,33 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                 echo "Ha ocurrido algún error al editar los datos";
             else
             {
+                if(usuario_logeado($nicku)){
+                    $soyyo = 'si';
+                    $clase = array('col-md-9','col-md-3');
+                    $mensajes = mensajes_privados($datosUsuario->id);
+                    echo "<br/><br/><br/><br/><br/>";
+                    
+                    $numeroUsuarios = num_mensajes($datosUsuario->id);
+                    echo count($numeroUsuarios);
+                    echo "<br/>";
+                    foreach($mensajes as $mensaje)
+                    {
+                        
+                        $aux = ORM::for_table("usuario")->find_one($mensaje->usuario_e);
+                        $aux2 = ORM::for_table("usuario")->find_one($mensaje->usuario_r);
+                        $mensaje->usuario_e = $aux->nick;
+                        $mensaje->usuario_r = $aux2->nick;
+                        echo "<br/>El usuario ".$mensaje->usuario_e.
+                                " ha enviado el mensaje '".$mensaje->mensaje."' al usuario ".$mensaje->usuario_r;
+                    }
+                }
+                else{
+                    $soyyo = 'no';
+                    $clase = array('col-md-12','col-md-4');
+                }
                 $favs = favoritos($datosUsuario->id);
                 
-                $mensajes = mensajes_privados($datosUsuario->id);
-                echo "<br/><br/><br/><br/><br/>";
-                foreach($mensajes as $mensaje)
-                {
-                    echo "<br/>El usuario ".$mensaje->usuario_e.
-                            " ha enviado el mensaje '".$mensaje->mensaje."' al usuario ".$mensaje->usuario_r;
-                }
+                
                 
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,

@@ -22,8 +22,8 @@ require_once "../config.php";
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
-    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 8) && 
-            preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/",$email) && 
+    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 8) &&
+            preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
         $dbh = \ORM::getDb();
         $dbh->beginTransaction();
@@ -34,8 +34,8 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
             $insertarUsuario->apellido = $apellido;
             $insertarUsuario->email = $email;
             $insertarUsuario->descripcion = $descripcion;
-            $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT); 
-            $insertarUsuario->es_admin = 0; 
+            $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT);
+            $insertarUsuario->es_admin = 0;
 
             if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
@@ -99,15 +99,14 @@ function subir_archivo($nickp) {
 function login($nick, $contraseña) {
     $compruebaLogin = ORM::for_table('usuario')->where("nick", $nick)->find_one();
     if ($compruebaLogin === false || !password_verify($contraseña, $compruebaLogin->clave)) {
-        return false;        
-    } else if (password_verify($contraseña,$compruebaLogin->clave)) {
-       $_SESSION['logeo'] = $compruebaLogin->nick;
-       return true;
+        return false;
+    } else if (password_verify($contraseña, $compruebaLogin->clave)) {
+        $_SESSION['logeo'] = $compruebaLogin->nick;
+        return true;
     }
 }
 
-function ultimas_noticias()
-{
+function ultimas_noticias() {
     $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(2)->find_many();
     return $ultimasNoticias;
 }
@@ -247,10 +246,9 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
-            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true)
-    {
-        try{
+    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
+        try {
             $variabl->estado = $estado;
             $variabl->puntuacion = $puntuacion;
             $variabl->capitulo_por_el_que_vas = $progreso;
@@ -260,7 +258,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
             $variabl->save();
             $ok = true;
             $dbh->commit();
-        }catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             $dbh->rollback();
             $ok = false;
         }
@@ -274,30 +272,27 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
-            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true)
-    {
-        try{
+    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
+        try {
             $variabl->estado = $estado;
             $variabl->puntuacion = $puntuacion;
             $variabl->capitulo_por_el_que_vas = $progreso;
             $variabl->vista_en = $vista_en;
             $variabl->comentario = $comentario;
             $variabl->favorito = $fav;
-            if($idt != -1)
-            {
+            if ($idt != -1) {
                 $variabl->material_id = $idt;
-                $iden = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+                $iden = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
                 $variabl->usuario_id = $iden->id;
                 $variabl->save();
                 $ok = true;
                 $dbh->commit();
-            }
-            else{
+            } else {
                 $ok = false;
                 $dbh->rollback();
             }
-        }catch (\PDOException $e) {
+        } catch (\PDOException $e) {
             $dbh->rollback();
             $ok = false;
         }
@@ -306,7 +301,6 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
         $ok = false;
     return $ok;
 }
-
 
 function usuario_logeado($elNick) {
     if (isset($_SESSION['logeo']) && $_SESSION['logeo'] == $elNick)
@@ -382,32 +376,27 @@ function buscar_noticia($busqueda, $filtrado) {
 
 function publica_comentario($comentario, $idNoticia) {
     $dbh = \ORM::getDb();
-        $dbh->beginTransaction();
-        if(comprueba_longitud($comentario,500,10) == true)
-        {
-            try 
-            {
-                
-                $insertarComentario = ORM::for_table('comentario')->create();
-                $insertarComentario->comentario = $comentario;
-                $insertarComentario->fecha_publicad = date("Y/m/d H:i:s");
-                $insertarComentario->noticias_id = $idNoticia;
-                $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
-                $insertarComentario->usuario_id = $id->id;
-                $insertarComentario->save();
-                $ok = true;
-                $dbh->commit();
-            } catch (\PDOException $e) {
-                $dbh->rollback();
-                $ok = false;
-            }
-        }
-        else
-        {
+    $dbh->beginTransaction();
+    if (comprueba_longitud($comentario, 500, 10) == true) {
+        try {
+
+            $insertarComentario = ORM::for_table('comentario')->create();
+            $insertarComentario->comentario = $comentario;
+            $insertarComentario->fecha_publicad = date("Y/m/d H:i:s");
+            $insertarComentario->noticias_id = $idNoticia;
+            $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
+            $insertarComentario->usuario_id = $id->id;
+            $insertarComentario->save();
+            $ok = true;
+            $dbh->commit();
+        } catch (\PDOException $e) {
+            $dbh->rollback();
             $ok = false;
-           
         }
-     return $ok;
+    } else {
+        $ok = false;
+    }
+    return $ok;
 }
 
 function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
@@ -417,22 +406,26 @@ function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
         return true;
 }
 
-function favoritos($idUsuario)
-{
-    $fav = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
-                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
-                    where('material_usuario.usuario_id',$idUsuario)->
-                    where('material_usuario.favorito',1)->find_many();
+function favoritos($idUsuario) {
+    $fav = ORM::for_table('material')->select_many('material.nombre', 'material.img_material', 'material.id')->
+                    join('material_usuario', array('material.id', '=', 'material_usuario.material_id'))->
+                    where('material_usuario.usuario_id', $idUsuario)->
+                    where('material_usuario.favorito', 1)->find_many();
     return $fav;
 }
 
-function mensajes_privados($idUsuario)
-{
+function mensajes_privados($idUsuario) {
     $mensaje = ORM::for_table('mensaje')->
-            where_raw('`usuario_e` = ? OR `usuario_r` = ?',array($idUsuario,$idUsuario))->
+            where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario, $idUsuario))->
             find_many();
     return $mensaje;
-            
+}
+
+function num_mensajes($idUsuario)
+{
+    $mensaje = ORM::for_table('mensaje')->distinct()->select('usuario_r')->
+            where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario, $idUsuario))->find_many();
+    return $mensaje;
 }
 
 ?>

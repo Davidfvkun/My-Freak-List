@@ -36,5 +36,10 @@ insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values
             ('Comentario 1 de noticia 4', '2013/02/01',1,4);
 insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values
             ('Comentario 2 de noticia 4', '2012/02/03',2,4);
-
+			
+insert into mensaje(mensaje,usuario_e,usuario_r,fecha_enviado) values ('mensaje1',1,2,'2012/02/03');
+insert into mensaje(mensaje,usuario_e,usuario_r,fecha_enviado) values ('mensaje2',2,1,'2012/02/03');
+insert into mensaje(mensaje,usuario_e,usuario_r,fecha_enviado) values ('mensaje3',1,3,'2012/02/03');
+insert into mensaje(mensaje,usuario_e,usuario_r,fecha_enviado) values ('mensaje4',2,1,'2012/02/03');
+insert into mensaje(mensaje,usuario_e,usuario_r,fecha_enviado) values ('mensaje',2,1,'2012/02/03');
 commit;
