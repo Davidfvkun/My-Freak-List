@@ -107,9 +107,22 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `myfreakzone`.`mensaje` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `mensaje` TEXT NOT NULL,
-  `usuario_e` VARCHAR(20) NOT NULL,
-  `usuario_r` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  `usuario_r` INT NOT NULL,
+  `usuario_e` INT NOT NULL,
+  `fecha_enviado` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_mensaje_usuario1_idx` (`usuario_e` ASC),
+  CONSTRAINT `fk_mensaje_usuario1`
+    FOREIGN KEY (`usuario_e`)
+    REFERENCES `myfreakzone`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+   CONSTRAINT `fk_mensaje_usuario2`
+    FOREIGN KEY (`usuario_r`)
+    REFERENCES `myfreakzone`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+	)
 ENGINE = InnoDB;
 
 
@@ -137,28 +150,6 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material_usuario` (
   CONSTRAINT `fk_usuario_has_material_material1`
     FOREIGN KEY (`material_id`)
     REFERENCES `myfreakzone`.`material` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `myfreakzone`.`usuario_mensaje`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myfreakzone`.`usuario_mensaje` (
-  `usuario_id` INT NOT NULL,
-  `mensaje_id` INT NOT NULL,
-  PRIMARY KEY (`usuario_id`, `mensaje_id`),
-  INDEX `fk_usuario_has_mensaje_mensaje1_idx` (`mensaje_id` ASC),
-  INDEX `fk_usuario_has_mensaje_usuario1_idx` (`usuario_id` ASC),
-  CONSTRAINT `fk_usuario_has_mensaje_usuario1`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `myfreakzone`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_usuario_has_mensaje_mensaje1`
-    FOREIGN KEY (`mensaje_id`)
-    REFERENCES `myfreakzone`.`mensaje` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

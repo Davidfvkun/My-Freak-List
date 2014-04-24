@@ -22,7 +22,7 @@ require_once "../config.php";
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
-    if (CompruebaLongitud($nick, 30, 1) && CompruebaLongitud($nick, 20, 8) && 
+    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 8) && 
             preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/",$email) && 
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
         $dbh = \ORM::getDb();
@@ -248,7 +248,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
-            CompruebaLongitud($vista_en, 100, -1) == true && CompruebaLongitud($vista_en, 500, -1) == true)
+            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true)
     {
         try{
             $variabl->estado = $estado;
@@ -275,7 +275,7 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     if($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
-            CompruebaLongitud($vista_en, 100, -1) == true && CompruebaLongitud($vista_en, 500, -1) == true)
+            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true)
     {
         try{
             $variabl->estado = $estado;
@@ -318,9 +318,9 @@ function usuario_logeado($elNick) {
 function publicar_noticia($titulo, $noticia, $fuente, $tags) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if (CompruebaLongitud($titulo, 200, 4) == true &&
-            CompruebaLongitud($noticia, 100000, 100) == true && CompruebaLongitud($tags, 200, 10) == true &&
-            CompruebaLongitud($fuente, 200, -1) == true) {
+    if (comprueba_longitud($titulo, 200, 4) == true &&
+            comprueba_longitud($noticia, 100000, 100) == true && comprueba_longitud($tags, 200, 10) == true &&
+            comprueba_longitud($fuente, 200, -1) == true) {
         try {
             $insertarNoticia = ORM::for_table('noticia')->create();
             $insertarNoticia->titulo = $titulo;
@@ -383,7 +383,7 @@ function buscar_noticia($busqueda, $filtrado) {
 function publica_comentario($comentario, $idNoticia) {
     $dbh = \ORM::getDb();
         $dbh->beginTransaction();
-        if(CompruebaLongitud($comentario,500,10) == true)
+        if(comprueba_longitud($comentario,500,10) == true)
         {
             try 
             {
@@ -410,11 +410,29 @@ function publica_comentario($comentario, $idNoticia) {
      return $ok;
 }
 
-function CompruebaLongitud($valor, $longitudMaxima, $longitudMinima) {
+function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
     if (strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
         return false;
     else
         return true;
+}
+
+function favoritos($idUsuario)
+{
+    $fav = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
+                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
+                    where('material_usuario.usuario_id',$idUsuario)->
+                    where('material_usuario.favorito',1)->find_many();
+    return $fav;
+}
+
+function mensajes_privados($idUsuario)
+{
+    $mensaje = ORM::for_table('mensaje')->
+            where_raw('`usuario_e` = ? OR `usuario_r` = ?',array($idUsuario,$idUsuario))->
+            find_many();
+    return $mensaje;
+            
 }
 
 ?>

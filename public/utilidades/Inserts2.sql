@@ -1,5 +1,6 @@
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
+
 	
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario, favorito) 
 		values (1,1,1, 6, 'Vista en Random David 1', 'Comentario random David 1', 1);

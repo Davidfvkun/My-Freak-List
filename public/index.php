@@ -305,10 +305,16 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                 echo "Ha ocurrido algún error al editar los datos";
             else
             {
-                $favs = ORM::for_table('material')->select_many('material.nombre','material.img_material','material.id')->
-                    join('material_usuario', array('material.id','=','material_usuario.material_id'))->
-                    where('material_usuario.usuario_id',$datosUsuario->id)->
-                    where('material_usuario.favorito',1)->find_many();
+                $favs = favoritos($datosUsuario->id);
+                
+                $mensajes = mensajes_privados($datosUsuario->id);
+                echo "<br/><br/><br/><br/><br/>";
+                foreach($mensajes as $mensaje)
+                {
+                    echo "<br/>El usuario ".$mensaje->usuario_e.
+                            " ha enviado el mensaje '".$mensaje->mensaje."' al usuario ".$mensaje->usuario_r;
+                }
+                
                 $app->render('datosusuario.html.twig', array(
                     'datos' => $datosUsuario,
                     'favs' => $favs,
