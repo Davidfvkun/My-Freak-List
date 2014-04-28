@@ -231,7 +231,7 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                             $ok = false;
                         } else {
                             if (isset($_POST['estado']) && isset($_POST['puntuacion']) && isset($_POST['progreso']) && isset($_POST['vista_en']) && isset($_POST['comentario'])) {
-                                if (isset($_POST['favorito']))
+                                if (isset($_POST['fav']))
                                     $fav = 1;
                                 else
                                     $fav = 0;

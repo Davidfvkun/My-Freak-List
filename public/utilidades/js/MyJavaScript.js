@@ -25,31 +25,31 @@ function CambiaEstilos(style)
 function init()
 {
     document.getElementById("nickR").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CompruebaCampo('nickR', /^[a-zA-Z0-9_]{1,30}$/, 3);
             }, false);
     document.getElementById("claveR").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CompruebaCampo('claveR', /^[a-zA-Z0-9_]{8,20}$/);
             }, false);
     document.getElementById("email").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CompruebaCampo('email', /[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/);
             }, false);
    document.getElementById("claveR").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                CompruebaClaves(0);
             }, false);        
    document.getElementById("claveRR").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CompruebaClaves(1);
@@ -103,14 +103,14 @@ function CompruebaClaves(check)
 function InitPlantillaPrincipal()
 {
     document.getElementById("inputbusqueda").addEventListener(
-            'keypress',
+            'keyup',
             function()
             {
                 Ajax_Usuario(document.getElementById("inputbusqueda").value,
                         document.getElementById("selectfiltrausuarios").value, 1);
             }, false);
     document.getElementById("inputbusqueda1").addEventListener(
-            'keypress',
+            'keyup',
             function()
             {
                 Ajax_Material(document.getElementById("inputbusqueda1").value,
@@ -123,25 +123,25 @@ function InitPlantillaPrincipal()
 function InitPublicaNoticia()
 {
     document.getElementById("titulonoticia").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('titulonoticia', 200,4);
             }, false);
     document.getElementById("fuentenoticia").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('fuentenoticia', 200,-1);
             }, false);
     document.getElementById("noticia").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('noticia', 100000,100);
             }, false);
      document.getElementById("tags").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('tags',200,10);
@@ -151,7 +151,7 @@ function InitPublicaNoticia()
 function InitNoticiasComentarios()
 {
     document.getElementById("comentario").addEventListener(
-            'keypress',
+            'keyup',
             function()
             {
                 CamposLongitud('comentario',500,10);
@@ -161,35 +161,35 @@ function InitNoticiasComentarios()
 function InitMaterial()
 {
     document.getElementById("vista_en").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('vista_en', 100,-1);
             }, false);
     document.getElementById("comentario").addEventListener(
-            'blur',
+            'keyup',
             function()
             {
                 CamposLongitud('comentario', 200,-1);
             }, false);
-    /*document.getElementById("puntuacion").addEventListener(
-            'keypress',
+    document.getElementById("puntuacion").addEventListener(
+            'keyup',
             function()
             {
-                CamposNumericos('puntuacion', 10,0);
+                CamposNumericos('puntuacion', 10,0, /^[0-9]{1}$/);
             }, false);
      document.getElementById("progreso").addEventListener(
-            'keypress',
+            'keyup',
             function()
             {
-                CamposNumericos('progreso',30000,0);
-            }, false);*/
+                CamposNumericos('progreso',30000,0,/^[0-9]{1,5}$/);
+            }, false);
 }
 
-/*function CamposNumericos(id,max,min)
+function CamposNumericos(id,max,min, expresion)
 {
     valor = document.getElementById(id).value;
-    if (valor > max || valor < min)
+    if (valor > max || valor < min || !expresion.test(valor) && valor != "" && valor != null)
     {
         document.getElementById(id + "div").className = "form-group has-error";
     }
@@ -197,7 +197,7 @@ function InitMaterial()
     {
           document.getElementById(id + "div").className = "form-group has-success";  
     }
-}*/
+}
 
 function CamposLongitud(id, longitudmaxima, longitudminima)
 {
