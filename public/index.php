@@ -273,7 +273,7 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                                 $mensaje = "Se ha actualizado correctamente";
                                 $clase = "info";
                             } else {
-                                $mensaje = "Ha ocurrido algún error";
+                                $mensaje = "Algún campo no es correcto o ha ocurrido algún error";
                                 $clase = "info error";
                             }
                         }
@@ -295,6 +295,8 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                     'datos' => $datosMaterial,
                     'datos2' => $capitulosMaterial,
                     'lotengo' => $check,
+                    'info' => $mensaje,
+                    'clase' => $clase,
                     'datospropios' => $loTengo,
                     'usuario' => $_SESSION['logeo']
                 ));

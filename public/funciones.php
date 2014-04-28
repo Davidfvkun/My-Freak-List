@@ -202,7 +202,8 @@ function listados($idt, $ide, $nicku) {
             $idEstado = 3;
             break;
         default:
-            echo "La página a la que intentas acceder no existe";
+            $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que tienes borradas. ";
+            $idEstado = 4;
             break;
     }
 
@@ -242,6 +243,20 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     return $ok;
 }
 
+function comprueba_estado($estado)
+{
+    $guardar = 0;
+    if($estado == 1)
+        $guardar = 1;
+    else if($estado == 2)
+        $guardar = 2;
+    else if($estado == 3)
+        $guardar = 3;
+    else 
+        $guardar = 4;
+    return $guardar;
+}
+
 function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $fav) {
     $ok = false;
     $dbh = \ORM::getDb();
@@ -249,7 +264,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
             comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
         try {
-            $variabl->estado = $estado;
+            $variabl->estado = comprueba_estado($estado);
             $variabl->puntuacion = $puntuacion;
             $variabl->capitulo_por_el_que_vas = $progreso;
             $variabl->vista_en = $vista_en;
@@ -272,10 +287,10 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 && is_number($puntuacion) && is_number($progreso) &&
             comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
         try {
-            $variabl->estado = $estado;
+            $variabl->estado = comprueba_estado($estado);
             $variabl->puntuacion = $puntuacion;
             $variabl->capitulo_por_el_que_vas = $progreso;
             $variabl->vista_en = $vista_en;

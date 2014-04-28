@@ -131,14 +131,23 @@
                                             <option value="1" selected>Visto</option>
                                             <option value="2">Viendo</option>
                                             <option value="3">Pendiente</option>
+                                             <option value="4">Borrada</option>
                                                 {% elseif datospropios['estado'] == 2 %}
                                             <option value="1">Visto</option>
                                             <option value="2" selected>Viendo</option>
                                             <option value="3">Pendiente</option>
+                                            <option value="4">Borrada</option>
                                                 {% elseif datospropios['estado'] == 3 %}
                                             <option value="1">Visto</option>
                                             <option value="2">Viendo</option>
                                             <option value="3" selected>Pendiente</option>
+                                            <option value="4">Borrada</option>
+                                            {% elseif datospropios['estado'] == 4 %}
+                                                <option value="1">Visto</option>
+                                                <option value="2">Viendo</option>
+                                                <option value="3">Pendiente</option>
+                                                <option value="4" selected>Borrada</option>
+
                                                 {% endif %}
                                         </select>
                                     </div>
