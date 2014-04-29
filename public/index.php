@@ -42,11 +42,15 @@ session_start();
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
-                    $app->render('inicio.html.twig', array(
-                        'generos' => $GLOBALS['generos'],
-                        'N' => count($GLOBALS['generos']),
-                        'ultimasNoticias' => ultimas_noticias(),
-                        'usuario' => $_SESSION['logeo']));
+                    if (usuario_logeado()) {
+                        $app->render('inicio.html.twig', array(
+                            'generos' => $GLOBALS['generos'],
+                            'N' => count($GLOBALS['generos']),
+                            'ultimasNoticias' => ultimas_noticias(),
+                            'usuario' => $_SESSION['logeo']));
+                    }
+                    else
+                        $app->redirect($app->urlFor('registro'));
                     break;
             }
         })->name('myfreakzone')->via('GET', 'POST');
@@ -60,6 +64,8 @@ $app->get('/salir', function() use ($app) {
 
 /* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
 $app->map('/MyFreakZone', function() use ($app) {
+    if(!usuario_logeado())
+    {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('myfreakzone.html.twig');
@@ -89,6 +95,9 @@ $app->map('/MyFreakZone', function() use ($app) {
                     }
                     break;
             }
+    }
+    else
+          $app->redirect($app->urlFor('myfreakzone'));
         })->name('registro')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 $app->map('/login', function() use ($app) {
@@ -119,7 +128,7 @@ $app->map('/busquedausuario', function() use ($app) {
                     $app->redirect($app->urlFor('myfreakzone'));
                     break;
                 case "POST":
-                    if (isset($_POST['buscaru'])) {
+                    if (isset($_POST['buscaru']) && usuario_logeado()) {
                         if (strlen($_POST['busquedausuario']) > 0) {// Comprobación de que introduces al menos una letra
                             $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
                         }
@@ -129,6 +138,8 @@ $app->map('/busquedausuario', function() use ($app) {
                             'datos' => $busqueda,
                             'usuario' => $_SESSION['logeo']));
                     }
+                    else
+                        $app->redirect($app->urlFor('myfreakzone'));
                     break;
             }
         })->name('busquedausuario')->via('GET', 'POST');
@@ -137,14 +148,13 @@ $app->map('/busquedausuario', function() use ($app) {
 /* Buscar animes-series-peliculas */
 
 $app->map('/busquedam', function() use ($app) {
+    if(usuario_logeado()){
             switch ($app->request()->getMethod()) {
                 case "GET":
-                    /* $app->render('myfreakzone.html.twig', array(
-                      'usuario' => $_SESSION['logeo']
-                      )); */
                     $app->redirect($app->urlFor('myfreakzone'));
                     break;
                 case "POST":
+                
                     $V = array(0, 0, 0);
                     if (isset($_POST['cbmaterial'])) {
                         foreach ($_POST['cbmaterial'] as $i) {
@@ -189,31 +199,45 @@ $app->map('/busquedam', function() use ($app) {
                             $busqueda = $busqueda->find_many();
                         }
                     }
+                
                     $app->render('busquedamaterial.html.twig', array(
                         'datos' => $busqueda,
                         'usuario' => $_SESSION['logeo']));
                     break;
             }
+         }else
+              $app->redirect($app->urlFor('registro'));
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
 /* Llamadas al listado */
 $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
+        if(usuario_logeado()){
             $GLOBALS['mensaje'] = "";
             $listad = listados($idt, $ide, $nicku);
             $mensajeListado = $GLOBALS['mensaje'];
-
-            if ($listad != -1) {
+            $mensaje = "";
+            $clase = "";
+            if ($listad == -1) 
+            {
+                $mensaje = "No existe ese usuario o la URL está mal puesta";
+                $clase = "info error";
+            }
+            
                 $app->render('listado.html.twig', array(
                     'datos' => $listad,
                     'cosas' => $mensajeListado,
+                    'clase' => $clase,
+                    'info' => $mensaje,
                     'usuario' => $_SESSION['logeo']));
             }
             else
-                echo "No existe ese usuario";
+                $app->redirect($app->urlFor('registro'));
         });
 
 $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
+        if(usuario_logeado())
+        {
             $clase = "";
             $mensaje = "";
             switch ($app->request()->getMethod()) {
@@ -301,10 +325,14 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                     'usuario' => $_SESSION['logeo']
                 ));
             }
+        }
+        else
+            $app->redirect($app->urlFor('registro'));
         })->name('material')->via('GET', 'POST');
 
 $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
-
+    if(usuario_logeado())
+    {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     if ($modo == 'e' && usuario_logeado($nicku)) {
@@ -366,9 +394,14 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     'usuario' => $_SESSION['logeo']
                 ));
             }
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('datosusuario')->via('GET', 'POST');
 
 $app->map('/publicabuscanoticias', function() use ($app) {
+    if(usuario_logeado())
+    {
             $mensaje = "";
             $clase = "";
             $datosBorrador = "";
@@ -410,9 +443,14 @@ $app->map('/publicabuscanoticias', function() use ($app) {
                 'usuario' => $_SESSION['logeo'],
                 'datosBorrador' => $datosBorrador,
             ));
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('publicabuscanoticias')->via('GET', 'POST');
 
 $app->post('/buscarnoticia', function() use ($app) {
+    if(usuario_logeado())
+    {
             if (isset($_POST['buscarnoticia'])) {
                 $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'], $_POST['filtradonoticia']);
             }
@@ -420,9 +458,14 @@ $app->post('/buscarnoticia', function() use ($app) {
                 'datos' => $datosNoticias,
                 'usuario' => $_SESSION['logeo']
             ));
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('buscarnoticia');
 
 $app->post('/publicacomentario', function() use ($app) {
+    if(usuario_logeado())
+    {
             $mensajeError = null;
             if (isset($_POST['comentar'])) {
                 $existeNoticia = ORM::for_table('noticia')->where('id', $_POST['id'])->find_one();
@@ -443,9 +486,14 @@ $app->post('/publicacomentario', function() use ($app) {
                     echo "Ha ocurrido algún error al enviar el comentario";
                 }
             }
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('publicacomentario');
 
 $app->get('/noticia/:idt', function($idt) use ($app) {
+    if(usuario_logeado())
+    {
             $datosNoticia = ORM::for_table('noticia')->where('id', $idt)->find_one();
 
             if (empty($datosNoticia)) {
@@ -463,9 +511,14 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
                     'usuario' => $_SESSION['logeo']
                 ));
             }
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('noticia');
 
 $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
+    if(usuario_logeado())
+    {
             $datosNoticia = ORM::for_table('noticia')->where('id', $idt)->find_one();
 
             if (empty($datosNoticia)) {
@@ -488,6 +541,9 @@ $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
                 }
                 $app->redirect($app->urlFor('noticia', array('idt' => $idt)));
             }
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
         })->name('borrar');
 
 $app->run();

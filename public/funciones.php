@@ -317,8 +317,8 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     return $ok;
 }
 
-function usuario_logeado($elNick) {
-    if (isset($_SESSION['logeo']) && $_SESSION['logeo'] == $elNick)
+function usuario_logeado() {
+    if (isset($_SESSION['logeo']))
         return true;
     else
         return false;
