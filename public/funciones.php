@@ -19,6 +19,19 @@
 include "../vendor/autoload.php";
 require_once "../config.php";
 
+/*
+ *  Permite registrarse en el sitio web
+ * 
+ *  @param string $nick Nick/alias que usarás en el sitio web.
+ *  @param string $contraseña Contraseña que usarás para logearte en el sitio web.
+ *  @param string $contraseña2 Para verificar que has puesto bien la contraseña
+ *  @param string $email Tu Email para enviarse la confirmación al sitio, publicidad, poder recuperar tu contraseña etc
+ *  @param string $nombre Nombre, opcional
+ *  @param string $apellido Apellido, opcional
+ *  @param string $descripcion Datos sobre ti que quieras que aparezcan en tu perfil, opcional
+ *  @return boolean Será True si se ha registrado correctamente o False si ha ocurrido algún error
+ */
+
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
@@ -57,6 +70,14 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
     return $ok;
 }
 
+/*
+ * Comprueba que el nick con el que te vas a registrar en el sitio no existe en el sistema,
+ * es decir, no lo está usando otra persona
+ * 
+ * @param string $nick Nick introducido.
+ * @return boolean Será True si el nick existe y False si no existe
+ */
+
 function comprueba_nick_existente($nicki) {
     $check = ORM::for_table('usuario')->where('nick', $nicki)->find_many();
     if (!empty($check)) {
@@ -65,6 +86,13 @@ function comprueba_nick_existente($nicki) {
     else
         return false;
 }
+
+/*
+ * Subir una imagen de perfil.
+ * 
+ * @param $nickp Nombre con el que se guardará la imagen.
+ * @return boolean True si se ha subido correctamente, False si no
+ */
 
 function subir_archivo($nickp) {
     $uploadedfileload = "true";
@@ -96,6 +124,13 @@ function subir_archivo($nickp) {
     }
 }
 
+/*
+ * Logearse en la aplicación.
+ * @param $nick Nick con el que te registraste
+ * @param $contraseña Clave con la que te registraste
+ * @return boolean False si el nick y/o contraseña son incorrectos, True si son correctos
+ */
+
 function login($nick, $contraseña) {
     $compruebaLogin = ORM::for_table('usuario')->where("nick", $nick)->find_one();
     if ($compruebaLogin === false || !password_verify($contraseña, $compruebaLogin->clave)) {
@@ -106,6 +141,10 @@ function login($nick, $contraseña) {
     }
 }
 
+/*
+ *  Devuelve las ultimas noticias publicadas por los usuarios
+ *  @return array
+ */
 function ultimas_noticias() {
     $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(2)->find_many();
     return $ultimasNoticias;
@@ -132,6 +171,13 @@ function buscar_usuarios($busqueda, $filtrado) {
     $buscaUsuario = $buscaUsuario->find_many();
     return $buscaUsuario;
 }
+
+/*
+ * Busqueda de una serie/pelicula/anime filtrando por X campo
+ * @param string $busqueda Cadena por la que filtrar
+ * @param string $V tipo de material por el que filtrar
+ * @return object
+ */
 
 function buscar_material($busqueda, $V) {
 
@@ -169,6 +215,14 @@ function buscar_material($busqueda, $V) {
     }
     return $buscaMaterial;
 }
+
+/*
+ * Funcióna para mostrar el listado de las series/peliculas/animes de un usuario
+ * @param string $idt Tipo de material que vas a listar (Anime/Serie/Peli)
+ * @param string $ide Estado de ese material (Visto, pendiente etc)
+ * @param string $nicku Nick del usuario
+ * @param array
+ */
 
 function listados($idt, $ide, $nicku) {
     switch ($idt) {
@@ -222,6 +276,14 @@ function listados($idt, $ide, $nicku) {
     return $buscaCosa;
 }
 
+/*
+ * Función para editar datos del usuario
+ * @param string $nombre Nombre nuevo
+ * @param string $apellido Apellido nuevo
+ * @param string $descripción Descripción nueva
+ * @return boolean, True si se han modificado correctamente, False si no.
+ */
+
 function editar_usuario($nombre, $apellido, $descripcion) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -243,6 +305,14 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     return $ok;
 }
 
+
+/*
+ * Función para comprobar el estado de un material
+ * 
+ * @param int $estado Estado en el que está el material (Visto, pendiente etc)
+ * @return int $guardar Estado en el que se guardará el material
+ */
+
 function comprueba_estado($estado)
 {
     $guardar = 0;
@@ -256,6 +326,18 @@ function comprueba_estado($estado)
         $guardar = 4;
     return $guardar;
 }
+
+/*
+ * Actualizar los datos de una serie/peli/anime
+ * @param object $variabl Objeto del ORM.
+ * @param int $estado Estado en el que guardas el material(serie/peli/anime)
+ * @param int $puntuacion Nota que le das a esa serie/peli/anime
+ * @param int $progreso Capítulo por el que vas
+ * @param string $vista_en Donde la vista
+ * @param string $comentario Comentario que quieras añadir sobre ese material
+ * @param int $fav Puede valer 1 o 0 dependiendo de si está en tus favoritos o no
+ * @return boolean True si se ha actualizado correctamente, False si no
+ */
 
 function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $fav) {
     $ok = false;
@@ -282,6 +364,18 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
         $ok = false;
     return $ok;
 }
+
+/*
+ * Agregar un nuevo material a tu lista
+ * @param object $variabl Objeto del ORM.
+ * @param int $estado Estado en el que guardas el material(serie/peli/anime)
+ * @param int $puntuacion Nota que le das a esa serie/peli/anime
+ * @param int $progreso Capítulo por el que vas
+ * @param string $vista_en Donde la vista
+ * @param string $comentario Comentario que quieras añadir sobre ese material
+ * @param int $fav Puede valer 1 o 0 dependiendo de si está en tus favoritos o no
+ * @return boolean True si se ha actualizado correctamente, False si no
+ */
 
 function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $comentario, $idt, $fav) {
     $ok = false;
@@ -317,12 +411,25 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     return $ok;
 }
 
+/* Comprueba si hay un usuario logeado
+ * @return boolean True si está logeado, False si no.
+ */
+
 function usuario_logeado() {
     if (isset($_SESSION['logeo']))
         return true;
     else
         return false;
 }
+
+/*
+ * Publicar una noticia en el sitio web.
+ * @param string $titulo Titulo de la noticia
+ * @param string $noticia Contenido de la noticia
+ * @param string $fuente Fuente de donde sacaste la noticia
+ * @param string $tags Identificadores, etiquetas.
+ * @return boolean, True si se ha publicado correctamente, False si no
+ */
 
 function publicar_noticia($titulo, $noticia, $fuente, $tags) {
     $dbh = \ORM::getDb();
@@ -351,6 +458,13 @@ function publicar_noticia($titulo, $noticia, $fuente, $tags) {
     }
     return $ok;
 }
+
+/*
+ * Buscar una noticia.
+ * @param string $busqueda cadena por la que buscas
+ * @param string $filtrado Tipo de dato por el que filtras
+ * @return array
+ */
 
 function buscar_noticia($busqueda, $filtrado) {
     $buscarNoticias = ORM::for_table("noticia");
@@ -389,6 +503,12 @@ function buscar_noticia($busqueda, $filtrado) {
     return $buscarNoticias;
 }
 
+/*
+ * Publicar un comentario en una noticia
+ * @param string $comentario Comentario a publicar
+ * @param string $idNoticia Noticia en la que pones el comentario
+ * @return boolean True si se ha publicado correctamente, False si no
+ */
 function publica_comentario($comentario, $idNoticia) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -414,6 +534,13 @@ function publica_comentario($comentario, $idNoticia) {
     return $ok;
 }
 
+/*
+ * Comprueba la longitud de una cadena
+ * @param string $valor Cadena a comprobar
+ * @param int $longitudMaxima Longitud maxima que podrá tener esa cadena
+ * @param int $longitudMinima Longitud minima que podrá tener esa cadena
+ */
+
 function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
     if (strlen($valor) > $longitudMaxima || strlen($valor) < $longitudMinima)
         return false;
@@ -421,6 +548,11 @@ function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
         return true;
 }
 
+/*
+ * Devuelve los materiales favoritos de un usuario
+ * @param int $idUsuario Id del usuario del perfil al que accedes.
+ * @return array
+ */
 function favoritos($idUsuario) {
     $fav = ORM::for_table('material')->select_many('material.nombre', 'material.img_material', 'material.id')->
                     join('material_usuario', array('material.id', '=', 'material_usuario.material_id'))->
