@@ -399,6 +399,25 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
         $app->redirect($app->urlFor('registro'));
         })->name('datosusuario')->via('GET', 'POST');
 
+$app->map('/introducematerial', function() use ($app) {
+    if(usuario_logeado())
+    {
+        
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    $app->render('introducematerial.html.twig');
+                    break;
+                case "POST":
+                    if (isset($_POST['coso'])) {
+                        
+                    }
+                    break;
+            }
+    }
+    else
+        $app->redirect($app->urlFor('registro'));
+        })->name('introducematerial')->via('GET', 'POST');        
+        
 $app->map('/publicabuscanoticias', function() use ($app) {
     if(usuario_logeado())
     {
@@ -515,7 +534,7 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
     else
         $app->redirect($app->urlFor('registro'));
         })->name('noticia');
-
+    
 $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
     if(usuario_logeado())
     {

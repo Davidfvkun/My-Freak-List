@@ -1,0 +1,82 @@
+{# My Freak Zone - My Freak List - Web application for films, series and animes (Japanase Animation)
+  Copyright (C) 2014: David Femenía Vázquez
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see [http://www.gnu.org/licenses/]. #}
+{% extends "base2.html.twig" %}
+{% block contenido2 %}
+<div class="container margintop">
+    <div class="row">
+        <div class="col-lg-2">
+            <label class="minibuttons flatly" onClick="CambiaEstilos('Flatly')">&#9679;</label>
+            <label class="minibuttons readable" onClick="CambiaEstilos('Readable')">&#9679;</label>
+            <label class="minibuttons cosmo" onClick="CambiaEstilos('Cosmo')">&#9679;</label>
+            <label class="minibuttons cerulean" onClick="CambiaEstilos('Cerulean')">&#9679;</label>
+            <label class="minibuttons cyborg" onClick="CambiaEstilos('Cyborg')">&#9679;</label>
+            <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
+        </div>
+    </div>
+        <div class="{{ clase }}">{{ mensaje }}</div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Insertar un nuevo 'material'</h3>
+                    </div>
+                    <div class="panel panel-body">
+                        <form class="form-horizontal" method="POST" action="">
+                            <div class="form-group" id="nombrematerialdiv">
+                                <label for=nombrematerial" class="col-lg-2 control-label">Nombre del material*</label>
+                                <div class="col-lg-10">
+                                    <input type="text" value="{{ datosBorrador[0] }}" class="form-control" id="nombrematerial" name="nombrematerial">
+                                    <label>Nombre de la serie. Mínimo 1 caracteres, máximo 200</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="sinopsismaterialdiv">
+                                <label for="sinopsismaterial" class="col-lg-2 control-label">Sinopsis</label>
+                                <div class="col-lg-10">
+                                    <textarea rows="15" type="text"class="form-control" id="sinopsismaterial" name="sinopsismaterial"
+                                                  placeholder="Pon aquí la sinopsis de la serie/película/anime">{{ datosBorrador[1] }}</textarea>
+                                    <label>Sinopsis de la serie/película/anime, máximo 100.000</label>
+                                </div>
+                            </div>
+                            <div class="form-group" id="aniodiv">
+                                <label for="aniomaterial" class="col-lg-2 control-label">Año</label>
+                                <div class="col-lg-10">
+                                    <input type="text" value="{{ datosBorrador[2] }}" class="form-control" id="aniomaterial" name="aniomaterial">
+                                    <label>Año en el que se estrenó ese serie/película/anime</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="tipomaterial" class="col-lg-2 control-label">Tipo</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" name="tipomaterial" >
+                                                <option value="1">Serie</option>
+                                                <option value="2">Anime</option>
+                                                <option value="3">Película</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="center">
+                                    <button class="btn btn-primary" name="publicar">Publicar</button>
+                                </div>
+                        </form>
+                    </div>
+             </div>
+         </div>
+    </div>
+</div>
+<script type="text/JavaScript">
+    window.onload = InitPublicaNoticia();
+</script>
+{% endblock %}
