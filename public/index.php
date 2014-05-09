@@ -364,19 +364,13 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     $clase = array('col-md-9', 'col-md-3');
                     $mensajes = mensajes_privados($datosUsuario->id);
                     echo "<br/><br/><br/><br/><br/>";
-
-                    $numeroUsuarios = num_mensajes($datosUsuario->id);
-                    echo count($numeroUsuarios);
-                    echo "<br/>";
-                    foreach ($mensajes as $mensaje) {
-
-                        $aux = ORM::for_table("usuario")->find_one($mensaje->usuario_e);
-                        $aux2 = ORM::for_table("usuario")->find_one($mensaje->usuario_r);
-                        $mensaje->usuario_e = $aux->nick;
-                        $mensaje->usuario_r = $aux2->nick;
-                        echo "<br/>El usuario " . $mensaje->usuario_e .
-                        " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;
-                    }
+                    
+                    $conjuntoUsuarios = usuarios_mensajeados($mensajes, $datosUsuario->id);
+                    echo "<br/><br/>";
+                    for ($i = 0; $i < count($conjuntoUsuarios); $i++)
+                        echo " - " . $conjuntoUsuarios[$i];
+                    
+                    /* Con esto ya tengo los usuarios con los que has conversado ($conjuntoUsuarios) y dichos mensajes ($mensajes) */
                 } else {
                     $soyyo = 'no';
                     $clase = array('col-md-12', 'col-md-4');

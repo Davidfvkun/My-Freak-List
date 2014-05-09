@@ -145,6 +145,7 @@ function login($nick, $contraseña) {
  *  Devuelve las ultimas noticias publicadas por los usuarios
  *  @return array
  */
+
 function ultimas_noticias() {
     $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(2)->find_many();
     return $ultimasNoticias;
@@ -305,7 +306,6 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     return $ok;
 }
 
-
 /*
  * Función para comprobar el estado de un material
  * 
@@ -313,16 +313,15 @@ function editar_usuario($nombre, $apellido, $descripcion) {
  * @return int $guardar Estado en el que se guardará el material
  */
 
-function comprueba_estado($estado)
-{
+function comprueba_estado($estado) {
     $guardar = 0;
-    if($estado == 1)
+    if ($estado == 1)
         $guardar = 1;
-    else if($estado == 2)
+    else if ($estado == 2)
         $guardar = 2;
-    else if($estado == 3)
+    else if ($estado == 3)
         $guardar = 3;
-    else 
+    else
         $guardar = 4;
     return $guardar;
 }
@@ -509,6 +508,7 @@ function buscar_noticia($busqueda, $filtrado) {
  * @param string $idNoticia Noticia en la que pones el comentario
  * @return boolean True si se ha publicado correctamente, False si no
  */
+
 function publica_comentario($comentario, $idNoticia) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -553,6 +553,7 @@ function comprueba_longitud($valor, $longitudMaxima, $longitudMinima) {
  * @param int $idUsuario Id del usuario del perfil al que accedes.
  * @return array
  */
+
 function favoritos($idUsuario) {
     $fav = ORM::for_table('material')->select_many('material.nombre', 'material.img_material', 'material.id')->
                     join('material_usuario', array('material.id', '=', 'material_usuario.material_id'))->
@@ -568,11 +569,24 @@ function mensajes_privados($idUsuario) {
     return $mensaje;
 }
 
-function num_mensajes($idUsuario)
-{
-    $mensaje = ORM::for_table('mensaje')->distinct()->select('usuario_r')->
-            where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario, $idUsuario))->find_many();
-    return $mensaje;
+function usuarios_mensajeados($mensajes, $id) {
+    $nUsuarios = 0;
+    $conjuntoUsuarios = array();
+    foreach ($mensajes as $mensaje) {
+        $aux = ORM::for_table("usuario")->find_one($mensaje->usuario_e);
+        $aux2 = ORM::for_table("usuario")->find_one($mensaje->usuario_r);
+        if ($mensaje->usuario_e == $id && in_array($mensaje->usuario_r, $conjuntoUsuarios) == false) {
+            $conjuntoUsuarios[$nUsuarios] = $mensaje->usuario_r;
+            $nUsuarios++;
+        } else if ($mensaje->usuario_r == $id && in_array($mensaje->usuario_e, $conjuntoUsuarios) == false) {
+            $conjuntoUsuarios[$nUsuarios] = $mensaje->usuario_r;
+            $nUsuarios++;
+        }
+        $mensaje->usuario_e = $aux->nick;
+        $mensaje->usuario_r = $aux2->nick;
+        echo "<br/>El usuario " . $mensaje->usuario_e .
+        " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;
+    }
 }
 
 ?>
