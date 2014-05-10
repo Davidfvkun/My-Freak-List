@@ -330,7 +330,7 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
             $app->redirect($app->urlFor('registro'));
         })->name('material')->via('GET', 'POST');
 
-$app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
+$app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use ($app) {
     if(usuario_logeado())
     {
             switch ($app->request()->getMethod()) {
@@ -362,15 +362,20 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                 if (usuario_logeado($nicku)) {
                     $soyyo = 'si';
                     $clase = array('col-md-9', 'col-md-3');
-                    $mensajes = mensajes_privados($datosUsuario->id);
-                    echo "<br/><br/><br/><br/><br/>";
                     
-                    $conjuntoUsuarios = usuarios_mensajeados($mensajes, $datosUsuario->id);
-                    /*echo "<br/><br/>";
-                    for ($i = 0; $i < count($conjuntoUsuarios); $i++)
-                        echo " - " . $conjuntoUsuarios[$i];*/
+                    if($priv == 1)
+                    {
+                        $mensajes = mensajes_privados($datosUsuario->id);
+                        $conjuntoUsuarios = usuarios_mensajeados($mensajes, $datosUsuario->id);
+                        $N = count($conjuntoUsuarios);
+                    }
+                    else
+                    {
+                        $conjuntoUsuarios = mensajes_privados_contenido($priv);
+                        $N = -1;
+                    }
+                       
                     
-                    /* Con esto ya tengo los usuarios con los que has conversado ($conjuntoUsuarios) y dichos mensajes ($mensajes) */
                 } else {
                     $soyyo = 'no';
                     $clase = array('col-md-12', 'col-md-4');
@@ -384,7 +389,7 @@ $app->map('/datosusuario/:nicku/:modo', function($nicku, $modo) use ($app) {
                     'soyyo' => $soyyo,
                     'clase' => $clase,
                     'mensajespriv' => $conjuntoUsuarios,
-                    'N' => count($conjuntoUsuarios),
+                    'N' => $N,
                     'usuario' => $_SESSION['logeo']
                 ));
             }

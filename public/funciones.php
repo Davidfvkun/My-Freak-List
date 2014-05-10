@@ -569,6 +569,15 @@ function mensajes_privados($idUsuario) {
     return $mensaje;
 }
 
+function mensajes_privados_contenido($usuario)
+{
+    $idUsuario = ORM::for_table('usuario')->where('nick',$usuario)->find_one();
+    $mensaje = ORM::for_table('mensaje')->
+            where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario->id, $idUsuario->id))->
+            find_many();
+    return $mensaje;
+}
+
 function usuarios_mensajeados($mensajes, $id) {
     $nUsuarios = 0;
     $conjuntoUsuarios = array();

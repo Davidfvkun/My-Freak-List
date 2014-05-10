@@ -42,21 +42,16 @@
                         <label class="panel-title">Mensajes privados</label>
                     </div>
                     <div class="panel-body">
-                        <ul class="nav nav-tabs">
-                            <li><a href="#tab0" data-toggle="tab" class="active">Cerrar mensajes</a></li>
-                            {% for i in 0..N-1 %}
-                                <li><a href="#tab{{i+1}}" data-toggle="tab">{{ mensajespriv[i] }}-----------</a></li>
-                            {% endfor %}
-                        </ul>
-                        <div class="tab-content">
-                            <div id="tab0" class="tab-pane active">
-                            </div>
-                                {% for i in 0..N %}
-                                <div id="tab{{i+1}}" class="tab-pane">
-                                    Mensaje {{ i }}
-                                </div>
-                                {% endfor %}
-                        </div>
+                      {% if N != -1 %}
+                        {% for i in 0..N-1 %}
+                             <div class="mensajesprivados">Usuario: <a href="/datosusuario/{{ usuario }}/m/{{ mensajespriv[i] }}" data-toggle="tab">{{ mensajespriv[i] }}</a></div>
+                        {% endfor %}
+                      {% else %}
+                          {% for i in mensajespriv %}
+                                 El mensaje '{{ i['mensaje']}}' por {{ i['usuario_e']}}<br/>
+                          {% endfor %}
+                      {% endif %}
+                                 
                     </div>
                 </div>
              </div>
@@ -118,7 +113,7 @@
                             
                             {% if soyyo == 'si' %}
                             <div class="center">
-                                  <a href="/datosusuario/{{ datos['nick']}}/e" class="btn btn-success">Editar</a>
+                                  <a href="/datosusuario/{{ datos['nick']}}/e/1" class="btn btn-success">Editar</a>
                             </div>
                             {% endif %}
                         {% endif %}<br/>

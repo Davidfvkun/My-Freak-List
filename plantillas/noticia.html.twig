@@ -37,7 +37,7 @@
                         <h2><div class="center">{{ datos['titulo'] }}</div></h2>
                         <div><p>{{ datos['noticia'] }}</p></div>
                         <br/>
-                        <label>Noticia publicada por <a href="/datosusuario/{{ autor }}/m">{{ autor }}</a></label>
+                        <label>Noticia publicada por <a href="/datosusuario/{{ autor }}/m/1">{{ autor }}</a></label>
                         <br/><label>Fuente: 
                         {% if datos['fuente'] is null or datos['fuente'] == "" %}
                         Desconocida
@@ -68,7 +68,7 @@
                                     {% endif %}
                                   {% set cont = cont + 1 %}
                                   <div>{{ i['comentario'] }}</div>
-                                  <br/>Escrito por <a href="/datosusuario/{{i['nick']}}/m">{{ i['nick'] }}</a>, en la fecha {{ i['fecha_publicad'] }}
+                                  <br/>Escrito por <a href="/datosusuario/{{i['nick']}}/m/1">{{ i['nick'] }}</a>, en la fecha {{ i['fecha_publicad'] }}
                                   <br/>{% if i['nick'] == usuario %}
                                   <a href="/borrar/{{ i['id']}}/{{datos['id']}}">Eliminar</a>
                                   {% endif %}
