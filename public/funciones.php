@@ -575,18 +575,19 @@ function usuarios_mensajeados($mensajes, $id) {
     foreach ($mensajes as $mensaje) {
         $aux = ORM::for_table("usuario")->find_one($mensaje->usuario_e);
         $aux2 = ORM::for_table("usuario")->find_one($mensaje->usuario_r);
-        if ($mensaje->usuario_e == $id && in_array($mensaje->usuario_r, $conjuntoUsuarios) == false) {
-            $conjuntoUsuarios[$nUsuarios] = $mensaje->usuario_r;
+        if ($mensaje->usuario_e == $id && in_array($aux2->nick, $conjuntoUsuarios) == false) {
+            $conjuntoUsuarios[$nUsuarios] = $aux2->nick;
             $nUsuarios++;
-        } else if ($mensaje->usuario_r == $id && in_array($mensaje->usuario_e, $conjuntoUsuarios) == false) {
-            $conjuntoUsuarios[$nUsuarios] = $mensaje->usuario_r;
+        } else if ($mensaje->usuario_r == $id && in_array($aux->nick, $conjuntoUsuarios) == false) {
+            $conjuntoUsuarios[$nUsuarios] = $aux->nick;
             $nUsuarios++;
         }
-        $mensaje->usuario_e = $aux->nick;
+        /*$mensaje->usuario_e = $aux->nick;
         $mensaje->usuario_r = $aux2->nick;
         echo "<br/>El usuario " . $mensaje->usuario_e .
-        " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;
+        " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;*/
     }
+    return $conjuntoUsuarios;
 }
 
 ?>

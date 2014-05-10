@@ -37,16 +37,29 @@
        <div class="row">
         {% if soyyo == 'si' %}
             <div class="col-md-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <label class="panel-title">Mensajes privados</label>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <label class="panel-title">Mensajes privados</label>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs">
+                            <li><a href="#tab0" data-toggle="tab" class="active">Cerrar mensajes</a></li>
+                            {% for i in 0..N-1 %}
+                                <li><a href="#tab{{i+1}}" data-toggle="tab">{{ mensajespriv[i] }}-----------</a></li>
+                            {% endfor %}
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab0" class="tab-pane active">
+                            </div>
+                                {% for i in 0..N %}
+                                <div id="tab{{i+1}}" class="tab-pane">
+                                    Mensaje {{ i }}
+                                </div>
+                                {% endfor %}
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    {% for i in mensajespriv %}
-                    {% endfor %}
-                </div>
-            </div>
-            </div>
+             </div>
         {% endif %}
         <div class={{ clase[0] }}>
             <div class="panel panel-success">
