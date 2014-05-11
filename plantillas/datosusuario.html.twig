@@ -36,7 +36,7 @@
         </div>
        <div class="row">
         {% if soyyo == 'si' %}
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <label class="panel-title">Mensajes privados</label>
@@ -48,8 +48,18 @@
                         {% endfor %}
                       {% else %}
                           {% for i in mensajespriv %}
-                                 El mensaje '{{ i['mensaje']}}' por {{ i['usuario_e']}}<br/>
+                                 <label>{{ i['mensaje']}}</label><br/>
+                                 <b>{{ i['usuario_e']}}</b>-<i>{{i['fecha_enviado']}}<br/><hr/>
                           {% endfor %}
+                          <div class="form-group center" id="mensajeprivadodiv">
+                            <div>
+                              <textarea class="form-control" rows="5" type="text" id="mensajeprivado" name="mensajeprivado"></textarea>
+                              <label>Mínimo un caracter, máximo 500</label>
+                            </div>
+                         </div>
+                         <div class="center">
+                             <button type="submit" class="btn btn-success" name="enviarmensaje">Enviar mensaje</button>
+                         </div>
                       {% endif %}
                                  
                     </div>
@@ -118,7 +128,7 @@
                             {% endif %}
                         {% endif %}<br/>
                     </div>
-                    <div id="listas" class="col-md-7">
+                    <div id="listas" class="col-md-7" style="margin-left: 5%">
                         <h2>Sus listas</h2>
                         <div class="btn-group margin-right">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -191,7 +201,7 @@
                             </div>
                         </div>
                     </div>
-                 </div>-->
+                 </div>
             </div>
         </div>
     </div>

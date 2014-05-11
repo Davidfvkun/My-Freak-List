@@ -361,7 +361,7 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
             else {
                 if (usuario_logeado($nicku)) {
                     $soyyo = 'si';
-                    $clase = array('col-md-9', 'col-md-3');
+                    $clase = array('col-md-8', 'col-md-2');
                     
                     if($priv == 1)
                     {
@@ -372,6 +372,10 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                     else
                     {
                         $conjuntoUsuarios = mensajes_privados_contenido($priv);
+                        foreach($conjuntoUsuarios as $conj)
+                        {
+                            $conj->usuario_e = ORM::for_table('usuario')->find_one($conj->usuario_e)->nick;
+                        }
                         $N = -1;
                     }
                        
