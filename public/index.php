@@ -349,6 +349,14 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                         else
                             $edit = false;
                     }
+                    if (isset($_POST['enviarmensaje']))
+                    {
+                        $caso = 'mostrar';
+                        if (isset($_POST['mensajeprivado']))
+                        {
+                            $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
+                        }
+                    }
                     break;
             }
             $datosUsuario = ORM::for_table('usuario')->where('nick', $nicku)->find_one();
@@ -358,10 +366,12 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
             } else if (isset($edit) && $edit == false)
                 echo "Ha ocurrido algún error al editar los datos";
+            else if(isset($ok) && $ok == false)
+                echo "Ha ocurrido algún error al enviar el mensaje";
             else {
                 if (usuario_logeado($nicku)) {
                     $soyyo = 'si';
-                    $clase = array('col-md-8', 'col-md-2');
+                    $clase = array('col-md-9', 'col-md-3');
                     
                     if($priv == 1)
                     {
@@ -393,6 +403,7 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                     'soyyo' => $soyyo,
                     'clase' => $clase,
                     'mensajespriv' => $conjuntoUsuarios,
+                    'usuariomensajes' => $priv,
                     'N' => $N,
                     'usuario' => $_SESSION['logeo']
                 ));

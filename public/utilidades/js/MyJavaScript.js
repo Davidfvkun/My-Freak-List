@@ -100,6 +100,17 @@ function CompruebaClaves(check)
         
 }
 
+function initDatosUsuario()
+{
+    
+    document.getElementById("mensajeprivado").addEventListener(
+            'keyup',
+            function()
+            {
+                CamposLongitud('mensajeprivado', 500,0);
+            }, false);
+}
+
 function InitPlantillaPrincipal()
 {
     document.getElementById("inputbusqueda").addEventListener(

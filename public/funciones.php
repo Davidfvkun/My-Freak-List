@@ -578,6 +578,34 @@ function mensajes_privados_contenido($usuario)
     return $mensaje;
 }
 
+function enviar_mensaje_privado($mensaje, $priv)
+{
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    $existeUsuario = ORM::for_table('usuario')->where('nick',$priv)->find_one();
+    if(empty($existeUsuario) || comprueba_longitud($mensaje, 500, 1))
+    {
+        try 
+        {
+            $guardar = ORM::for_table('mensaje')->create();
+            $guardar->usuario_e = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id;
+            $guardar->usuario_r = $existeUsuario->id;
+            $guardar->fecha_enviado = date("Y-m-d H:i:s");
+            $guardar->mensaje = $mensaje;
+            $guardar->save();
+            $dbh->commit();
+            $ok = true;
+         } catch (\PDOException $e) 
+         {
+             $dbh->rollback();
+             $ok = false;
+         }
+    }
+    else
+        $ok = false;
+    return $ok;
+}
+
 function usuarios_mensajeados($mensajes, $id) {
     $nUsuarios = 0;
     $conjuntoUsuarios = array();
