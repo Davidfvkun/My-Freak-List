@@ -50,7 +50,7 @@
                                     <label>Sinopsis de la serie/película/anime, máximo 100.000</label>
                                 </div>
                             </div>
-                            <div class="form-group" id="aniodiv">
+                            <div class="form-group" id="aniomaterialdiv">
                                 <label for="aniomaterial" class="col-lg-2 control-label">Año</label>
                                 <div class="col-lg-10">
                                     <input type="text" value="{{ datosBorrador[2] }}" class="form-control" id="aniomaterial" name="aniomaterial">
@@ -77,6 +77,6 @@
     </div>
 </div>
 <script type="text/JavaScript">
-    
+    window.onload = InitPublicaMaterial();
 </script>
 {% endblock %}

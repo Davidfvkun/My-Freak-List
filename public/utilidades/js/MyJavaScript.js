@@ -100,6 +100,28 @@ function CompruebaClaves(check)
         
 }
 
+function InitPublicaMaterial()
+{
+    document.getElementById("nombrematerial").addEventListener(
+            'keyup',
+            function()
+            {
+                CamposLongitud('nombrematerial', 200,1);
+            }, false);
+    document.getElementById("sinopsismaterial").addEventListener(
+            'blur',
+            function()
+            {
+                CamposLongitud('sinopsismaterial', 1000,-1);
+            }, false);
+    document.getElementById("aniomaterial").addEventListener(
+            'keyup',
+            function()
+            {
+                CompruebaCampo('aniomaterial', /^[0-9]{4}$/);
+            }, false);
+}
+
 function initDatosUsuario()
 {
     
