@@ -419,12 +419,43 @@ $app->map('/introducematerial', function() use ($app) {
         
             switch ($app->request()->getMethod()) {
                 case "GET":
-                    $app->render('introducematerial.html.twig');
+                    $app->render('introducematerial.html.twig', array(
+                        'usuario' => $_SESSION['logeo']
+                    ));
                     break;
                 case "POST":
-                    if (isset($_POST['coso'])) {
+                    if (isset($_POST['publicar'])) {
+                        if(isset($_POST['nombrematerial']) && isset($_POST['sinopsismaterial']) && isset($_POST['aniomaterial']) && isset($_POST['tipomaterial']))
+                        {
+                            $nombreMaterial = $_POST['nombrematerial'];
+                            $sinopsisMaterial = $_POST['sinopsismaterial'];
+                            $anioMaterial = $_POST['aniomaterial'];
+                            $tipoMaterial = $_POST['tipomaterial'];
+                            $verificar = publicar_material($nombreMaterial, $sinopsisMaterial, $anioMaterial, $tipoMaterial);
+                        }
+                        else
+                            $verificar = false;
                         
+                        if($verificar)
+                        {
+                            $datosBorrador = array("", "", "");
+                            $clase = "info";
+                            $mensaje = "Se le ha enviado una notificación con los datos a un administrador. En unos días se le responderá.";
+                        }
+                        else
+                        {
+                            $datosBorrador = array($nombreMaterial, $sinopsisMaterial, $anioMaterial);
+                            $clase = "info error";
+                            $mensaje = "Ha ocurrido algún error";
+                        }
+                        $app->render('introducematerial.html.twig', array(
+                        'usuario' => $_SESSION['logeo'],
+                        'clase' => $clase,
+                        'mensaje' => $mensaje,
+                        'datosBorrador' => $datosBorrador
+                    ));
                     }
+                    
                     break;
             }
     }

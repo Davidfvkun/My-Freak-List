@@ -590,8 +590,8 @@ function enviar_mensaje_privado($mensaje, $priv)
             $guardar = ORM::for_table('mensaje')->create();
             $guardar->usuario_e = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id;
             $guardar->usuario_r = $existeUsuario->id;
-            $guardar->fecha_enviado = date("Y-m-d H:i:s");
             $guardar->mensaje = $mensaje;
+            $guardar->fecha_enviado = date("Y-m-d H:i:s");
             $guardar->save();
             $dbh->commit();
             $ok = true;
@@ -625,6 +625,36 @@ function usuarios_mensajeados($mensajes, $id) {
         " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;*/
     }
     return $conjuntoUsuarios;
+}
+
+function publicar_material($nombre, $sinopsis, $anio, $tipo)
+{
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    if(comprueba_longitud($nombre, 200, 1) && comprueba_longitud($sinopsis, 10000,0) && $tipo >= 1  && $tipo <= 3)
+    {
+        try
+        {
+            $usuarioAdmin = ORM::for_table('usuario')->where('es_admin',1)->find_one();
+            $mensajePrivado = ORM::for_table('mensaje')->create();
+            $mensajePrivado->usuario_r = $usuarioAdmin->id;
+            $mensajePrivado->usuario_e = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id;
+            $mensajePrivado->mensaje = "Nombre: ".$nombre." Sinopsis: ".$sinopsis." Año: ".$anio. " Tipo: ".$tipo;
+            $mensajePrivado->fecha_enviado = date("Y-m-d H:i:s");
+            $mensajePrivado->save();
+            $dbh->commit();
+            $ok = true;
+         } catch (\PDOException $e) 
+         {
+             $dbh->rollback();
+             $ok = false;
+         }
+         $ok = true;
+    }
+    else
+        $ok = false;
+   
+    return $ok;
 }
 
 ?>
