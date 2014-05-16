@@ -27,18 +27,7 @@
         </div>
     </div>
         <div class="row">
-            {% set cont = 0 %}
-            {% set cont2 = 2 %}
-            <div class="tab-content">
-                <div id="tab1" class="tab-pane active">
                 {% for i in datos %}
-                    {% if cont == 10 %}
-                        </div>
-                        <div id="tab{{cont2}}" class="tab-pane">
-                         {% set cont = 0 %}
-                        {% set cont2 = cont2 + 1 %}
-                    {% endif %}
-                    {% set cont = cont + 1 %}
                         <div class="col-md-3 cajitas">
                              <a href="/datosmaterial/{{i['id']}}">
                                  {{ i['nombre'] }}<br/>
@@ -70,11 +59,7 @@
         </div>     
         <div class="row">
             <div class="col-md-12">
-            <ul class="nav nav-tabs">  
-                {% for i in 1..(cont2-1) %}
-                   <li><a href="#tab{{i}}" data-toggle="tab" class="active">{{i}}</a></li>
-                {% endfor %}
-              </ul>
+            
            </div>
          </div>
          <br/>
