@@ -24,6 +24,7 @@ switch ($_REQUEST['peticion']) {
         switch ($_GET['val2']) {
             case 1:
                 $busqueda = buscar_usuarios($_GET['val1'], $_GET['val2']);
+                $busqueda = $busqueda->find_many();
                 $i = 0;
                 $arr = array();
                 foreach ($busqueda as $j) {

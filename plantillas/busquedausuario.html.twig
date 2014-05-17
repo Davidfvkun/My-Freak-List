@@ -54,9 +54,15 @@
                  <div class="info center">No se han encontrado datos</div>
                  {% endfor %}
              </div>
-        </div>     
         <div class="row">
             <div class="col-md-12">
+                <div class="bs-component">
+                    <ul class="pagination">
+                      {% for i in 1..N %}
+                        <li><a href="/busquedausuario/{{i}}">{{i}}</a></li>
+                      {% endfor %}
+                    </ul>
+                 </div>
            </div>
          </div>
     </div>

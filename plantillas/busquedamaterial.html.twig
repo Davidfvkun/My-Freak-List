@@ -55,15 +55,20 @@
                  {% else %}
                  <div class="info center">No se han encontrado datos</div>
                  {% endfor %}
-             </div>
-        </div>     
+             </div> 
         <div class="row">
             <div class="col-md-12">
-            
+                <div class="bs-component">
+                    <ul class="pagination">
+                      {% for i in 1..N %}
+                        <li><a href="/busquedam/{{i}}">{{i}}</a></li>
+                      {% endfor %}
+                    </ul>
+                 </div>
+                 <br/>
+                <label>Si la serie/película/anime que ha buscado no ha sido encontrada y
+                quiere agregarla pinche <a href="/introducematerial">aquí</a></label>
            </div>
          </div>
-         <br/>
-         <label>Si la serie/película/anime que ha buscado no ha sido encontrada y
-                quiere agregarla pinche <a href="/introducematerial">aquí</a></label>
-    </div>
+   </div> 
 {% endblock %}

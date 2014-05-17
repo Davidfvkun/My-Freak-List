@@ -169,7 +169,6 @@ function buscar_usuarios($busqueda, $filtrado) {
             $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%"); // Si alguien cambia el value de ese select aplicamos case 1
             break;
     }
-    $buscaUsuario = $buscaUsuario->find_many();
     return $buscaUsuario;
 }
 
@@ -475,7 +474,7 @@ function buscar_noticia($busqueda, $filtrado) {
                 //$mensajeError = "No existe usuario con ese nick";
                 $buscarNoticias = null;
             } else {
-                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id)->find_many();
+                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id);
                 /* if(empty($buscarNoticias))
                   $mensajeError = "Ese usuario no ha publicado ninguna noticia"; */
             }
@@ -493,7 +492,7 @@ function buscar_noticia($busqueda, $filtrado) {
               $mensajeError = "No existen noticias con esos tags"; */
             break;
         case 3:
-            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%')->find_many();
+            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%');
             /* if(empty($buscarNoticias))
               $mensajeError = "No existen noticias con ese contenido"; */
             break;
