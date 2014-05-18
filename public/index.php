@@ -39,6 +39,14 @@ $view->parserExtensions = array(
 
 session_start();
 
+$app->map('/coso', function() use ($app) {
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                        $app->render('coso.html.twig');
+                    break;
+            }
+        })->name('coso')->via('GET', 'POST');
+
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
@@ -154,70 +162,42 @@ $app->map('/busquedausuario/:num', function($num) use ($app) {
 
 $app->map('/busquedam/:num', function($num) use ($app) {
     if(usuario_logeado()){
-            switch ($app->request()->getMethod()) {
-                case "GET":
-                    $app->redirect($app->urlFor('myfreakzone'));
-                    break;
-                case "POST":
-                    $datosPorPagina = 5;
+                   $datosPorPagina = 5;
+                    $datosQueGuardar = array();
+                    $V = array(0, 0, 0);
+                    $busqueda = null;
+                    $numPaginas = 1;
                     if(is_numeric($num)){
-                        $V = array(0, 0, 0);
-                        if (isset($_POST['cbmaterial'])) {
-                            foreach ($_POST['cbmaterial'] as $i) {
+                        if (isset($_REQUEST['cbmaterial'])) {
+                            foreach ($_REQUEST['cbmaterial'] as $i) {
                                 $V[$i] = 1;
                             }
                         } else {
                             $V = array(1, 1, 1);
                         }
-                        if (isset($_POST['buscarm'])) {
-                            if (strlen($_POST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
-                                $busqueda = buscar_material($_POST['buscaanime'], $V);
-                                $totalDatos = count($busqueda->find_many());
-                                $numPaginas = ceil($totalDatos/$datosPorPagina);
-                                $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
-                            }
-                            else
-                                $busqueda = null;
-                        } else if (isset($_POST['buscarma'])) {
-                            if (isset($_POST['incluir'])) {
-                                if (strlen($_POST['buscaanime']) > 0) { // Comprobación de que introduces al menos una letra
-                                    $busqueda = buscar_material($_POST['buscaanime'], $V);
-                                    if (isset($_POST['geneross']) && $_POST['geneross'] != "No filtrar") {
-                                        //echo "Hola";
-                                        $busqueda = $busqueda->where_like('genero', '%' . $_POST['geneross'] . '%');
-                                    }
-                                    if (isset($_POST['fech']) && $_POST['fech'] != "") {
-                                        // echo "Holi";
-                                        $busqueda = $busqueda->where('anio', $_POST['fech']);
-                                    }
-
-                                    $busqueda = $busqueda->limit(3)->offset(1)->find_many();
+                        if (isset($_POST['buscarm']) || ($num > 1)) {
+                            echo "<br/><br/><br/>Hola";
+                            echo $_REQUEST['buscaanime'];
+                            //if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
+                                if(isset($_REQUEST['buscaanime']))
+                                {
+                                    $datosQueGuardar[0] = $_REQUEST['buscaanime'];
+                                    $busqueda = buscar_material($_REQUEST['buscaanime'], $V);
+                                    $totalDatos = count($busqueda->find_many());
+                                    $numPaginas = ceil($totalDatos/$datosPorPagina);
+                                    $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
                                 }
-                                else
-                                    $busqueda = null;
-                            } else {
-                                $busqueda = ORM::for_table('material');
-                                if (isset($_POST['geneross']) && $_POST['geneross'] != "No filtrar") {
-                                    $busqueda = $busqueda->where_like('genero', '%' . $_POST['geneross'] . '%');
-                                }
-                                if (isset($_POST['fech']) && $_POST['fech'] != "") {
-                                    $busqueda = $busqueda->where('anio', $_POST['fech']);
-                                }
-
-                                $busqueda = $busqueda->limit(3)->offset(1)->find_many();
-                            }
+                            //}
                         }
                     }
-                    else
-                        $busqueda = null;
                 
-                    $app->render('busquedamaterial.html.twig', array(
+                   $app->render('busquedamaterial.html.twig', array(
                         'datos' => $busqueda,
                         'N' => $numPaginas,
+                        'opciones' => $V,
+                        'datosBusqueda' => $datosQueGuardar,
                         'usuario' => $_SESSION['logeo']));
-                    break;
-            }
-         }else
+           }else
               $app->redirect($app->urlFor('registro'));
         })->name('busquedam')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////

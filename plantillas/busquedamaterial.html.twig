@@ -70,5 +70,42 @@
                 quiere agregarla pinche <a href="/introducematerial">aquí</a></label>
            </div>
          </div>
+         <div class="row">
+             <div class="col-md-12">
+                <label>Está filtrando por 
+                  {% if opciones[0] == 1 %}
+                      <input id="A" type="checkbox" class="css-checkbox" name="cbmaterial[]"  value='0' checked>
+                      <label for="A" class="css-label">Serie </label>
+                  {% else %} 
+                      <input id="A" type="checkbox" class="css-checkbox" name="cbmaterial[]"  value='0'>
+                      <label for="A" class="css-label">Serie </label>
+                  {% endif %}
+                  {% if opciones[1] == 1 %}
+                      <input id="B" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='1' checked >
+                      <label for="B" class="css-label">Anime </label>
+                  {% else %} 
+                      <input id="B" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='1' >
+                      <label for="B" class="css-label">Anime </label>
+                  {% endif %}
+                  {% if opciones[2] == 1 %}
+                       <input id="C" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='2' checked >
+                       <label for="C" class="css-label">Pelicula </label>
+                  {% else %}
+                       <input id="C" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='2' >
+                       <label for="C" class="css-label">Pelicula </label>
+                  {% endif %}
+                  </label>
+                  <br/><label>Está filtrando por la palabra
+                      <input type="text" class="form-control" value="{{ datosBusqueda[0] }}" name="buscaanime" id="inputbusqueda1" autocomplete="off">
+                  </label>
+                  {% if datosBusqueda[1] is not null %}
+                  <br/><label>Está filtrando por el género '{{ datosBusqueda[1]}}' </label>
+                  {% endif %}
+                  {% if datosBusqueda[2] is not null %}
+                  <br/>
+                  <label>Está filtrando por el año '{{datosBusqueda[2]}}' </label>
+                  {% endif %}
+             </div>
+         </div>
    </div> 
 {% endblock %}

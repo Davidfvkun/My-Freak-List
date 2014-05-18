@@ -33,15 +33,12 @@
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <ul class="nav nav-tabs panel-title">
-                        <li><a href="#tab1" data-toggle="tab" class="active">Busqueda normal</a></li>
-                        <li><a href="#tab2" data-toggle="tab">Busqueda avanzada</a></li>
-                    </ul>
+                    <h3 class="panel-title">
+                        Busqueda
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="/busquedam/1">
-                        <div class="tab-content">
-                            <div id="tab1" class="tab-pane active">
                                 <div class="form-group">
                                     <label for="inputBusqueda" class="col-lg-2 control-label">Buscar</label>
                                     <div class="col-lg-10">
@@ -70,43 +67,9 @@
                                         <button type="submit" class="btn btn-primary" name="buscarm">Buscar</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="tab2" class="tab-pane">
-                                <div class="form-group">
-                                    <label for="inputgenero" class="col-lg-2 control-label">Género</label>
-                                    <div class="col-lg-10">
-                                        <select class="form-control" name="geneross" >
-                                            {% for i in 0..N-1 %}
-                                                <option value="{{ generos[i] }}">{{ generos[i] }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputfecha" class="col-lg-2 control-label">Fecha de estreno</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" name="fech" class="form-control" placeholder="Introducir año">
-                                    </div>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="incluir" class="css-checkbox" > 
-                                    </label>
-                                </div>
-                               <div>
-                                    <input id="D" type="checkbox" class="css-checkbox" name="incluir" >
-                                    <label for="D" class="css-label">Incluir los datos de la busqueda normal</label>
-                               </div><br/>
-                                <div class="form-group">
-                                    <div class="center" class="col-lg-10">
-                                        <button type="submit" class="btn btn-primary" name="buscarma">Buscar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                   </div>
                 </div>
-            </div>
         </div>
         <div class="col-md-6">
             <div class="panel panel-success">
