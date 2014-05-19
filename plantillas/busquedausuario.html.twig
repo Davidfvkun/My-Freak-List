@@ -54,16 +54,38 @@
                  <div class="info center">No se han encontrado datos</div>
                  {% endfor %}
              </div>
+      <form method="POST" >
         <div class="row">
             <div class="col-md-12">
                 <div class="bs-component">
                     <ul class="pagination">
                       {% for i in 1..N %}
-                        <li><a href="/busquedausuario/{{i}}">{{i}}</a></li>
+                        <li><button onClick="this.form.action = '/busquedausuario/{{i}}' ">{{i}}</button></li>
                       {% endfor %}
                     </ul>
                  </div>
            </div>
          </div>
+        <div class="row">
+            <div class="col-md-12">
+                <br/><label>Está filtrando por la palabra
+                      <input type="text" class="form-control" value="{{ datosBusqueda[0] }}" name="busquedausuario" id="inputbusqueda" 
+                                       placeholder="Introduce el X del usuario" autocomplete="off"
+                  </label>
+                <br/><label>Está filtrando por el campo 
+                    {% if datosBusqueda[1] == 1 %}
+                    'Nombre'
+                    {% endif %}
+                    {% if datosBusqueda[1] == 2 %}
+                    'Nick'
+                    {% endif %}
+                    {% if datosBusqueda[1] == 3 %}
+                    'Material'
+                    {% endif %}
+                    </label>
+                <input type="hidden" value="{{datosBusqueda[1]}}" name="filtrado" />
+            </div>
+        </div>
+      </form>
     </div>
 {% endblock %}

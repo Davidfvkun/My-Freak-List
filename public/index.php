@@ -131,30 +131,28 @@ $app->map('/login', function() use ($app) {
 /* Buscar usuarios */
 
 $app->map('/busquedausuario/:num', function($num) use ($app) {
-            switch ($app->request()->getMethod()) {
-                case "GET":
-                    $app->redirect($app->urlFor('myfreakzone'));
-                    break;
-                case "POST":
+    if(usuario_logeado()){
                     $datosPorPagina = 2;
-                    if (isset($_POST['buscaru']) && usuario_logeado()) {
-                        //if (strlen($_POST['busquedausuario']) > 0) {// Comprobación de que introduces al menos una letra
+                    $numPaginas = 1;
+                    $busqueda = null;
+                    $datosQueGuardar = array();
+                    if (isset($_POST['buscaru']) || $num > 1) {
+                        //if (strlen($_POST['busquedausuario']) > 0 && isset($_POST['filtrado'])) {// Comprobación de que introduces al menos una letra
                             $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
-                        /*}
-                        else
-                            $busqueda = null;*/
-                        $totalDatos = count($busqueda->find_many());
-                        $numPaginas = ceil($totalDatos/$datosPorPagina);
-                        $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
-                        $app->render('busquedausuario.html.twig', array(
+                            $datosQueGuardar[0] = $_POST['busquedausuario'];  $datosQueGuardar[1] = $_POST['filtrado'];  
+                            $totalDatos = count($busqueda->find_many());
+                            $numPaginas = ceil($totalDatos/$datosPorPagina);
+                            $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
+                        //}
+                    }
+                    $app->render('busquedausuario.html.twig', array(
                             'datos' => $busqueda,
                             'N' => $numPaginas,
+                            'datosBusqueda' => $datosQueGuardar,
                             'usuario' => $_SESSION['logeo']));
-                    }
-                    else
-                        $app->redirect($app->urlFor('myfreakzone'));
-                    break;
-            }
+              
+        }else
+              $app->redirect($app->urlFor('registro'));
         })->name('busquedausuario')->via('GET', 'POST');
 //////////////////////////////////////////////////////////////////////
 
@@ -176,8 +174,6 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                             $V = array(1, 1, 1);
                         }
                         if (isset($_POST['buscarm']) || ($num > 1)) {
-                            echo "<br/><br/><br/>Hola";
-                            echo $_REQUEST['buscaanime'];
                             //if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
                                 if(isset($_REQUEST['buscaanime']))
                                 {
