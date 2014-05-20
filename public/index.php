@@ -361,7 +361,6 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                 if (usuario_logeado($nicku)) {
                     $soyyo = 'si';
                     $clase = array('col-md-9', 'col-md-3');
-                    
                     if($priv == 1)
                     {
                         $mensajes = mensajes_privados($datosUsuario->id);
@@ -371,9 +370,11 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                     else
                     {
                         $conjuntoUsuarios = mensajes_privados_contenido($priv);
-                        foreach($conjuntoUsuarios as $conj)
-                        {
-                            $conj->usuario_e = ORM::for_table('usuario')->find_one($conj->usuario_e)->nick;
+                        if($conjuntoUsuarios != null){
+                            foreach($conjuntoUsuarios as $conj)
+                            {
+                                    $conj->usuario_e = ORM::for_table('usuario')->find_one($conj->usuario_e)->nick;
+                            }
                         }
                         $N = -1;
                     }
@@ -384,18 +385,21 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                     $clase = array('col-md-12', 'col-md-4');
                 }
                 $favs = favoritos($datosUsuario->id);
-
-                $app->render('datosusuario.html.twig', array(
-                    'datos' => $datosUsuario,
-                    'favs' => $favs,
-                    'caso' => $caso,
-                    'soyyo' => $soyyo,
-                    'clase' => $clase,
-                    'mensajespriv' => $conjuntoUsuarios,
-                    'usuariomensajes' => $priv,
-                    'N' => $N,
-                    'usuario' => $_SESSION['logeo']
-                ));
+                if($conjuntoUsuarios == null)
+                    $app->redirect($app->urlFor('registro'));
+                else{
+                    $app->render('datosusuario.html.twig', array(
+                        'datos' => $datosUsuario,
+                        'favs' => $favs,
+                        'caso' => $caso,
+                        'soyyo' => $soyyo,
+                        'clase' => $clase,
+                        'mensajespriv' => $conjuntoUsuarios,
+                        'usuariomensajes' => $priv,
+                        'N' => $N,
+                        'usuario' => $_SESSION['logeo']
+                    ));
+                }
             }
     }
     else

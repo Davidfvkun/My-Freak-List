@@ -110,19 +110,14 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`mensaje` (
   `usuario_r` INT NOT NULL,
   `usuario_e` INT NOT NULL,
   `fecha_enviado` DATETIME NOT NULL,
+  `leido` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_mensaje_usuario1_idx` (`usuario_e` ASC),
   CONSTRAINT `fk_mensaje_usuario1`
     FOREIGN KEY (`usuario_e`)
     REFERENCES `myfreakzone`.`usuario` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-   CONSTRAINT `fk_mensaje_usuario2`
-    FOREIGN KEY (`usuario_r`)
-    REFERENCES `myfreakzone`.`usuario` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-	)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
