@@ -96,8 +96,8 @@
                        <label for="C" class="css-label">Pelicula </label>
                   {% endif %}
                   </label>
-                  <br/><label>Está filtrando por la palabra
-                      <input type="text" class="form-control" value="{{ datosBusqueda[0] }}" name="buscaanime" id="inputbusqueda1" autocomplete="off">
+                  <br/><label>Está filtrando por la palabra {{ datosBusqueda[0] }}
+                      <input type="hidden" value="{{ datosBusqueda[0] }}" name="buscaanime" >
                   </label>
                   {% if datosBusqueda[1] is not null %}
                   <br/><label>Está filtrando por el género '{{ datosBusqueda[1]}}' </label>

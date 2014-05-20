@@ -143,6 +143,7 @@ $app->map('/busquedausuario/:num', function($num) use ($app) {
                             $totalDatos = count($busqueda->find_many());
                             $numPaginas = ceil($totalDatos/$datosPorPagina);
                             $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
+                            
                         //}
                     }
                     $app->render('busquedausuario.html.twig', array(
@@ -504,24 +505,25 @@ $app->post('/buscarnoticia/:num', function($num) use ($app) {
     if(usuario_logeado())
     {
             $datosNoticias = null;
-            $numPaginas = 1;
+            $numPaginas = 0;
             $datosPorPagina = 1;
-            if (isset($_POST['buscarnoticia'])) {// Comprobación de que introduces al menos una letra
-                $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'], $_POST['filtradonoticia']);
-                if($_POST['filtradonoticia'] != 2 && $datosNoticias != null)
-                {
-                    $totalDatos = count($datosNoticias->find_many());
-                    $numPaginas = ceil($totalDatos/$datosPorPagina);
-                    $datosNoticias = $datosNoticias->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
-                }
-                else
-                {
-                    $numPaginas = 0;
-                }
+            $datosQueGuardar = array();
+            if(isset($_POST['inputbuscarnoticias']) && isset($_POST['filtradonoticia'])){
+                    $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'], $_POST['filtradonoticia']);
+                    $datosCompletos = $datosNoticias->find_many();
+                    if($datosNoticias != null)
+                    {
+                        $totalDatos = count($datosCompletos);
+                        $numPaginas = ceil($totalDatos/$datosPorPagina);
+                        $datosNoticias = $datosNoticias->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
+                        $datosQueGuardar[0] = $_POST['inputbuscarnoticias'];
+                        $datosQueGuardar[1] = $_POST['filtradonoticia'];
+                    }
             }
             $app->render('busquedanoticias.html.twig', array(
                 'datos' => $datosNoticias,
                 'N' => $numPaginas,
+                'datosBusqueda' => $datosQueGuardar,
                 'usuario' => $_SESSION['logeo']
             ));
     }

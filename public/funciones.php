@@ -480,14 +480,7 @@ function buscar_noticia($busqueda, $filtrado) {
             }
             break;
         case 2:
-            $datosBusqueda = explode(",", $busqueda);
-            $datosConsulta = array();
-
-            for ($i = 0; $i < count($datosBusqueda); $i++) {
-                $consultaSimple = $buscarNoticias->where_like('etiquetas', '%' . $datosBusqueda[$i] . '%')->find_many();
-                $datosConsulta = array_merge($datosConsulta, $consultaSimple);
-            }
-            $buscarNoticias = $datosConsulta;
+            $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%');
             /* if(empty($buscarNoticias))
               $mensajeError = "No existen noticias con esos tags"; */
             break;
