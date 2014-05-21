@@ -574,6 +574,22 @@ function mensajes_privados_contenido($usuario)
     return $mensaje;
 }
 
+function mensajes_no_leidos()
+{
+    $cadena = "";
+    $yo = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+    $mensajes = ORM::for_table('mensaje')->where('usuario_r',$yo->id)->where('leido',0)->find_many();
+    $mensajes_recibidos = array();
+    foreach($mensajes as $aux)
+    {
+        $mensajes_recibidos[count($mensajes_recibidos)] = ORM::for_table('usuario')->where('id',$aux->usuario_e)->find_one()->nick;
+        $cadena = $cadena."<br/>Tienes mensajes de ".$mensajes_recibidos[count($mensajes_recibidos)-1];
+    }
+    return $cadena;
+    
+    
+}
+
 function enviar_mensaje_privado($mensaje, $priv)
 {
     $dbh = \ORM::getDb();
@@ -588,6 +604,7 @@ function enviar_mensaje_privado($mensaje, $priv)
             $guardar->usuario_r = $existeUsuario->id;
             $guardar->mensaje = $mensaje;
             $guardar->fecha_enviado = date("Y-m-d H:i:s");
+            $guardar->leido = 0; // No leido
             $guardar->save();
             $dbh->commit();
             $ok = true;

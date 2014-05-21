@@ -40,9 +40,10 @@ $view->parserExtensions = array(
 session_start();
 
 $app->map('/coso', function() use ($app) {
-            switch ($app->request()->getMethod()) {
+            switch ($app->request()->getMethod()) { // Esto es para poder probar funciones y demás cosas fuera de lo 
+                                                    // que es el diseño de la aplicación
                 case "GET":
-                        $app->render('coso.html.twig');
+                    mensajes_no_leidos();
                     break;
             }
         })->name('coso')->via('GET', 'POST');
@@ -51,8 +52,10 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
                 case "GET":
                     if (usuario_logeado()) {
+                        $tienesMensajes = mensajes_no_leidos();
                         $app->render('inicio.html.twig', array(
                             'generos' => $GLOBALS['generos'],
+                            'tienesMensajes' => $tienesMensajes,
                             'N' => count($GLOBALS['generos']),
                             'ultimasNoticias' => ultimas_noticias(),
                             'usuario' => $_SESSION['logeo']));
