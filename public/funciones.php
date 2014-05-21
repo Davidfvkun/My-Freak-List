@@ -583,9 +583,8 @@ function mensajes_no_leidos()
     foreach($mensajes as $aux)
     {
         $mensajes_recibidos[count($mensajes_recibidos)] = ORM::for_table('usuario')->where('id',$aux->usuario_e)->find_one()->nick;
-        $cadena = $cadena."<br/>Tienes mensajes de ".$mensajes_recibidos[count($mensajes_recibidos)-1];
     }
-    return $cadena;
+    return $mensajes_recibidos;
     
     
 }

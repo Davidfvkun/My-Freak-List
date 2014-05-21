@@ -54,6 +54,20 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                 {% if tienesMensajes is null %}
+                    <li><img src="/utilidades/image/leidos.png" alt="mensajes leidos" class="simbol" id="img_leidos" /></li>
+                 {% else %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" 
+                           href="#" id="themes"><img src="/utilidades/image/no-leidos1.png" alt="mensajes leidos" class="simbol" id="img_leidos" /></a>
+                        <ul class="dropdown-menu" aria-labelledby="themes">
+                            {% for i in 0..nMensajes-1 %}
+                                <li><a href="/datosusuario/{{ usuario }}/m/{{ tienesMensajes[i] }}">Tienes un mensaje de {{ tienesMensajes[i] }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        
+                    </li>
+                 {% endif %}
                 <li><a href="/datosusuario/{{ usuario }}/m/1">Mi perfil</a></li>
                 <li><a href="{{ urlFor('salir')}}">Salir</a></li>
             </ul>

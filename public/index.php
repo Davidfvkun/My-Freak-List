@@ -56,6 +56,7 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                         $app->render('inicio.html.twig', array(
                             'generos' => $GLOBALS['generos'],
                             'tienesMensajes' => $tienesMensajes,
+                            'nMensajes' => count($tienesMensajes),
                             'N' => count($GLOBALS['generos']),
                             'ultimasNoticias' => ultimas_noticias(),
                             'usuario' => $_SESSION['logeo']));
