@@ -53,6 +53,7 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                 case "GET":
                     if (usuario_logeado()) {
                         $tienesMensajes = mensajes_no_leidos();
+                        
                         $app->render('inicio.html.twig', array(
                             'generos' => $GLOBALS['generos'],
                             'tienesMensajes' => $tienesMensajes,
