@@ -345,12 +345,6 @@ function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
     request.done(function(response, textStatus, jqXHR)
     {
         coso = JSON.parse(response);
-        /*mostrar = new Array();
-         for (i = 0; i <= 6; i++)
-         {
-         mostrar[i] = coso[i];
-         }
-         alert(mostrar);*/
         $("#inputbusqueda1").autocomplete({
             source: coso
         });

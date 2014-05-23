@@ -47,6 +47,23 @@
                         {% for i in 0..N-1 %}
                              <div class="mensajesprivados">Usuario: <a href="/datosusuario/{{ usuario }}/m/{{ mensajespriv[i] }}" data-toggle="tab">{{ mensajespriv[i] }}</a></div>
                         {% endfor %}
+                       <form class="form-horizontal" method="POST" action="/datosusuario/{{ datos['nick']}}/e/2">
+                           <br/>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                     <input type="text" class="form-control" name="para" id="para" autocomplete="off" placeholder="Nick del destinatario" />
+                                </div>
+                            </div>
+                            <div class="form-group" id="mensajeprivadodiv">
+                                <div class="col-lg-12">
+                                     <textarea name="mensajeprivado" rows="5" class="form-control" id="mensajeprivado" placeholder="Mensaje a enviar" ></textarea>
+                                     <label>Mínimo un carácter, máximo 500</label>
+                                </div>
+                            </div>
+                            <div class="center">
+                                <button type="submit" class="btn btn-success" name="enviarmensaje">Enviar mensaje</button>
+                            </div>
+                      </form>
                       {% else %}
                        <form method="POST" action="/datosusuario/{{ datos['nick']}}/e/{{ usuariomensajes }}" class="form-horizontal">
                           {% for i in mensajespriv %}

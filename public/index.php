@@ -348,13 +348,15 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                         $caso = 'mostrar';
                         if (isset($_POST['mensajeprivado']))
                         {
+                            if($priv == 2 && isset($_POST['para']))
+                                $priv = $_POST['para'];
                             $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
                         }
                     }
                     break;
             }
             $datosUsuario = ORM::for_table('usuario')->where('nick', $nicku)->find_one();
-
+            $N = -1;
 
             if (empty($datosUsuario)) {
                 echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
@@ -363,7 +365,7 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
             else if(isset($ok) && $ok == false)
                 echo "Ha ocurrido algún error al enviar el mensaje";
             else {
-                if (usuario_logeado($nicku)) {
+                if (usuario_logeado() && $_SESSION['logeo'] == $nicku) {
                     $soyyo = 'si';
                     $clase = array('col-md-9', 'col-md-3');
                     if($priv == 1)
@@ -381,16 +383,16 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                                     $conj->usuario_e = ORM::for_table('usuario')->find_one($conj->usuario_e)->nick;
                             }
                         }
-                        $N = -1;
                     }
                        
                     
                 } else {
                     $soyyo = 'no';
+                    $conjuntoUsuarios = array();
                     $clase = array('col-md-12', 'col-md-4');
                 }
                 $favs = favoritos($datosUsuario->id);
-                if($conjuntoUsuarios == null)
+                if($conjuntoUsuarios == null && $priv != 1)
                     $app->redirect($app->urlFor('registro'));
                 else{
                     $app->render('datosusuario.html.twig', array(
