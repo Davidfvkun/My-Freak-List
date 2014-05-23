@@ -39,14 +39,32 @@ $view->parserExtensions = array(
 
 session_start();
 
-$app->map('/coso', function() use ($app) {
-            switch ($app->request()->getMethod()) { // Esto es para poder probar funciones y demás cosas fuera de lo 
-                                                    // que es el diseño de la aplicación
-                case "GET":
-                    mensajes_no_leidos();
+$app->map('/error/:fail', function($fail) use ($app) {
+            switch($fail)
+            {
+                case 1: // El usuario no existe
+                    $info = "El usuario no existe";
+                    break;
+                case 2: // Error al editar datos
+                    $info = "Ha ocurrido algún error al eitar los datos";
+                    break;
+                case 3: // No existe ese anime/serie/película
+                    $info = "No existe ese anime/serie/película";
+                    break;
+                case 4:
+                    $info = "Ha ocurrido algún error al enviar el mensaje";
+                    break;
+                case 5:
+                    $info = "No existe esa noticia";
+                    break;
+                default: 
+                    $info = "Error desconocido";
                     break;
             }
-        })->name('coso')->via('GET', 'POST');
+            $app->render('error.html.twig', array(
+                            'info' => $info
+                        ));
+        })->name('error')->via('GET', 'POST');
 
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {
@@ -304,7 +322,7 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
 
             empty($loTengo) ? $check = 'Agregar' : $check = 'Editar';
             if (empty($datosMaterial)) {
-                echo "No existe ese anime/serie/película";
+               $app->redirect($app->urlFor('error',array('fail' => 3)));
             } else {
                 $capitulosMaterial = ORM::for_table('capitulo')->
                                 where('material_id', $idt)->find_many();
@@ -348,22 +366,23 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                         $caso = 'mostrar';
                         if (isset($_POST['mensajeprivado']))
                         {
-                            if($priv == 2 && isset($_POST['para']))
+                            if($priv == 2 && isset($_POST['para'])){
                                 $priv = $_POST['para'];
-                            $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
+                                $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
+                            }
                         }
                     }
                     break;
-            }
+            }/* Fin del Switch */
             $datosUsuario = ORM::for_table('usuario')->where('nick', $nicku)->find_one();
             $N = -1;
 
             if (empty($datosUsuario)) {
-                echo "Ese usuario no existe"; // Esto está cutrisimo, pero por ahora se queda así
+               $app->redirect($app->urlFor('error',array('fail' => 1))); // Esto está cutrisimo, pero por ahora se queda así
             } else if (isset($edit) && $edit == false)
-                echo "Ha ocurrido algún error al editar los datos";
+               $app->redirect($app->urlFor('error',array('fail' => 2)));
             else if(isset($ok) && $ok == false)
-                echo "Ha ocurrido algún error al enviar el mensaje";
+               $app->redirect($app->urlFor('error',array('fail' => 4)));
             else {
                 if (usuario_logeado() && $_SESSION['logeo'] == $nicku) {
                     $soyyo = 'si';
@@ -407,7 +426,7 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                         'usuario' => $_SESSION['logeo']
                     ));
                 }
-            }
+            }/* Fin del else */
     }
     else
         $app->redirect($app->urlFor('registro'));
@@ -576,7 +595,7 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
             $datosNoticia = ORM::for_table('noticia')->where('id', $idt)->find_one();
 
             if (empty($datosNoticia)) {
-                echo "No existe esa noticia";
+                $app->redirect($app->urlFor('error',array('fail' => 5)));
             } else {
                 $comentarios = ORM::for_table('comentario')->
                                 select_many('comentario.id', 'comentario.comentario', 'comentario.fecha_publicad', 'usuario.nick')->
@@ -601,7 +620,7 @@ $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
             $datosNoticia = ORM::for_table('noticia')->where('id', $idt)->find_one();
 
             if (empty($datosNoticia)) {
-                echo "<br/><br/><br/><br/><br/>No existe esa noticia";
+                $app->redirect($app->urlFor('error',array('fail' => 5)));
             } else {
                 $comentarioBorrar = ORM::for_table('comentario')->where('id', $idc)->find_one();
                 if (!empty($comentarioBorrar)) {

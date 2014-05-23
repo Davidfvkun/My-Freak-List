@@ -598,7 +598,7 @@ function enviar_mensaje_privado($mensaje, $priv)
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     $existeUsuario = ORM::for_table('usuario')->where('nick',$priv)->find_one();
-    if(empty($existeUsuario) || comprueba_longitud($mensaje, 500, 1))
+    if(!empty($existeUsuario)&& comprueba_longitud($mensaje, 500, 1))
     {
         try 
         {
