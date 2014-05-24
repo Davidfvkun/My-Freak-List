@@ -47,6 +47,44 @@ insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
 		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3);
 insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
 		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (22, 'El inventa1',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (23, 'El inventa2',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (24, 'El inventa3',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (25, 'El inventa4',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (26, 'El inventa5',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (27, 'El inventa6',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (28, 'El inventa7',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (29, 'El inventa8',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (30, 'El inventa9',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (31, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (32, 'El Hola que tal',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (33, 'El Adios que tal',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (34, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (35, 'The Wish',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (36, 'The Me aburro',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (37, 'The Hola Twitter',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (38, 'The Facebook',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (39, 'The Usar Internet Explorer es malo',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
+		values (40, 'The Bye bye',3,'Sinopsis de la pelicula El rey leon','2004',0);
 		
 		/* ,2013-07-01*/
 insert into capitulo (material_id, titulo, fecha_salida) 
@@ -246,6 +284,26 @@ insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin
 		values ('alvaronick', 'alvaronombre', 'alvaroapellido', 'alvaroemail@hotmail.com', 'descripcion alvaro', 'oretaniaalvaro',0);
 insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
 		values ('danielnick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('danielanick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('davinianick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('daInventadonick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('daInventado2nick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('pepenick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('pepenick2', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('pepanick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('pepita', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('mariapepa', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
+		values ('pepainventatelo', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
 		
 		
 

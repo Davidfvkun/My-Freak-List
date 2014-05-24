@@ -569,8 +569,10 @@ function mensajes_privados_contenido($usuario)
                 where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario->id, $idUsuario->id))->
                 find_many();
         foreach($mensaje as $aux){
-            $aux->leido = 1;
-            $aux->save();
+            if($aux->usuario_r == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id){
+                $aux->leido = 1;
+                $aux->save();
+            }
         }
     }
     else

@@ -155,7 +155,7 @@ $app->map('/login', function() use ($app) {
 
 $app->map('/busquedausuario/:num', function($num) use ($app) {
     if(usuario_logeado()){
-                    $datosPorPagina = 2;
+                    $datosPorPagina = 5;
                     $numPaginas = 1;
                     $busqueda = null;
                     $datosQueGuardar = array();
