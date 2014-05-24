@@ -198,7 +198,7 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                             $V = array(1, 1, 1);
                         }
                         if (isset($_POST['buscarm']) || ($num > 1)) {
-                            //if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
+                            if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
                                 if(isset($_REQUEST['buscaanime']))
                                 {
                                     $datosQueGuardar[0] = $_REQUEST['buscaanime'];
@@ -207,7 +207,7 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                                     $numPaginas = ceil($totalDatos/$datosPorPagina);
                                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
                                 }
-                            //}
+                            }
                         }
                     }
                 
@@ -540,9 +540,9 @@ $app->post('/buscarnoticia/:num', function($num) use ($app) {
             $datosQueGuardar = array();
             if(isset($_POST['inputbuscarnoticias']) && isset($_POST['filtradonoticia'])){
                     $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'], $_POST['filtradonoticia']);
-                    $datosCompletos = $datosNoticias->find_many();
                     if($datosNoticias != null)
                     {
+                        $datosCompletos = $datosNoticias->find_many();
                         $totalDatos = count($datosCompletos);
                         $numPaginas = ceil($totalDatos/$datosPorPagina);
                         $datosNoticias = $datosNoticias->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();

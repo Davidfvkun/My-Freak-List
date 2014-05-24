@@ -96,31 +96,26 @@ function comprueba_nick_existente($nicki) {
 
 function subir_archivo($nickp) {
     $uploadedfileload = "true";
-    //echo $_FILES['uploadedfile']['name'];
-    //$msg = "";
     if ($_FILES['uploadedfile']['size'] > 200000) {
-        //$msg = $msg . "El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo<BR>";
+        // El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo";
         $uploadedfileload = "false";
     }
 
     if (!($_FILES['uploadedfile']['type'] == "image/jpeg" OR $_FILES['uploadedfile']['type'] == "image/png")) {
-        //$msg = $msg . " Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos<BR>";
+        // Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos;
         $uploadedfileload = "false";
     }
-
-    //$file_name = $_FILES['uploadedfile']['name'];
     $add = "utilidades/image/perfil/" . $nickp . ".jpg";
     if ($uploadedfileload == "true") {
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
-            //echo " Ha sido subido satisfactoriamente";
+            //Ha sido subido satisfactoriamente
             return true;
         } else {
-            //echo "Error al subir el archivo";
+            //e Error al subir el archivo;
             return false;
         }
     } else {
         return true;
-        //echo $msg;
     }
 }
 
@@ -471,23 +466,16 @@ function buscar_noticia($busqueda, $filtrado) {
         case 1:
             $idUsuario = ORM::for_table('usuario')->where("nick", $busqueda)->find_one();
             if (empty($idUsuario)) {
-                //$mensajeError = "No existe usuario con ese nick";
                 $buscarNoticias = null;
             } else {
                 $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id);
-                /* if(empty($buscarNoticias))
-                  $mensajeError = "Ese usuario no ha publicado ninguna noticia"; */
             }
             break;
         case 2:
             $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%');
-            /* if(empty($buscarNoticias))
-              $mensajeError = "No existen noticias con esos tags"; */
             break;
         case 3:
             $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%');
-            /* if(empty($buscarNoticias))
-              $mensajeError = "No existen noticias con ese contenido"; */
             break;
         default:
     }
@@ -554,12 +542,26 @@ function favoritos($idUsuario) {
     return $fav;
 }
 
+/*
+ * Devuelve los mensajes privados de un usuario
+ * 
+ * @param string $idUsuario Id del usuario del que se muestran los mensajes
+ * @return array $mensaje Contiene dichos mensajes
+ */
+
 function mensajes_privados($idUsuario) {
     $mensaje = ORM::for_table('mensaje')->
             where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario, $idUsuario))->
             find_many();
     return $mensaje;
 }
+
+/*
+ * Devuelve los mensajes privados entre dos usuarios concretos (Tu y otro)
+ * 
+ * @param string $usuario El nick del usuario
+ * @return array
+ */
 
 function mensajes_privados_contenido($usuario)
 {
@@ -580,6 +582,12 @@ function mensajes_privados_contenido($usuario)
     return $mensaje;
 }
 
+/*
+ * Devuelve los mensajes no leidos para notificar al usuario que tiene esos mensajes sin leer
+ * 
+ * @return array $mensajes_recibidos
+ */
+
 function mensajes_no_leidos()
 {
     $cadena = "";
@@ -594,6 +602,13 @@ function mensajes_no_leidos()
     
     
 }
+
+/*
+ * Envia un mensaje privado a un usuario
+ * 
+ * @param string $mensaje El mensaje que se va a enviar
+ * @return string $priv El nick del usuario al que se va a enviar el mensaje
+ */
 
 function enviar_mensaje_privado($mensaje, $priv)
 {
@@ -624,6 +639,13 @@ function enviar_mensaje_privado($mensaje, $priv)
     return $ok;
 }
 
+/*
+ * Devuelve el conjunto de usuarios con los que te has enviado mensajes privados
+ * 
+ * @param array $mensajes Mensajes ue tienes
+ * @return int $id Id de los usuarios
+ */
+
 function usuarios_mensajeados($mensajes, $id) {
     $nUsuarios = 0;
     $conjuntoUsuarios = array();
@@ -637,13 +659,20 @@ function usuarios_mensajeados($mensajes, $id) {
             $conjuntoUsuarios[$nUsuarios] = $aux->nick;
             $nUsuarios++;
         }
-        /*$mensaje->usuario_e = $aux->nick;
-        $mensaje->usuario_r = $aux2->nick;
-        echo "<br/>El usuario " . $mensaje->usuario_e .
-        " ha enviado el mensaje '" . $mensaje->mensaje . "' al usuario " . $mensaje->usuario_r;*/
     }
     return $conjuntoUsuarios;
 }
+
+/*
+ * Función para publicar un nuevo material. Se le envia un mensaje privado al usuario administrador
+ * con los datos de ese material. Ese administrador será el encargado de decidir publicarlo o no
+ * 
+ * @param string $nombre Nombre del material
+ * @param string $sinopsis Sinopsis del material
+ * @param string $anio Año del material
+ * @param int $tipo Tipo del material (Serie/Anime/Película)
+ * @return boolean $ok Devuelve true o false según si se ha enviado correctamente la notificación al usuario
+ */
 
 function publicar_material($nombre, $sinopsis, $anio, $tipo)
 {
@@ -667,7 +696,6 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo)
              $dbh->rollback();
              $ok = false;
          }
-         $ok = true;
     }
     else
         $ok = false;

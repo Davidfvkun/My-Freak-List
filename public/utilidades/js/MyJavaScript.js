@@ -266,16 +266,6 @@ function CompruebaCampo(id, expresionRegular, casoNick)
             return true;
         }
     }
-    /*if (document.getElementById("claveRdiv").className != "form-group has-success" ||
-            document.getElementById("emaildiv").className != "form-group has-success" ||
-            document.getElementById("nickRdiv").className != "form-group has-success")
-    {
-        document.getElementById("registrarse").disabled = true;
-    }
-    else
-    {
-        document.getElementById("registrarse").disabled = false;
-    }*/
 }
 
 function CompruebaNick(id, peticionn, expresionRegular1, valor1)
