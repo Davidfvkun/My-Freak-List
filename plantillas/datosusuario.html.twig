@@ -78,8 +78,8 @@
                          </div>
                          <div class="center">
                              <button type="submit" class="btn btn-success" name="enviarmensaje">Enviar mensaje</button>
-                         </div>
-                       </form>  
+                         </div>-
+                       </form> 
                       {% endif %}
                                  
                     </div>
@@ -224,10 +224,30 @@
                  </div>
             </div>
         </div>
+        <div class="col-md-6">
+        <input type="button" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
+            <div style="display: none;" id="bajaCuenta">
+                <form method="POST" action="darseDeBaja">
+                    <label>Está seguro de que quiere darse de baja. Los datos de su cuenta se mantendrán durante un mes.
+                        En ese tiempo podrá volver a entrar sin problema y se reactivará la cuenta</label>
+                        <button class="btn btn-danger">Aceptar</button>
+               </form>
+            </div>
+        </div>
     </div>
     
   </div>
 <script>
      window.onload = initDatosUsuario();
+     
+     $(document).ready(function(){
+        $("#eliminarCuenta").click(function(){
+          $("#bajaCuenta").slideToggle();
+          if(document.getElementById("eliminarCuenta").value === "Darse de baja")
+            document.getElementById("eliminarCuenta").value = "Abortar";
+          else
+            document.getElementById("eliminarCuenta").value = "Darse de baja";
+        });
+      });
 </script>
 {% endblock %}
