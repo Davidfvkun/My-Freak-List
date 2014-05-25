@@ -274,40 +274,38 @@ insert into capitulo (material_id, titulo, fecha_salida)
 		values (21, 'Capitulo 4 Titulo El rey leon','2009-04-04');
 		
 
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('davidnick2', 'davidnombre', 'davidapellido', 'davidemail@hotmail.com', 'descripcion david', 'oretaniadavid',1);
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('pepenick', 'pepenombre', 'pepeapellido', 'pepeemail@hotmail.com', 'descripcion pepe', 'oretaniapepe',0);
-insert into usuario (nick, email, descripcion, clave, es_admin) 
-		values ('lauranick','lauraemail@hotmail.com', 'descripcion laura', 'oretanialaura',0);
-insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin) 
-		values ('alvaronick', 'alvaronombre', 'alvaroapellido', 'alvaroemail@hotmail.com', 'descripcion alvaro', 'oretaniaalvaro',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('danielnick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('danielanick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('davinianick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('daInventadonick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('daInventado2nick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('pepenick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('pepenick2', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('pepanick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('pepita', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('mariapepa', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
-insert into usuario (nick, nombre, apellido, email, clave, es_admin) 
-		values ('pepainventatelo', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0);
+insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin, activo) 
+		values ('davidnick2', 'davidnombre', 'davidapellido', 'davidemail@hotmail.com', 'descripcion david', 'oretaniadavid',1,1);
+insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin, activo) 
+		values ('pepenick', 'pepenombre', 'pepeapellido', 'pepeemail@hotmail.com', 'descripcion pepe', 'oretaniapepe',0,1);
+insert into usuario (nick, email, descripcion, clave, es_admin, activo) 
+		values ('lauranick','lauraemail@hotmail.com', 'descripcion laura', 'oretanialaura',0,1);
+insert into usuario (nick, nombre, apellido, email, descripcion, clave, es_admin, activo) 
+		values ('alvaronick', 'alvaronombre', 'alvaroapellido', 'alvaroemail@hotmail.com', 'descripcion alvaro', 'oretaniaalvaro',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('danielnick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('danielanick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('davinianick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('daInventadonick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('daInventado2nick', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('pepenick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('pepenick2', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('pepanick1', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('pepita', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('mariapepa', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
+insert into usuario (nick, nombre, apellido, email, clave, es_admin, activo) 
+		values ('pepainventatelo', 'danielnombre', 'danielapellido', 'danielemail@hotmail.com', 'oretania daniel',0,1);
 		
 		
-
-	
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario, favorito) 
 		values (1,1,1, 6, 'Vista en Random David 1', 'Comentario random David 1', 1);
 insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_en, comentario, capitulo_por_el_que_vas, favorito) 

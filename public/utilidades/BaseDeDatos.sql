@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`usuario` (
   `clave` VARCHAR(255) NOT NULL,
   `es_admin` INT NOT NULL,
   `img_perfil` VARCHAR(45) NULL,
+  `activo` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -100,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`capitulo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `myfreakzone`.`mensaje`

@@ -49,6 +49,7 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
             $insertarUsuario->descripcion = $descripcion;
             $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT);
             $insertarUsuario->es_admin = 0;
+            $insertarUsuario->activo = 1;
 
             if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
@@ -701,6 +702,13 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo)
         $ok = false;
    
     return $ok;
+}
+
+function eliminar_cuenta()
+{
+    $usuario = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+    $usuario->activo = 0;
+    $usuario->save();
 }
 
 ?>

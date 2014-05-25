@@ -227,7 +227,7 @@
         <div class="col-md-6">
         <input type="button" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
             <div style="display: none;" id="bajaCuenta">
-                <form method="POST" action="darseDeBaja">
+                <form method="POST" action="{{ urlFor('eliminarcuenta')}}">
                     <label>Está seguro de que quiere darse de baja. Los datos de su cuenta se mantendrán durante un mes.
                         En ese tiempo podrá volver a entrar sin problema y se reactivará la cuenta</label>
                         <button class="btn btn-danger">Aceptar</button>

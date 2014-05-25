@@ -643,6 +643,11 @@ $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
     else
         $app->redirect($app->urlFor('registro'));
         })->name('borrar');
+$app->post('/eliminarcuenta', function() use ($app) {
+            eliminar_cuenta();
+            unset($_SESSION['logeo']);
+            $app->redirect($app->urlFor('registro'));
+        })->name('eliminarcuenta');
 
 $app->run();
 ?>
