@@ -40,13 +40,17 @@
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        <label class="panel-title">Mensajes privados</label>
+                        <label class="panel-title">Mensajes privados {{ N }}</label>
                     </div>
                     <div class="panel-body">
                       {% if N != -1 %}
-                        {% for i in 0..N-1 %}
-                             <div class="mensajesprivados">Usuario: <a href="/datosusuario/{{ usuario }}/m/{{ mensajespriv[i] }}" data-toggle="tab">{{ mensajespriv[i] }}</a></div>
-                        {% endfor %}
+                        {% if N != 0 %}
+                            {% for i in 0..N-1 %}
+                                 <div class="mensajesprivados">Usuario: <a href="/datosusuario/{{ usuario }}/m/{{ mensajespriv[i] }}" data-toggle="tab">{{ mensajespriv[i] }}</a></div>
+                            {% endfor %}
+                        {% else %}
+                                 <label>No tienes mensajes privados</label>
+                        {% endif %}
                        <form class="form-horizontal" method="POST" action="/datosusuario/{{ datos['nick']}}/e/2">
                            <br/>
                             <div class="form-group">
@@ -224,6 +228,7 @@
                  </div>
             </div>
         </div>
+       {% if soyyo == 'si' %}
         <div class="col-md-6">
         <input type="button" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
             <div style="display: none;" id="bajaCuenta">
@@ -234,6 +239,7 @@
                </form>
             </div>
         </div>
+        {% endif %}
     </div>
     
   </div>

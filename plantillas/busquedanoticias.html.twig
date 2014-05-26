@@ -30,7 +30,7 @@
         <div class="row">
                 {% for i in datos %}
                         <div class="col-md-3 cajitas">
-                            <h2><a href="noticia/{{i['id']}}"> 
+                            <h2><a href="/noticia/{{i['id']}}"> 
                             {{ i['titulo'] }}
                             </a></h2>
                             <p> {{ i['noticia']|striptags|slice(0, 150)}}</p>
