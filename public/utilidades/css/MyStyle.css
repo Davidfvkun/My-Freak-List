@@ -105,6 +105,7 @@ My Freak Zone - My Freak List - Web application for films, series and animes (Ja
     width: 25px;
     height: 25px;
 }
+
 .imgmaterial
 {
     width: 100px;
@@ -162,7 +163,16 @@ input[type=checkbox].css-checkbox:checked + label.css-label
 {
     background-image:url('../image/lite-cyan-check.png');
 }
-
+.img_leidos_{
+    margin-top: 15px;
+}
+@media all and (min-width: 100px) and (max-width: 770px)
+{
+    .img_leidos_{
+        margin-left: 15px;
+        margin-top: 0 !important;
+    }
+}
 .mensajesprivados{
     margin-top: 15px;
 }

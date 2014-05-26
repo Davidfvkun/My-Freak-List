@@ -71,12 +71,14 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
                 case "GET":
                     if (usuario_logeado()) {
                         $tienesMensajes = mensajes_no_leidos();
+                        $yo = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
                         
                         $app->render('inicio.html.twig', array(
                             'generos' => $GLOBALS['generos'],
                             'tienesMensajes' => $tienesMensajes,
                             'nMensajes' => count($tienesMensajes),
                             'N' => count($GLOBALS['generos']),
+                            'soyAdmin' => $yo->es_admin,
                             'ultimasNoticias' => ultimas_noticias(),
                             'usuario' => $_SESSION['logeo']));
                     }
@@ -143,6 +145,11 @@ $app->map('/login', function() use ($app) {
                                 'mensaje' => 'Usuario y/o contraseña incorrectos',
                                 'clase' => 'info error'));
                         } else {
+                            $dioBaja = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+                            if($dioBaja->activo == 0){
+                                $dioBaja->activo = 1;
+                                $dioBaja->save();
+                            }
                             $app->redirect($app->urlFor('myfreakzone'));
                         }
                     }
