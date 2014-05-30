@@ -664,5 +664,6 @@ $app->get('/borrarnoticia/:idn', function($idn) use ($app) {
             if($ok == false) echo "<br/><br/><br/><br/><br/><br/>False"; else echo "<br/><br/><br/><br/><br/><br/>true";
             //$app->redirect($app->urlFor('registro'));
         })->name('borrarnoticia');
+        
 $app->run();
 ?>

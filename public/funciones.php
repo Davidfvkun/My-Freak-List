@@ -35,7 +35,7 @@ require_once "../config.php";
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
-    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 8) &&
+    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 7) &&
             preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
         $dbh = \ORM::getDb();
@@ -55,7 +55,7 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
                 $insertarUsuario->save();
             } else if (subir_archivo($nick)) {
-                $insertarUsuario->img_perfil = "/utilidades/image/perfil/" . $nick . ".jpg";
+                $insertarUsuario->img_perfil = "/utilidades/image/perfil/".nick.".jpg";
                 $insertarUsuario->save();
             } else {
                 $dbh->rollback();
@@ -286,10 +286,14 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     $ok = false;
     try {
         $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
-
         $editarUsuario->nombre = $nombre;
         $editarUsuario->apellido = $apellido;
         $editarUsuario->descripcion = $descripcion;
+        echo $_FILES['uploadedfile']['name'];
+        if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
+            $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
+            subir_archivo($_SESSION['logeo']);
+        }
         $editarUsuario->save();
         $ok = true;
         $dbh->commit();
@@ -297,6 +301,11 @@ function editar_usuario($nombre, $apellido, $descripcion) {
         $dbh->rollback();
         $ok = false;
     }
+    /*
+            } else {
+                $dbh->rollback();
+                return false;
+            }*/
 
     return $ok;
 }
@@ -566,10 +575,12 @@ function mensajes_privados($idUsuario) {
 
 function mensajes_privados_contenido($usuario)
 {
+    $yo = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
     $idUsuario = ORM::for_table('usuario')->where('nick',$usuario)->find_one();
     if(!empty($idUsuario)){
         $mensaje = ORM::for_table('mensaje')->
                 where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario->id, $idUsuario->id))->
+                where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($yo->id, $yo->id))->
                 find_many();
         foreach($mensaje as $aux){
             if($aux->usuario_r == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id){
