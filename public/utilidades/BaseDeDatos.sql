@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`comentario` (
   CONSTRAINT `fk_comentario_noticias1`
     FOREIGN KEY (`noticias_id`)
     REFERENCES `myfreakzone`.`noticia` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -101,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`capitulo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Table `myfreakzone`.`mensaje`

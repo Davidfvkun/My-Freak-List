@@ -609,9 +609,12 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
                                 join('usuario', array('comentario.usuario_id', '=', 'usuario.id'))->
                                 where('noticias_id', $datosNoticia->id)->order_by_asc('fecha_publicad')->find_many();
                 $nombreUsuario = ORM::for_table("usuario")->where('id', $datosNoticia->usuario_id)->find_one();
+                $_SESSION['logeo'] == $nombreUsuario->nick ? $soyyo = "si" : $soyyo = "no";
                 $app->render('noticia.html.twig', array(
                     'datos' => $datosNoticia,
                     'autor' => $nombreUsuario->nick,
+                    'soyyo' => $soyyo,
+                    'idNoticia' => $idt,
                     'coments' => $comentarios,
                     'usuario' => $_SESSION['logeo']
                 ));
@@ -656,5 +659,10 @@ $app->post('/eliminarcuenta', function() use ($app) {
             $app->redirect($app->urlFor('registro'));
         })->name('eliminarcuenta');
 
+$app->get('/borrarnoticia/:idn', function($idn) use ($app) {
+            $ok = borrar_noticia($idn);
+            if($ok == false) echo "<br/><br/><br/><br/><br/><br/>False"; else echo "<br/><br/><br/><br/><br/><br/>true";
+            //$app->redirect($app->urlFor('registro'));
+        })->name('borrarnoticia');
 $app->run();
 ?>

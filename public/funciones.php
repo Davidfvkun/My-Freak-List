@@ -711,4 +711,25 @@ function eliminar_cuenta()
     $usuario->save();
 }
 
+function borrar_noticia($idNoticia)
+{
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    $laNoticia = ORM::for_table('noticia')->find_one($idNoticia);
+    $ok = false;
+    if($laNoticia->usuario_id == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id)
+    {
+        try
+        {
+            $laNoticia->delete();
+            $ok = true;
+        } catch (\PDOException $e) 
+        {
+             $dbh->rollback();
+             $ok = false;
+        }
+    }
+    return $ok;
+}
+
 ?>
