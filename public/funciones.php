@@ -35,7 +35,7 @@ require_once "../config.php";
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
-    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($nick, 20, 7) &&
+    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($contraseña, 20, 7) &&
             preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
         $dbh = \ORM::getDb();
@@ -55,7 +55,11 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
                 $insertarUsuario->save();
             } else if (subir_archivo($nick)) {
-                $insertarUsuario->img_perfil = "/utilidades/image/perfil/".nick.".jpg";
+                if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                    $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
+                else if($_FILES['uploadedfile']['type'] == "image/png")
+                    $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".png";
+                    
                 $insertarUsuario->save();
             } else {
                 $dbh->rollback();
@@ -97,7 +101,7 @@ function comprueba_nick_existente($nicki) {
 
 function subir_archivo($nickp) {
     $uploadedfileload = "true";
-    if ($_FILES['uploadedfile']['size'] > 200000) {
+    if ($_FILES['uploadedfile']['size'] > 600000) {
         // El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo";
         $uploadedfileload = "false";
     }
@@ -106,17 +110,21 @@ function subir_archivo($nickp) {
         // Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos;
         $uploadedfileload = "false";
     }
-    $add = "utilidades/image/perfil/" . $nickp . ".jpg";
+    /*else if($_FILES['uploadedfile']['type'] == "image/png")
+        $add = "utilidades/image/perfil/" . $nickp . ".png";
+    else if($_FILES['uploadedfile']['type'] == "image/jpeg")*/
+        $add = "utilidades/image/perfil/" . $nickp . ".jpg";
+    
     if ($uploadedfileload == "true") {
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
             //Ha sido subido satisfactoriamente
-            return true;
+            return true; 
         } else {
             //e Error al subir el archivo;
-            return false;
+            return false; 
         }
     } else {
-        return true;
+        return true; 
     }
 }
 
@@ -289,10 +297,18 @@ function editar_usuario($nombre, $apellido, $descripcion) {
         $editarUsuario->nombre = $nombre;
         $editarUsuario->apellido = $apellido;
         $editarUsuario->descripcion = $descripcion;
-        echo $_FILES['uploadedfile']['name'];
         if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
-            $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
-            subir_archivo($_SESSION['logeo']);
+            if(subir_archivo($_SESSION['logeo'])){
+                if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                        $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
+                else if($_FILES['uploadedfile']['type'] == "image/png")
+                        $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".png";
+            }
+            else{
+                $dbh->rollback();
+                return false;
+            }
+            
         }
         $editarUsuario->save();
         $ok = true;
@@ -300,13 +316,8 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     } catch (\PDOException $e) {
         $dbh->rollback();
         $ok = false;
+        echo "2";
     }
-    /*
-            } else {
-                $dbh->rollback();
-                return false;
-            }*/
-
     return $ok;
 }
 
