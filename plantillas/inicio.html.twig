@@ -29,8 +29,7 @@
         </div>
     </div>
     <div class="row">
-        <h2 style="margin-left: 13px">Busqueda de animes/series/películas</h2>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
@@ -70,8 +69,6 @@
                         </form>
                    </div>
                 </div>
-        </div>
-        <div class="col-md-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <h3 class="panel-title">Buscar usuarios</h3>
@@ -102,16 +99,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Noticias recientes</h3>
-                </div>
-                <div class="panel panel-body">
+        <div class="col-md-7" style="margin-top: -20px !important">
+            <h2>Noticias recientes</h2>
                     {% for i in ultimasNoticias %}
-                        <div class="col-md-5">
+                        <div>
                             <h2><a href="/noticia/{{i['id']}}"> 
                             {{ i['titulo'] }}
                             </a></h2>
@@ -119,8 +110,6 @@
                          </div>
                     {% endfor %}
                     <a href="{{urlFor('publicabuscanoticias')}}">Publica o busca noticias</a>
-                </div>
-            </div>
         </div>
             
     </div>

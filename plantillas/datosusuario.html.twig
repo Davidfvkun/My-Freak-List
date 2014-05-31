@@ -91,11 +91,7 @@
              </div>
         {% endif %}
         <div class={{ clase[0] }}>
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <label class="panel-title">Datos del usuario {{ datos.nick }}</label>
-                </div>
-                <div class="panel-body">
+                <h2>Datos del usuario {{ datos.nick }}</h2>
                     <div id="datospersonales" class="{{ clase[1] }}">
                         <h2>Datos Personales</h2>
                         <img src="{{ datos['img_perfil'] }}" class="imgmaterial" ><br/>
@@ -233,8 +229,6 @@
                         </div>
                     </div>
                  </div>
-            </div>
-        </div>
        {% if soyyo == 'si' %}
         <div class="col-md-6">
         <input type="button" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />

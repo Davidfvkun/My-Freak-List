@@ -54,7 +54,29 @@ function init()
             {
                 CompruebaClaves(1);
             }, false);
+   document.getElementById("file1").addEventListener(
+       'change',
+       function()
+       {
+           CompruebaImagen();
+       }, false);
             
+}
+
+function CompruebaImagen()
+{
+    valor = document.getElementById("file1").value;
+    formato = valor.substring(valor.length-4);
+    if(formato != ".png" && formato != ".jpg")
+    {
+         document.getElementById("errorimagen").innerHTML = "Archivo de imagen incorrecto";
+         document.getElementById("errorimagen").style = "color: red";
+    }
+    else
+    {
+        document.getElementById("errorimagen").innerHTML = "Archivo de imagen correcto";
+        document.getElementById("errorimagen").style = "color: green";    
+    }
 }
 
 function CompruebaClaves(check)

@@ -151,7 +151,7 @@ function login($nick, $contraseña) {
  */
 
 function ultimas_noticias() {
-    $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(2)->find_many();
+    $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(4)->find_many();
     return $ultimasNoticias;
 }
 
