@@ -101,7 +101,8 @@
                             <div class="form-group">
                                 <div class="col-lg-10">
                                     <label>Cambia de avatar</label>
-                                    <input name="uploadedfile" type="file" />
+                                    <input name="uploadedfile" type="file" id="file1" onChange="CompruebaImagen()" />
+                                    <label id="errorimagen">Solo imágenes de menos de 1MB</label>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -273,7 +273,7 @@ function listados($idt, $ide, $nicku) {
                         join('usuario', array('usuario_id', '=', 'usuario.id'))->
                         where('material.tipo', $idTipo)->
                         where('material_usuario.estado', $idEstado)->
-                        where('usuario.id', $idUsuario->id)->find_many();
+                        where('usuario.id', $idUsuario->id)->order_by_asc('material.nombre')->find_many();
     }
     else
         $buscaCosa = -1;

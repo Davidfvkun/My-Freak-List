@@ -151,7 +151,13 @@ function initDatosUsuario()
             function()
             {
                 CamposLongitud('mensajeprivado', 500,0);
-            }, false)
+            }, false);
+    /*document.getElementById("file1").addEventListener(
+       'change',
+       function()
+       {
+           CompruebaImagen();
+       }, false);*/
 }
 
 function InitPlantillaPrincipal()
