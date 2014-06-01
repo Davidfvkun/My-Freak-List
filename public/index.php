@@ -209,7 +209,8 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                                 if(isset($_REQUEST['buscaanime']))
                                 {
                                     $datosQueGuardar[0] = $_REQUEST['buscaanime'];
-                                    $busqueda = buscar_material($_REQUEST['buscaanime'], $V);
+                                    $datosQueGuardar[1] = $_REQUEST['geneross'];
+                                    $busqueda = buscar_material($_REQUEST['buscaanime'], $V, $_REQUEST['geneross']);
                                     $totalDatos = count($busqueda->find_many());
                                     $numPaginas = ceil($totalDatos/$datosPorPagina);
                                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();

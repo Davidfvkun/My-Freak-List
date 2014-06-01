@@ -71,7 +71,7 @@
                 quiere agregarla pinche <a href="/introducematerial">aquí</a></label>
            </div>
          </div>
-         <div class="row">
+         <div class="row" >
              <div class="col-md-12">
                 <label>Está filtrando por 
                   {% if opciones[0] == 1 %}
@@ -101,6 +101,7 @@
                   </label>
                   {% if datosBusqueda[1] is not null %}
                   <br/><label>Está filtrando por el género '{{ datosBusqueda[1]}}' </label>
+                  <input type="hidden" value="{{ datosBusqueda[1] }}" name="geneross" >
                   {% endif %}
                   {% if datosBusqueda[2] is not null %}
                   <br/>

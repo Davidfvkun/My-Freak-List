@@ -33,7 +33,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Busqueda
+                        Búsqueda
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -59,6 +59,16 @@
                                             <input id="C" type="checkbox" class="css-checkbox" name="cbmaterial[]" value='2' >
                                             <label for="C" class="css-label">Pelicula </label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputgenero" class="col-lg-2 control-label">Género</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="geneross" name="geneross" >
+                                            {% for i in 0..N-1 %}
+                                                <option value="{{ generos[i] }}">{{ generos[i] }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">

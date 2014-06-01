@@ -51,7 +51,7 @@ switch ($_REQUEST['peticion']) {
             $arri = array(1,1,1);
         else
             $arri = array($_GET['val2'], $_GET['val3'], $_GET['val4']);
-        $busqueda = buscar_material($_GET['val1'], $arri);
+        $busqueda = buscar_material($_GET['val1'], $arri, $_GET['val5']);
         $busqueda = $busqueda->find_many();
         $i = 0;
         $arr = array();

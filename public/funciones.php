@@ -183,12 +183,13 @@ function buscar_usuarios($busqueda, $filtrado) {
  * @return object
  */
 
-function buscar_material($busqueda, $V) {
+function buscar_material($busqueda, $V, $genero) {
 
     $buscaMaterial = ORM::for_table('material');
     $cadena = "";
     $arr = array();
     $sep = false;
+    /* Array de tipos */
     if ($V[0] == 1) {
         $cadena = $cadena . "(`tipo` = ? ";
         $arr[count($arr)] = 1;
@@ -211,12 +212,18 @@ function buscar_material($busqueda, $V) {
 
         $arr[count($arr)] = 3;
     }
+    //////////////////////////
+    /* Género */
+    
     $cadena = $cadena . ")";
     if (strlen($busqueda) > 2) {
         $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
     } else {
         $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%');
     }
+    
+    if($genero != "No filtrar")
+        $buscaMaterial = $buscaMaterial->where_like('genero', '%' . $genero . '%');
     return $buscaMaterial;
 }
 

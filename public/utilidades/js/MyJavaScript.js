@@ -176,7 +176,8 @@ function InitPlantillaPrincipal()
                 Ajax_Material(document.getElementById("inputbusqueda1").value,
                         document.getElementById("A").checked,
                         document.getElementById("B").checked,
-                        document.getElementById("C").checked, 2);
+                        document.getElementById("C").checked, 
+                        document.getElementById("geneross").value,2);
             }, false);
 }
 
@@ -347,7 +348,7 @@ function Ajax_Usuario(valor1, valor2, peticionn)
         });
     });
 }
-function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
+function Ajax_Material(valor1, valor2, valor3, valor4, valor5, peticionn)
 {
     valor2 == true ? valor2 = 1 : valor2 = 0;
     valor3 == true ? valor3 = 1 : valor3 = 0;
@@ -356,7 +357,7 @@ function Ajax_Material(valor1, valor2, valor3, valor4, peticionn)
     request = $.ajax({
         url: "/ajax.php",
         type: "GET",
-        data: {val1: valor1, val2: valor2, val3: valor3, val4: valor4, peticion: peticionn}
+        data: {val1: valor1, val2: valor2, val3: valor3, val4: valor4, val5: valor5, peticion: peticionn}
     });
 
     request.done(function(response, textStatus, jqXHR)

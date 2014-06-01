@@ -3,88 +3,88 @@ START TRANSACTION;
 
 /* Previamente crear el usuario numero uno desde el registro del programa */
 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010',3);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006',2); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004',4); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (5,'Lost',1,'Sinopsis de la serie Lost','2006',3); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004',3); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006',5); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010',4); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010',3,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006',2,'lucha, ciencia'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004',4,'shonen, accion, amor'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (5,'Lost',1,'Sinopsis de la serie Lost','2006',3,'lucha, accion, amor'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004',3,'lucha, accion, amor'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006',5,'lucha, accion, amor'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010',4,'lucha, accion, amor'); 
 		
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009',3);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009',5);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (11,'Bleach',2,'Sinopsis del anime bleach','2010',4);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004',4);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006',5);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006',4);	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004',6);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009',3,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009',5,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (11,'Bleach',2,'Sinopsis del anime bleach','2010',4,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004',4,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006',5,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006',4,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004',6,'lucha, accion, amor');	
 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009',5);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009',3);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010',4);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010',5);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (22, 'El inventa1',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (23, 'El inventa2',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (24, 'El inventa3',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (25, 'El inventa4',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (26, 'El inventa5',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (27, 'El inventa6',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (28, 'El inventa7',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (29, 'El inventa8',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (30, 'El inventa9',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (31, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (32, 'El Hola que tal',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (33, 'El Adios que tal',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (34, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (35, 'The Wish',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (36, 'The Me aburro',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (37, 'The Hola Twitter',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (38, 'The Facebook',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (39, 'The Usar Internet Explorer es malo',3,'Sinopsis de la pelicula El rey leon','2004',0);
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos)
-		values (40, 'The Bye bye',3,'Sinopsis de la pelicula El rey leon','2004',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009',5,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009',3,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010',4,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010',5,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (22, 'El inventa1',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (23, 'El inventa2',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (24, 'El inventa3',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (25, 'El inventa4',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (26, 'El inventa5',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (27, 'El inventa6',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (28, 'El inventa7',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (29, 'El inventa8',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (30, 'El inventa9',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (31, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (32, 'El Hola que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (33, 'El Adios que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (34, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (35, 'The Wish',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (36, 'The Me aburro',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (37, 'The Hola Twitter',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (38, 'The Facebook',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (39, 'The Usar Internet Explorer es malo',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
+		values (40, 'The Bye bye',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
 		
 		/* ,2013-07-01*/
 insert into capitulo (material_id, titulo, fecha_salida) 
@@ -354,6 +354,7 @@ insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, tit
 		values ('Noticia numero 4', '2014/02/03', 'fuente numero 3', 1, 'pepita, coso, otro', 'Titulo 4');
 insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
 		values ('Noticia numero 5', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5');
+
 
 insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values
             ('Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1', '2014/02/03',1,1);
