@@ -62,9 +62,17 @@ $app->map('/error/:fail', function($fail) use ($app) {
                     break;
             }
             $app->render('error.html.twig', array(
-                            'info' => $info
+                            'info' => $info,
+                            'usuario' => $_SESSION['logeo']
                         ));
         })->name('error')->via('GET', 'POST');
+
+$app->map('/panelAdmin', function() use ($app) {
+            
+            $app->render('panelAdmin.html.twig', array(
+                            'usuario' => $_SESSION['logeo']
+                        ));
+        })->name('panelAdmin')->via('GET', 'POST');;
 
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {

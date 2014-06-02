@@ -151,7 +151,7 @@ function login($nick, $contraseña) {
  */
 
 function ultimas_noticias() {
-    $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(4)->find_many();
+    $ultimasNoticias = ORM::for_table('noticia')->where('publicada',1)->order_by_desc('fecha_publicado')->limit(4)->find_many();
     return $ultimasNoticias;
 }
 
@@ -216,9 +216,9 @@ function buscar_material($busqueda, $V, $genero) {
     
     $cadena = $cadena . ")";
     if (strlen($busqueda) > 2) {
-        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%');
+        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', '%' . $busqueda . '%')->where('publicado',1);
     } else {
-        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%');
+        $buscaMaterial = $buscaMaterial->where_raw($cadena, $arr)->where_like('nombre', $busqueda . '%')->where('publicado',1);
     }
     
     if($genero != "No filtrar")
@@ -464,6 +464,7 @@ function publicar_noticia($titulo, $noticia, $fuente, $tags) {
             $insertarNoticia->noticia = $noticia;
             $insertarNoticia->fuente = $fuente;
             $insertarNoticia->etiquetas = $tags;
+            $insertarNoticia->publicada = 0;
             $id = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
             $insertarNoticia->usuario_id = $id->id;
             $insertarNoticia->save();
@@ -495,14 +496,14 @@ function buscar_noticia($busqueda, $filtrado) {
             if (empty($idUsuario)) {
                 $buscarNoticias = null;
             } else {
-                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id);
+                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id)->where('publicada',1);
             }
             break;
         case 2:
-            $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%');
+            $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%')->where('publicada',1);
             break;
         case 3:
-            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%');
+            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%')->where('publicada',1);
             break;
         default:
     }
