@@ -166,15 +166,14 @@ $app->map('/busquedausuario/:num', function($num) use ($app) {
                     $numPaginas = 1;
                     $busqueda = null;
                     $datosQueGuardar = array();
-                    if (isset($_POST['buscaru']) || $num > 1) {
-                        //if (strlen($_POST['busquedausuario']) > 0 && isset($_POST['filtrado'])) {// Comprobación de que introduces al menos una letra
+                    if (strlen($_POST['busquedausuario']) > 0 && isset($_POST['filtrado'])) {
+                    
                             $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
                             $datosQueGuardar[0] = $_POST['busquedausuario'];  $datosQueGuardar[1] = $_POST['filtrado'];  
                             $totalDatos = count($busqueda->find_many());
                             $numPaginas = ceil($totalDatos/$datosPorPagina);
                             $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
                             
-                        //}
                     }
                     $app->render('busquedausuario.html.twig', array(
                             'datos' => $busqueda,
@@ -204,7 +203,6 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                         } else {
                             $V = array(1, 1, 1);
                         }
-                        if (isset($_POST['buscarm']) || ($num > 1)) {
                             if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
                                 if(isset($_REQUEST['buscaanime']))
                                 {
@@ -216,7 +214,6 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num-1)*$datosPorPagina)->find_many();
                                 }
                             }
-                        }
                     }
                 
                    $app->render('busquedamaterial.html.twig', array(

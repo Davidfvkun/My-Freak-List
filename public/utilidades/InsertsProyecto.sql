@@ -3,88 +3,88 @@ START TRANSACTION;
 
 /* Previamente crear el usuario numero uno desde el registro del programa */
 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010',3,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006',2,'lucha, ciencia'); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004',4,'shonen, accion, amor'); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (5,'Lost',1,'Sinopsis de la serie Lost','2006',3,'lucha, accion, amor'); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004',3,'lucha, accion, amor'); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006',5,'lucha, accion, amor'); 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010',4,'lucha, accion, amor'); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (1,'Arrow',1,'Sinopsis de la serie Arrow','2009',3,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (2,'The Following', 1,'Sinopsis de la serie The Following','2010',3,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (3,'The Big Bang Theory',1,'Sinopsis de la serie The Big Bang Theory','2006',2,'lucha, ciencia',1); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (4,'Como conoci a vuestra madre',1,'Sinopsis de la serie CCAVM','2004',4,'shonen, accion, amor',1); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (5,'Lost',1,'Sinopsis de la serie Lost','2006',3,'lucha, accion, amor',1); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (6,'Vampire Diaries',1,'Sinopsis de la serie Vampire Diaries','2004',3,'lucha, accion, amor',1); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (7,'Juego de tronos',1,'Sinopsis de la serie Juego de tronos','2006',5,'lucha, accion, amor',1); 
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (8,'American Horror Story',1,'Sinopsis de la serie American Horror Story','2010',4,'lucha, accion, amor',1); 
 		
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009',3,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009',5,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (11,'Bleach',2,'Sinopsis del anime bleach','2010',4,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004',4,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006',5,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006',4,'lucha, accion, amor');	
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004',6,'lucha, accion, amor');	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (9,'Durarara',2,'Sinopsis del anime Durarara','2009',3,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (10,'Ef a tale of memories',2,'Sinopsis del anime Ef a tale of memories','2009',5,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (11,'Bleach',2,'Sinopsis del anime bleach','2010',4,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (12,'One Piece',2,'Sinopsis del anime One Piece','2004',4,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (13,'Dragon Ball',2,'Sinopsis del anime Dragon Ball','2006',5,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (14,'Naruto',2,'Sinopsis del anime Naruto','2006',4,'lucha, accion, amor',1);	
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (15,'Ranma',2,'Sinopsis del anime Ranma','2004',6,'lucha, accion, amor',1);	
 
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009',5,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009',3,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010',4,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010',5,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (22, 'El inventa1',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (23, 'El inventa2',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (24, 'El inventa3',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (25, 'El inventa4',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (26, 'El inventa5',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (27, 'El inventa6',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (28, 'El inventa7',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (29, 'El inventa8',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (30, 'El inventa9',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (31, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (32, 'El Hola que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (33, 'El Adios que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (34, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (35, 'The Wish',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (36, 'The Me aburro',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (37, 'The Hola Twitter',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (38, 'The Facebook',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (39, 'The Usar Internet Explorer es malo',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
-insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero)
-		values (40, 'The Bye bye',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor');
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (16, 'A todo gas',3,'Sinopsis de la pelicula a todo gas','2009',5,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (17, 'Resacon en las vegas',3,'Sinopsis de la pelicula resacon en las vegas','2009',3,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (18, 'Avatar',3,'Sinopsis de la pelicula avatar','2010',4,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (19, 'Harry Potter',3,'Sinopsis de la pelicula Harry Potter','2010',5,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (20, 'El señor de los anillos',3,'Sinopsis de la pelicula el señor de los anillos','2004',3,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (21, 'El rey leon',3,'Sinopsis de la pelicula El rey leon','2004',4,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (22, 'El inventa1',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (23, 'El inventa2',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (24, 'El inventa3',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (25, 'El inventa4',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (26, 'El inventa5',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (27, 'El inventa6',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (28, 'El inventa7',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (29, 'El inventa8',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (30, 'El inventa9',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',0);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (31, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (32, 'El Hola que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (33, 'El Adios que tal',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (34, 'El pepito de los palotes',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (35, 'The Wish',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (36, 'The Me aburro',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (37, 'The Hola Twitter',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (38, 'The Facebook',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (39, 'The Usar Internet Explorer es malo',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
+insert into material (id, nombre, tipo, sinopsis, anio,n_capitulos, genero, publicado)
+		values (40, 'The Bye bye',3,'Sinopsis de la pelicula El rey leon','2004',0,'lucha, accion, amor',1);
 		
 		/* ,2013-07-01*/
 insert into capitulo (material_id, titulo, fecha_salida) 
@@ -344,16 +344,16 @@ insert into material_usuario(usuario_id, material_id, estado, puntuacion, vista_
 		values (1,18,1, 8, 'Vista en Random David 18', 'Comentario random David 18', 1);
 		
 
-insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
-		values ('Noticia numero 2 Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', '2014/02/03', 'fuente numero 1', 1, 'pepito, coso, otro', 'Titulo 2');
-insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 2 Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.', '2014/02/03', 'fuente numero 1', 1, 'pepito, coso, otro', 'Titulo 2',0);
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
 		values ('Noticia numero 3 Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock, un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..", viene de una linea en la sección 1.10.32
 
-El trozo de texto estándar de Lorem Ipsum usado desde el año 1500 es reproducido debajo para aquellos interesados. Las secciones 1.10.32 y 1.10.33 de "de Finibus Bonorum et Malorum" por Cicero son también reproducidas en su forma original exacta, acompañadas por versiones en Inglés de la traducción realizada en 1914 por H. Rackham.', '2014/02/03', 'fuente numero 2', 1, 'pepito, cosa, otro', 'Titulo 3');
-insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
-		values ('Noticia numero 4', '2014/02/03', 'fuente numero 3', 1, 'pepita, coso, otro', 'Titulo 4');
-insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo)
-		values ('Noticia numero 5', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5');
+El trozo de texto estándar de Lorem Ipsum usado desde el año 1500 es reproducido debajo para aquellos interesados. Las secciones 1.10.32 y 1.10.33 de "de Finibus Bonorum et Malorum" por Cicero son también reproducidas en su forma original exacta, acompañadas por versiones en Inglés de la traducción realizada en 1914 por H. Rackham.', '2014/02/03', 'fuente numero 2', 1, 'pepito, cosa, otro', 'Titulo 3',0);
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 4', '2014/02/03', 'fuente numero 3', 1, 'pepita, coso, otro', 'Titulo 4',1);
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 5', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5',1);
 
 
 insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values

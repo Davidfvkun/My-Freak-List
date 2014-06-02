@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`noticia` (
   `usuario_id` INT NOT NULL,
   `etiquetas` VARCHAR(200) NOT NULL,
   `titulo` VARCHAR(200) NOT NULL,
+  `publicada` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_noticias_usuario1_idx` (`usuario_id` ASC),
   CONSTRAINT `fk_noticias_usuario1`
@@ -81,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
   `n_capitulos` INT NULL,
   `img_material` VARCHAR(45) NULL,
   `genero` VARCHAR(45) NULL,
+  `publicado` INT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

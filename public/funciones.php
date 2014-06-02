@@ -213,7 +213,6 @@ function buscar_material($busqueda, $V, $genero) {
         $arr[count($arr)] = 3;
     }
     //////////////////////////
-    /* Género */
     
     $cadena = $cadena . ")";
     if (strlen($busqueda) > 2) {
