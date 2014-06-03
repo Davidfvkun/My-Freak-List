@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`material` (
   `img_material` VARCHAR(45) NULL,
   `genero` VARCHAR(45) NULL,
   `publicado` INT NOT NULL,
+  `fecha_publicado` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -103,6 +104,7 @@ CREATE TABLE IF NOT EXISTS `myfreakzone`.`capitulo` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `myfreakzone`.`mensaje`

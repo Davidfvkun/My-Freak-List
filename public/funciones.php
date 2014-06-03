@@ -115,7 +115,7 @@ function subir_archivo($nickp, $opcion) {
     if($opcion == 1 && $_FILES['uploadedfile']['type'] == "image/jpeg")
         $add = "utilidades/image/perfil/" . $nickp . ".jpg";
     else if($opcion == 1 && $_FILES['uploadedfile']['type'] == "image/png")
-        $add = "utilidades/image/material/" . $nickp . ".png";
+        $add = "utilidades/image/perfil/" . $nickp . ".png";
     else if($opcion == 2 && $_FILES['uploadedfile']['type'] == "image/png")
         $add = "utilidades/image/material/" . $nickp . ".png";
     else if($opcion == 2 && $_FILES['uploadedfile']['type'] == "image/jpeg")
@@ -157,7 +157,7 @@ function login($nick, $contraseña) {
  */
 
 function ultimas_noticias() {
-    $ultimasNoticias = ORM::for_table('noticia')->where('publicada',1)->order_by_desc('fecha_publicado')->limit(4)->find_many();
+    $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(4)->find_many();
     return $ultimasNoticias;
 }
 
@@ -501,14 +501,14 @@ function buscar_noticia($busqueda, $filtrado) {
             if (empty($idUsuario)) {
                 $buscarNoticias = null;
             } else {
-                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id)->where('publicada',1);
+                $buscarNoticias = $buscarNoticias->where('usuario_id', $idUsuario->id);
             }
             break;
         case 2:
-            $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%')->where('publicada',1);
+            $buscarNoticias = $buscarNoticias->where_like('etiquetas', '%' . $busqueda . '%');
             break;
         case 3:
-            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%')->where('publicada',1);
+            $buscarNoticias = $buscarNoticias->where_like('noticia', '%' . $busqueda . '%');
             break;
         default:
     }
