@@ -54,11 +54,13 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
             if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                 $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
                 $insertarUsuario->save();
-            } else if (subir_archivo($nick)) {
+            } else if (subir_archivo($nick, 1)) {
                 if($_FILES['uploadedfile']['type'] == "image/jpeg")
                     $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
                 else if($_FILES['uploadedfile']['type'] == "image/png")
                     $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".png";
+                else
+                    $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
                     
                 $insertarUsuario->save();
             } else {
@@ -99,7 +101,7 @@ function comprueba_nick_existente($nicki) {
  * @return boolean True si se ha subido correctamente, False si no
  */
 
-function subir_archivo($nickp) {
+function subir_archivo($nickp, $opcion) {
     $uploadedfileload = "true";
     if ($_FILES['uploadedfile']['size'] > 600000) {
         // El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo";
@@ -110,11 +112,10 @@ function subir_archivo($nickp) {
         // Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos;
         $uploadedfileload = "false";
     }
-    /*else if($_FILES['uploadedfile']['type'] == "image/png")
-        $add = "utilidades/image/perfil/" . $nickp . ".png";
-    else if($_FILES['uploadedfile']['type'] == "image/jpeg")*/
+    if($opcion == 1)
         $add = "utilidades/image/perfil/" . $nickp . ".jpg";
-    
+    else
+        $add = "utilidades/image/material/" . $nickp . ".jpg";
     if ($uploadedfileload == "true") {
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
             //Ha sido subido satisfactoriamente
@@ -304,7 +305,7 @@ function editar_usuario($nombre, $apellido, $descripcion) {
         $editarUsuario->apellido = $apellido;
         $editarUsuario->descripcion = $descripcion;
         if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
-            if(subir_archivo($_SESSION['logeo'])){
+            if(subir_archivo($_SESSION['logeo'],1)){
                 if($_FILES['uploadedfile']['type'] == "image/jpeg")
                         $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
                 else if($_FILES['uploadedfile']['type'] == "image/png")
@@ -322,7 +323,6 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     } catch (\PDOException $e) {
         $dbh->rollback();
         $ok = false;
-        echo "2";
     }
     return $ok;
 }
@@ -704,7 +704,7 @@ function usuarios_mensajeados($mensajes, $id) {
  * @return boolean $ok Devuelve true o false según si se ha enviado correctamente la notificación al usuario
  */
 
-function publicar_material($nombre, $sinopsis, $anio, $tipo)
+function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
 {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
@@ -712,13 +712,26 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo)
     {
         try
         {
-            $usuarioAdmin = ORM::for_table('usuario')->where('es_admin',1)->find_one();
-            $mensajePrivado = ORM::for_table('mensaje')->create();
-            $mensajePrivado->usuario_r = $usuarioAdmin->id;
-            $mensajePrivado->usuario_e = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id;
-            $mensajePrivado->mensaje = "Nombre: ".$nombre." Sinopsis: ".$sinopsis." Año: ".$anio. " Tipo: ".$tipo;
-            $mensajePrivado->fecha_enviado = date("Y-m-d H:i:s");
-            $mensajePrivado->save();
+            $id = count(ORM::for_table('material')->find_many()) + 1;
+            $insertaMaterial = ORM::for_table('material')->create();
+            $insertaMaterial->nombre = $nombre;
+            $insertaMaterial->tipo = $tipo;
+            $insertaMaterial->sinopsis = $sinopsis;
+            $insertaMaterial->anio = $anio;
+            $insertaMaterial->genero = $genero;
+            if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
+                 $insertaMaterial->img_material = "/utilidades/image/material/default.png";
+            } else if (subir_archivo($id, 2)) {
+                if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                     $insertaMaterial->img_material = "/utilidades/image/material/".$id.".jpg";
+                else if($_FILES['uploadedfile']['type'] == "image/png")
+                     $insertaMaterial->img_material = "/utilidades/image/material/".$id.".png";
+                else
+                     $insertaMaterial->img_material = "/utilidades/image/material/default.png";
+            }
+                
+            $insertaMaterial->publicado = 0; 
+            $insertaMaterial->save();
             $dbh->commit();
             $ok = true;
          } catch (\PDOException $e) 

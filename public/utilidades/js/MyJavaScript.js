@@ -142,6 +142,12 @@ function InitPublicaMaterial()
             {
                 CompruebaCampo('aniomaterial', /^[0-9]{4}$/);
             }, false);
+    document.getElementById("generomaterial").addEventListener(
+            'keyup',
+            function()
+            {
+                CamposLongitud('generomaterial', 100,-1);
+            }, false);
 }
 
 function initDatosUsuario()

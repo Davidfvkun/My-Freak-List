@@ -28,13 +28,13 @@
     </div>
         <div class="{{ clase }}">{{ mensaje }}</div>
     <div class="row">
-        <div class="col-md-8">
             <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Insertar un nuevo 'material'</h3>
                     </div>
                     <div class="panel panel-body">
-                        <form class="form-horizontal" method="POST" action="">
+                        <form class="form-horizontal" method="POST" action="{{ urlFor('introducematerial')}}" enctype="multipart/form-data">
+                         <div class="col-md-6">
                             <div class="form-group" id="nombrematerialdiv">
                                 <label for=nombrematerial" class="col-lg-2 control-label">Nombre del material*</label>
                                 <div class="col-lg-10">
@@ -47,9 +47,11 @@
                                 <div class="col-lg-10">
                                     <textarea rows="15" type="text"class="form-control" id="sinopsismaterial" name="sinopsismaterial"
                                                   placeholder="Pon aquí la sinopsis de la serie/película/anime">{{ datosBorrador[1] }}</textarea>
-                                    <label>Sinopsis de la serie/película/anime, máximo 100.000</label>
+                                    <label>Sinópsis de la serie/película/anime, máximo 100.000</label>
                                 </div>
                             </div>
+                          </div>
+                          <div class="col-md-6">
                             <div class="form-group" id="aniomaterialdiv">
                                 <label for="aniomaterial" class="col-lg-2 control-label">Año</label>
                                 <div class="col-lg-10">
@@ -66,14 +68,29 @@
                                                 <option value="3">Película</option>
                                         </select>
                                     </div>
+                              </div>
+                              <div class="form-group" id="generomaterialdiv">
+                                    <label for="generomaterial" class="col-lg-2 control-label">Géneros</label>
+                                    <div class="col-lg-10">
+                                        <input type="text" value="{{ datosBorrador[3] }}" class="form-control" id="generomaterial" name="generomaterial">
+                                        <label>Introduce los géneros separados por comas.</label>
+                                    </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="uploadedfile" class="col-lg-2 control-label">Imagen para el material</label>
+                                <div class="col-lg-10">
+                                    <input name="uploadedfile" type="file" id="file1" onChange="CompruebaImagen()" />
+                                    <label id="errorimagen">Solo imágenes de menos de 1MB</label>
                                 </div>
-                                <div class="center">
+                              </div>
+                          </div>
+                                <br/>
+                            <div class="center">
                                     <button class="btn btn-primary" name="publicar">Publicar</button>
-                                </div>
+                            </div>
                         </form>
                     </div>
              </div>
-         </div>
     </div>
 </div>
 <script type="text/JavaScript">

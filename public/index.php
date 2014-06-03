@@ -457,26 +457,30 @@ $app->map('/introducematerial', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['publicar'])) {
-                        if(isset($_POST['nombrematerial']) && isset($_POST['sinopsismaterial']) && isset($_POST['aniomaterial']) && isset($_POST['tipomaterial']))
+                        if(isset($_POST['nombrematerial']) && isset($_POST['sinopsismaterial']) && 
+                                isset($_POST['aniomaterial']) && isset($_POST['tipomaterial'])&& isset($_POST['generomaterial'])
+                                )
                         {
                             $nombreMaterial = $_POST['nombrematerial'];
                             $sinopsisMaterial = $_POST['sinopsismaterial'];
                             $anioMaterial = $_POST['aniomaterial'];
                             $tipoMaterial = $_POST['tipomaterial'];
-                            $verificar = publicar_material($nombreMaterial, $sinopsisMaterial, $anioMaterial, $tipoMaterial);
+                            $generoMaterial = $_POST['generomaterial'];
+                            $verificar = publicar_material($nombreMaterial, $sinopsisMaterial, 
+                                    $anioMaterial, $tipoMaterial, $generoMaterial);
                         }
                         else
                             $verificar = false;
                         
                         if($verificar)
                         {
-                            $datosBorrador = array("", "", "");
+                            $datosBorrador = array("", "", "", "");
                             $clase = "info";
                             $mensaje = "Se le ha enviado una notificación con los datos a un administrador. En unos días se le responderá.";
                         }
                         else
                         {
-                            $datosBorrador = array($nombreMaterial, $sinopsisMaterial, $anioMaterial);
+                            $datosBorrador = array($nombreMaterial, $sinopsisMaterial, $anioMaterial, $generoMaterial);
                             $clase = "info error";
                             $mensaje = "Ha ocurrido algún error";
                         }
