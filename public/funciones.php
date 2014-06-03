@@ -112,10 +112,15 @@ function subir_archivo($nickp, $opcion) {
         // Tu archivo tiene que ser JPG o GIF o PNG. Otros archivos no son permitidos;
         $uploadedfileload = "false";
     }
-    if($opcion == 1)
+    if($opcion == 1 && $_FILES['uploadedfile']['type'] == "image/jpeg")
         $add = "utilidades/image/perfil/" . $nickp . ".jpg";
-    else
+    else if($opcion == 1 && $_FILES['uploadedfile']['type'] == "image/png")
+        $add = "utilidades/image/material/" . $nickp . ".png";
+    else if($opcion == 2 && $_FILES['uploadedfile']['type'] == "image/png")
+        $add = "utilidades/image/material/" . $nickp . ".png";
+    else if($opcion == 2 && $_FILES['uploadedfile']['type'] == "image/jpeg")
         $add = "utilidades/image/material/" . $nickp . ".jpg";
+    
     if ($uploadedfileload == "true") {
         if (move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $add)) {
             //Ha sido subido satisfactoriamente

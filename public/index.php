@@ -68,7 +68,27 @@ $app->map('/error/:fail', function($fail) use ($app) {
         })->name('error')->via('GET', 'POST');
 
 $app->map('/panelAdmin', function() use ($app) {
-            
+            switch ($app->request()->getMethod()) {
+                case "GET":
+                    
+                    break;
+                case "POST":
+                    if(isset($_POST['muestranoticias']))
+                    {
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            
+                        }
+                    }
+                    else if(isset($_POST['muestramateriales']))
+                    {
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            
+                        }
+                    }
+                    break;
+            }
             $app->render('panelAdmin.html.twig', array(
                             'usuario' => $_SESSION['logeo']
                         ));

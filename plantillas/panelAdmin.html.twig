@@ -29,12 +29,44 @@
         </div>
        <div class="row">
            <h1 style="text-align: center">Panel de administración</h1>
-           <div class="col-md-6">
-               <h2>Noticias pendientes de aprobar</h2>
-           </div>
-           <div class="col-md-6">
-               <h2>Materiales pendientes de aprobar</h2>
-           </div>
+           <form method="POST" action="{{ urlFor('panelAdmin')}}">
+                <div class="col-md-6">
+                    <h2>Noticias pendientes de aprobar</h2>
+                    <button class="btn btn-primary" name="muestranoticias">Mostrar noticias</button>
+                </div>
+                <div class="col-md-6">
+                    <h2>Materiales pendientes de aprobar</h2>
+                    <button class="btn btn-primary" name="muestramateriales">Mostrar materiales</button>
+                </div>
+                <div class="col-md-12">
+                    <br/>
+                </div>
+                <div class="col-md-4">
+                     <div class="form-group">
+                           <label for="fecha_1" class="col-lg-2 control-label">Fecha inicial</label>
+                            <div class="col-lg-10">
+                                 <input type="date" name="fecha_1" class="form-control" />
+                            </div>
+                      </div>
+                </div>
+                <div class="col-md-4">
+                      <div class="form-group">
+                           <label for="fecha_2" class="col-lg-2 control-label">Fecha final</label>
+                            <div class="col-lg-10">
+                                 <input type="date" name="fecha_2" class="form-control" />
+                            </div>
+                      </div>
+                </div>
+                {% if muestracampos == 1 %}
+                   {% if dato == 0 %}
+                        {% for i in N %}
+                        {% endfor %}
+                   {% elseif dato == 1 %}
+                        {% for i in N %}
+                        {% endfor %}
+                   {% endif %}
+                {% endif %}
+            </form>
         </div>
     
   </div>
