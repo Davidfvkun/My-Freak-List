@@ -128,6 +128,16 @@ My Freak Zone - My Freak List - Web application for films, series and animes (Ja
     height: 200px;
 }
 
+.botonesadmin{
+    margin-top: 10%;
+}
+@media all and (min-width: 30px) and (max-width: 990px) 
+{
+    .botonesadmin{
+        margin-top: 2%;
+    }
+}
+
 /* Estilo Checkbox */
 
 input[type=checkbox].css-checkbox 

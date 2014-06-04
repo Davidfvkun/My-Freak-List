@@ -61,7 +61,31 @@
         </div>
                     {% if dato < 2 %}
                        {% if dato == 0 %}
+                            <h2>Listado de noticias pendientes en esas fechas</h2><br/>
                             {% for i in N %}
+                                <form class="form-horizontal" method="POST" action="{{ urlFor('panelAdmin')}}">
+                                    <div class="row">
+                                        <input type="text" value="{{ fecha1 }}" name="fecha_1" />
+                                        <input type="text" value="{{ fecha2 }}" name="fecha_2" />
+                                        <input type="text" value="{{ i['id'] }}" name="id" />
+                                        <div class="col-md-10">
+                                            <label>Titulo: {{ i['titulo'] }}</label>
+                                            <br/><label>Fuente: 
+                                            {% if i['fuente'] is null or i['fuente'] == "" %}
+                                            Desconocida
+                                            {% else %}
+                                            {{ i['fuente'] }}
+                                            {% endif %}</label>
+                                            <br/><div><p>{{ i['noticia'] }}</p></div>
+                                            <br/>
+                                        </div>
+                                       <div class="col-md-2 botonesadmin">
+                                            <button class="btn btn-primary" name="aceptarnoticia">Aceptar</button>
+                                            <button class="btn btn-success" name="borrarnoticia">Borrar</button>
+                                      </div>
+                                    </div>
+                                </form>
+                                <hr/>
                             {% endfor %}
                        {% elseif dato == 1 %}
                             <h2>Listado de materiales pendientes en esas fechas</h2><br/>
@@ -82,7 +106,7 @@
                                    <div class="form-group" id="sinopsismaterialdiv">
                                        <label for="sinopsismaterial" class="col-lg-2 control-label">Sinopsis</label>
                                        <div class="col-lg-10">
-                                           <textarea rows="10" type="text"class="form-control" id="sinopsismaterial" name="sinopsismaterial"
+                                           <textarea rows="5" type="text"class="form-control" id="sinopsismaterial" name="sinopsismaterial"
                                                          placeholder="Pon aquí la sinopsis de la serie/película/anime">{{ i['sinopsis'] }}</textarea>
                                            <label>Sinópsis de la serie/película/anime, máximo 100.000</label>
                                        </div>

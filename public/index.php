@@ -92,8 +92,39 @@ $app->map('/panelAdmin', function() use ($app) {
                         {
                             $fecha1 = $_POST['fecha_1'];
                             $fecha2 = $_POST['fecha_2'];
-                            $datos = dame_no_publicados('material', $fecha1, $fecha2);
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
                             $dato = 0;
+                        }
+                    }
+                    else if(isset($_POST['aceptarnoticia']))
+                    {
+                        if(isset($_POST['id']))
+                        {
+                            $aceptarNoticia = ORM::for_table('noticia')->find_one($_POST['id']);
+                            $aceptarNoticia->publicada = 1;
+                            $aceptarNoticia->save();
+                        }
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $dato = 0;
+                        }
+                    }
+                    else if(isset($_POST['borrarnoticia']))
+                    {
+                        if(isset($_POST['id']))
+                        {
+                            $aceptarNoticia = ORM::for_table('noticia')->find_one($_POST['id']);
+                            $aceptarNoticia->delete();
+                        }
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $dato = 1;
                         }
                     }
                     else if(isset($_POST['muestramateriales']))
@@ -102,7 +133,7 @@ $app->map('/panelAdmin', function() use ($app) {
                         {
                             $fecha1 = $_POST['fecha_1'];
                             $fecha2 = $_POST['fecha_2'];
-                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $datos = dame_no_publicados('material', $fecha1, $fecha2);
                             $dato = 1;
                         }
                     }
@@ -123,7 +154,7 @@ $app->map('/panelAdmin', function() use ($app) {
                         {
                             $fecha1 = $_POST['fecha_1'];
                             $fecha2 = $_POST['fecha_2'];
-                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $datos = dame_no_publicados('material', $fecha1, $fecha2);
                             $dato = 1;
                         }
                         
@@ -139,7 +170,7 @@ $app->map('/panelAdmin', function() use ($app) {
                         {
                             $fecha1 = $_POST['fecha_1'];
                             $fecha2 = $_POST['fecha_2'];
-                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $datos = dame_no_publicados('material', $fecha1, $fecha2);
                             $dato = 1;
                         }
                     }

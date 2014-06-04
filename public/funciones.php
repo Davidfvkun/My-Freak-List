@@ -354,8 +354,12 @@ function comprueba_estado($estado) {
 
 function dame_no_publicados($tabla,$fecha1,$fecha2)
 {
+    if($tabla == "material")
+        $public = "publicado";
+    else
+        $public = "publicada";
     return ORM::for_table($tabla)->raw_query(
-                                    "SELECT * FROM `material` WHERE publicado = 0 
+                                    "SELECT * FROM `$tabla` WHERE $public = 0 
                                         and (fecha_publicado between '"
                                     .$fecha1."' and '".$fecha2."')")->find_many();
 }
