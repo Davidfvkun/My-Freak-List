@@ -352,6 +352,13 @@ function comprueba_estado($estado) {
     return $guardar;
 }
 
+function dame_no_publicados($tabla,$fecha1,$fecha2)
+{
+    return ORM::for_table($tabla)->raw_query(
+                                    "SELECT * FROM `material` WHERE publicado = 0 
+                                        and (fecha_publicado between '"
+                                    .$fecha1."' and '".$fecha2."')")->find_many();
+}
 /*
  * Actualizar los datos de una serie/peli/anime
  * @param object $variabl Objeto del ORM.
@@ -406,7 +413,7 @@ function agrega_material($variabl, $estado, $puntuacion, $progreso, $vista_en, $
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 && is_number($puntuacion) && is_number($progreso) &&
+    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 && is_numeric($puntuacion) && is_numeric($progreso) &&
             comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
         try {
             $variabl->estado = comprueba_estado($estado);
@@ -739,6 +746,45 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
     else
         $ok = false;
    
+    return $ok;
+}
+
+function aceptar_material($nombre, $sinopsis, $anio, $tipo, $genero, $id)
+{
+    $dbh = \ORM::getDb();
+    $dbh->beginTransaction();
+    if(comprueba_longitud($nombre, 200, 1) && comprueba_longitud($sinopsis, 10000,0) && $tipo >= 1  && $tipo <= 3)
+    {
+        try
+        {
+            $material = ORM::for_table('material')->find_one($id);
+            $material->nombre  = $nombre;
+            $material->sinopsis = $sinopsis;
+            $material->anio = $anio;
+            $material->tipo = $tipo;
+            $material->genero = $genero;
+            $material->publicado = 1;
+            if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
+                   $material->img_material = "/utilidades/image/perfil/default.png";
+            } else if (subir_archivo($id, 2)) {
+                   if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                      $material->img_material = "/utilidades/image/material/".$id.".jpg";
+                   else if($_FILES['uploadedfile']['type'] == "image/png")
+                      $material->img_material = "/utilidades/image/material/".$id.".png";
+                   else
+                      $material->img_material = "/utilidades/image/material/default.png";
+             }
+             $material->save();
+            $dbh->commit();
+            $ok = true;
+         } catch (\PDOException $e) 
+         {
+             $dbh->rollback();
+             $ok = false;
+         }
+    }
+    else
+        $ok = false;
     return $ok;
 }
 

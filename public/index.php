@@ -48,7 +48,7 @@ $app->map('/error/:fail', function($fail) use ($app) {
                     $info = "El usuario no existe";
                     break;
                 case 2: // Error al editar datos
-                    $info = "Ha ocurrido algún error al eitar los datos";
+                    $info = "Ha ocurrido algún error al editar los datos";
                     break;
                 case 3: // No existe ese anime/serie/película
                     $info = "No existe ese anime/serie/película";
@@ -59,6 +59,9 @@ $app->map('/error/:fail', function($fail) use ($app) {
                 case 5:
                     $info = "No existe esa noticia";
                     break;
+                case 6:
+                    $info = "Error al aceptar el material";
+                        break;
                 default: 
                     $info = "Error desconocido";
                     break;
@@ -76,6 +79,8 @@ $app->map('/panelAdmin', function() use ($app) {
     if(usuario_logeado()){
         $dato = 10;
         $datos = null;
+        $fecha1 = null;
+        $fecha2 = null;
             switch ($app->request()->getMethod()) {
                 case "GET":
                     
@@ -85,10 +90,9 @@ $app->map('/panelAdmin', function() use ($app) {
                     {
                         if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
                         {
-                            $datos = ORM::for_table('material')->raw_query(
-                                    "SELECT * FROM `material` WHERE publicado = 0 
-                                        and (fecha_publicado between '"
-                                    .$_POST['fecha_1']."' and '".$_POST['fecha_2']."')")->find_many();
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('material', $fecha1, $fecha2);
                             $dato = 0;
                         }
                     }
@@ -96,10 +100,46 @@ $app->map('/panelAdmin', function() use ($app) {
                     {
                         if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
                         {
-                            $datos = ORM::for_table('noticia')->raw_query(
-                                    "SELECT * FROM `material` WHERE publicado = 0 
-                                        and (fecha_publicado between '"
-                                    .$_POST['fecha_1']."' and '".$_POST['fecha_2']."')")->find_many();
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $dato = 1;
+                        }
+                    }
+                    else if(isset($_POST['aceptarmaterial']))
+                    {
+                        if(isset($_POST['nombrematerial']) && isset($_POST['sinopsismaterial']) && 
+                                isset($_POST['aniomaterial']) && isset($_POST['tipomaterial'])&& 
+                                isset($_POST['generomaterial']) && isset($_POST['id']))
+                        {
+                            $correcto = aceptar_material($_POST['nombrematerial'],
+                                    $_POST['sinopsismaterial'], $_POST['aniomaterial'],
+                                    $_POST['tipomaterial'], $_POST['generomaterial'], $_POST['id']);
+                        }
+                        if($correcto == false)
+                            $app->redirect($app->urlFor('error',array('fail' => 6))); 
+                        
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
+                            $dato = 1;
+                        }
+                        
+                    }
+                    else if(isset($_POST['borrarmaterial']))
+                    {
+                        if(isset($_POST['id']))
+                        {
+                            $material = ORM::for_table('material')->find_one($_POST['id']);
+                            $material->delete();
+                        }
+                        if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
+                        {
+                            $fecha1 = $_POST['fecha_1'];
+                            $fecha2 = $_POST['fecha_2'];
+                            $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
                             $dato = 1;
                         }
                     }
@@ -108,7 +148,9 @@ $app->map('/panelAdmin', function() use ($app) {
             $app->render('panelAdmin.html.twig', array(
                             'usuario' => $_SESSION['logeo'],
                             'N' => $datos,
-                            'dato' => $dato
+                            'dato' => $dato,
+                            'fecha1' => $fecha1,
+                            'fecha2' => $fecha2
                         ));
     }
     //else
@@ -432,7 +474,7 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
             $N = -1;
 
             if (empty($datosUsuario)) {
-               $app->redirect($app->urlFor('error',array('fail' => 1))); // Esto está cutrisimo, pero por ahora se queda así
+               $app->redirect($app->urlFor('error',array('fail' => 1))); 
             } else if (isset($edit) && $edit == false)
                $app->redirect($app->urlFor('error',array('fail' => 2)));
             else if(isset($ok) && $ok == false)

@@ -59,15 +59,19 @@
                 </div>
             </form>
         </div>
-            <div class="row">
                     {% if dato < 2 %}
                        {% if dato == 0 %}
                             {% for i in N %}
                             {% endfor %}
                        {% elseif dato == 1 %}
-                            <h2>Listado de materiales pendientes en esas fechas</h2>
+                            <h2>Listado de materiales pendientes en esas fechas</h2><br/>
                             {% for i in N %}
-                                <div class="col-md-5 cajitas" >
+                            <form class="form-horizontal" method="POST" action="{{ urlFor('panelAdmin')}}" enctype="multipart/form-data">
+                            <input type="text" value="{{ fecha1 }}" name="fecha_1" />
+                            <input type="text" value="{{ fecha2 }}" name="fecha_2" />
+                            <input type="text" value="{{ i['id'] }}" name="id" />
+                            <div class="row">
+                                <div class="col-md-6" >
                                    <div class="form-group" id="nombrematerialdiv">
                                        <label for=nombrematerial" class="col-lg-2 control-label">Nombre del material*</label>
                                        <div class="col-lg-10">
@@ -90,6 +94,8 @@
                                            <label>Año en el que se estrenó ese serie/película/anime</label>
                                        </div>
                                    </div>
+                                </div>
+                              <div class="col-md-6">
                                    <div class="form-group">
                                            <label for="tipomaterial" class="col-lg-2 control-label">Tipo</label>
                                            <div class="col-lg-10">
@@ -108,6 +114,7 @@
                                                        <option value="3" selected>Película</option>
                                                        {% endif %}
                                                </select>
+                                               <label></label>
                                            </div>
                                      </div>
                                      <div class="form-group" id="generomaterialdiv">
@@ -124,10 +131,19 @@
                                            <label id="errorimagen">Solo imágenes de menos de 1MB</label>
                                        </div>
                                      </div>
+                                      <div class="center">
+                                            <button class="btn btn-primary" name="aceptarmaterial">Aceptar</button>
+                                            <button class="btn btn-success" name="borrarmaterial">Borrar</button>
+                                      </div>
+                                   </div>
                                  </div>
-                            {% endfor %}
-                       {% endif %}
-                    {% endif %}
+                                </form>
+                                 <hr/>
+                            {% else %}
+                            <div class="info center">No hay datos</div>
+                          {% endfor %}
+                                 
+                     {% endif %}
+                  {% endif %}
             </div>
-  </div>
 {% endblock %}
