@@ -40,6 +40,8 @@ $view->parserExtensions = array(
 session_start();
 
 $app->map('/error/:fail', function($fail) use ($app) {
+    if(usuario_logeado())
+    {
             switch($fail)
             {
                 case 1: // El usuario no existe
@@ -65,9 +67,15 @@ $app->map('/error/:fail', function($fail) use ($app) {
                             'info' => $info,
                             'usuario' => $_SESSION['logeo']
                         ));
+    }
+    else
+          $app->redirect($app->urlFor('myfreakzone'));
         })->name('error')->via('GET', 'POST');
 
 $app->map('/panelAdmin', function() use ($app) {
+    if(usuario_logeado()){
+        $dato = 10;
+        $datos = null;
             switch ($app->request()->getMethod()) {
                 case "GET":
                     
@@ -77,22 +85,35 @@ $app->map('/panelAdmin', function() use ($app) {
                     {
                         if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
                         {
-                            
+                            $datos = ORM::for_table('material')->raw_query(
+                                    "SELECT * FROM `material` WHERE publicado = 0 
+                                        and (fecha_publicado between '"
+                                    .$_POST['fecha_1']."' and '".$_POST['fecha_2']."')")->find_many();
+                            $dato = 0;
                         }
                     }
                     else if(isset($_POST['muestramateriales']))
                     {
                         if(isset($_POST['fecha_1']) && isset($_POST['fecha_2']))
                         {
-                            
+                            $datos = ORM::for_table('noticia')->raw_query(
+                                    "SELECT * FROM `material` WHERE publicado = 0 
+                                        and (fecha_publicado between '"
+                                    .$_POST['fecha_1']."' and '".$_POST['fecha_2']."')")->find_many();
+                            $dato = 1;
                         }
                     }
                     break;
             }
             $app->render('panelAdmin.html.twig', array(
-                            'usuario' => $_SESSION['logeo']
+                            'usuario' => $_SESSION['logeo'],
+                            'N' => $datos,
+                            'dato' => $dato
                         ));
-        })->name('panelAdmin')->via('GET', 'POST');;
+    }
+    //else
+          //$app->redirect($app->urlFor('myfreakzone'));
+        })->name('panelAdmin')->via('GET', 'POST');
 
 $app->map('/MyFreakZone/principal', function() use ($app) {
             switch ($app->request()->getMethod()) {

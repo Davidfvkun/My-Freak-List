@@ -45,7 +45,7 @@
                      <div class="form-group">
                            <label for="fecha_1" class="col-lg-2 control-label">Fecha inicial</label>
                             <div class="col-lg-10">
-                                 <input type="date" name="fecha_1" class="form-control" />
+                                 <input type="date" name="fecha_1" value="2012-10-05" class="form-control" />
                             </div>
                       </div>
                 </div>
@@ -53,21 +53,81 @@
                       <div class="form-group">
                            <label for="fecha_2" class="col-lg-2 control-label">Fecha final</label>
                             <div class="col-lg-10">
-                                 <input type="date" name="fecha_2" class="form-control" />
+                                 <input type="date" name="fecha_2"value="2012-10-08" class="form-control" />
                             </div>
                       </div>
                 </div>
-                {% if muestracampos == 1 %}
-                   {% if dato == 0 %}
-                        {% for i in N %}
-                        {% endfor %}
-                   {% elseif dato == 1 %}
-                        {% for i in N %}
-                        {% endfor %}
-                   {% endif %}
-                {% endif %}
             </form>
         </div>
-    
+            <div class="row">
+                    {% if dato < 2 %}
+                       {% if dato == 0 %}
+                            {% for i in N %}
+                            {% endfor %}
+                       {% elseif dato == 1 %}
+                            <h2>Listado de materiales pendientes en esas fechas</h2>
+                            {% for i in N %}
+                                <div class="col-md-5 cajitas" >
+                                   <div class="form-group" id="nombrematerialdiv">
+                                       <label for=nombrematerial" class="col-lg-2 control-label">Nombre del material*</label>
+                                       <div class="col-lg-10">
+                                           <input type="text" value="{{ i['nombre'] }}" class="form-control" id="nombrematerial" name="nombrematerial">
+                                           <label>Nombre de la serie. Mínimo 1 caracteres, máximo 200</label>
+                                       </div>
+                                   </div>
+                                   <div class="form-group" id="sinopsismaterialdiv">
+                                       <label for="sinopsismaterial" class="col-lg-2 control-label">Sinopsis</label>
+                                       <div class="col-lg-10">
+                                           <textarea rows="10" type="text"class="form-control" id="sinopsismaterial" name="sinopsismaterial"
+                                                         placeholder="Pon aquí la sinopsis de la serie/película/anime">{{ i['sinopsis'] }}</textarea>
+                                           <label>Sinópsis de la serie/película/anime, máximo 100.000</label>
+                                       </div>
+                                   </div>
+                                   <div class="form-group" id="aniomaterialdiv">
+                                       <label for="aniomaterial" class="col-lg-2 control-label">Año</label>
+                                       <div class="col-lg-10">
+                                           <input type="text" value="{{ i['anio'] }}" class="form-control" id="aniomaterial" name="aniomaterial">
+                                           <label>Año en el que se estrenó ese serie/película/anime</label>
+                                       </div>
+                                   </div>
+                                   <div class="form-group">
+                                           <label for="tipomaterial" class="col-lg-2 control-label">Tipo</label>
+                                           <div class="col-lg-10">
+                                               <select class="form-control" name="tipomaterial" >
+                                                       {% if i['tipo'] == 1 %}
+                                                        <option value="1" selected>Serie</option>
+                                                       <option value="2">Anime</option>
+                                                       <option value="3">Película</option>
+                                                       {% elseif i['tipo'] == 2 %}
+                                                       <option value="1">Serie</option>
+                                                       <option value="2" selected>Anime</option>
+                                                       <option value="3">Película</option>
+                                                       {% elseif i['tipo'] == 3 %}
+                                                       <option value="1">Serie</option>
+                                                       <option value="2">Anime</option>
+                                                       <option value="3" selected>Película</option>
+                                                       {% endif %}
+                                               </select>
+                                           </div>
+                                     </div>
+                                     <div class="form-group" id="generomaterialdiv">
+                                           <label for="generomaterial" class="col-lg-2 control-label">Géneros</label>
+                                           <div class="col-lg-10">
+                                               <input type="text" value="{{ i['genero'] }}" class="form-control" id="generomaterial" name="generomaterial">
+                                               <label>Introduce los géneros separados por comas.</label>
+                                           </div>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="uploadedfile" class="col-lg-2 control-label">Imagen para el material</label>
+                                       <div class="col-lg-10">
+                                           <input name="uploadedfile" type="file" id="file1" onChange="CompruebaImagen()" />
+                                           <label id="errorimagen">Solo imágenes de menos de 1MB</label>
+                                       </div>
+                                     </div>
+                                 </div>
+                            {% endfor %}
+                       {% endif %}
+                    {% endif %}
+            </div>
   </div>
 {% endblock %}

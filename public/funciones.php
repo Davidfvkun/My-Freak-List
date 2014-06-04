@@ -724,16 +724,7 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
             $insertaMaterial->sinopsis = $sinopsis;
             $insertaMaterial->anio = $anio;
             $insertaMaterial->genero = $genero;
-            if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
-                 $insertaMaterial->img_material = "/utilidades/image/material/default.png";
-            } else if (subir_archivo($id, 2)) {
-                if($_FILES['uploadedfile']['type'] == "image/jpeg")
-                     $insertaMaterial->img_material = "/utilidades/image/material/".$id.".jpg";
-                else if($_FILES['uploadedfile']['type'] == "image/png")
-                     $insertaMaterial->img_material = "/utilidades/image/material/".$id.".png";
-                else
-                     $insertaMaterial->img_material = "/utilidades/image/material/default.png";
-            }
+            $insertaMaterial->img_material = "/utilidades/image/material/default.png";
                 
             $insertaMaterial->publicado = 0; 
             $insertaMaterial->save();

@@ -27,6 +27,9 @@
             <label class="minibuttons lumen" onClick="CambiaEstilos('Lumen')">&#9679;</label>
             {{ usuario }}
         </div>
+            {% if soyAdmin == 1 %}
+                <a href="/panelAdmin">Panel de administración</a>
+            {% endif %}
     </div>
     <div class="row">
         <div class="col-md-5">
