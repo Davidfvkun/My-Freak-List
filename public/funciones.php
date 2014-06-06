@@ -97,7 +97,8 @@ function comprueba_nick_existente($nicki) {
 /*
  * Subir una imagen de perfil.
  * 
- * @param $nickp Nombre con el que se guardará la imagen.
+ * @param string $nickp Nombre con el que se guardará la imagen.
+ * @param int $opcion Opción que indica si la imagen es de perfil o de material
  * @return boolean True si se ha subido correctamente, False si no
  */
 
@@ -160,6 +161,13 @@ function ultimas_noticias() {
     $ultimasNoticias = ORM::for_table('noticia')->order_by_desc('fecha_publicado')->limit(4)->find_many();
     return $ultimasNoticias;
 }
+
+/*
+ * Permite buscar usuarios filtrando por diversos campos
+ * @param string $busqueda Palabra por la que buscas
+ * @param int $filtrado Campo por el que filtras
+ * @return object Objeto que contiene los datos que se devuelven de la base de datos
+ */
 
 function buscar_usuarios($busqueda, $filtrado) {
     $buscaUsuario = ORM::for_table('usuario');
@@ -355,16 +363,22 @@ function comprueba_estado($estado) {
     return $guardar;
 }
 
+/*
+ * Le da al usuario administrador los materiales o noticias no publicados entre las fechas elegidas
+ * @param $tabla La tabla en la que vas a buscar el campo: material o noticia.
+ * @param $fecha1 Fecha desde la que quieres que se muestren materiales
+ * @param $fecha2 Fecha hasta la que quieres que se muestren materiales
+ */
+
 function dame_no_publicados($tabla,$fecha1,$fecha2)
 {
     if($tabla == "material")
         $public = "publicado";
     else
         $public = "publicada";
-    return ORM::for_table($tabla)->raw_query(
-                                    "SELECT * FROM `$tabla` WHERE $public = 0 
-                                        and (fecha_publicado between '"
-                                    .$fecha1."' and '".$fecha2."')")->find_many();
+     return ORM::for_table($tabla)->where_gte('fecha_publicado', $fecha1)->
+             where_lte('fecha_publicado', $fecha2)->where($public,0)->find_many();
+    
 }
 /*
  * Actualizar los datos de una serie/peli/anime
@@ -758,6 +772,17 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
     return $ok;
 }
 
+/*
+ * Se encarga de aceptar y poner como publicado un material. Lo hace el administrador, basandose
+ * en los campos que publicó algún usuario normal.
+ * @param string $nombre Nombre del material
+ * @param string $sinopsis Sinopsis del material
+ * @param int $tipo Indica si es una serie/anime/película
+ * @param string $genero Generos del material
+ * @param int $id Número identificador del material
+ * @param boolean $ok Devuelve true o false dependiendo de si se ha guardado correctamente o ha ocurrido algún error
+ */
+
 function aceptar_material($nombre, $sinopsis, $anio, $tipo, $genero, $id)
 {
     $dbh = \ORM::getDb();
@@ -803,6 +828,12 @@ function eliminar_cuenta()
     $usuario->activo = 0;
     $usuario->save();
 }
+
+/*
+ * Borra una noticia
+ * @param int $idNoticia Identificador de la noticia
+ * @return boolean $ok Devuelve true o false dependiendo de si se ha borrado correctamente o no
+ */
 
 function borrar_noticia($idNoticia)
 {
