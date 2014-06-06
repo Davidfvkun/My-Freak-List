@@ -30,7 +30,6 @@
     </div>
         <div class="{{ clase }}">{{ info }}</div>
     <div class="row">
-        <div class="col-md-12">
             <h1 class="center">Listado de {{ cosas }}</h1>
             {% for i in datos %}
             <div class="col-md-3 cajitas">
@@ -64,20 +63,18 @@
                 {% if i['vista_en'] is null %}
                 Sin rellenar
                 {% else %}
-                {{ i['vista_en'] }}
+                <p>{{ i['vista_en'] }}</p>
                 {% endif %}
                 <br/><label class="resalta">Comentario: </label>
                 {% if i['comentario'] is null %}
                 Sin comentario
                 {% else %}
-                {{ i['comentario'] }}
+                <p>{{ i['comentario'] }}</p>
                 {% endif %}
             </div>
             {% else %}
             <div class="info center">Su lista está vacia</div>
             {% endfor %}
-            
-        </div>
     </div>
 
 {% endblock %}

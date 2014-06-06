@@ -255,7 +255,7 @@ function listados($idt, $ide, $nicku) {
             $idTipo = 3;
             break;
         default:
-            echo "La página a la que intentas acceder no existe";
+            return -1;
             break;
     }
     switch ($ide) {
@@ -271,9 +271,12 @@ function listados($idt, $ide, $nicku) {
             $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que tienes pendientes. ";
             $idEstado = 3;
             break;
-        default:
+        case "borradas":
             $GLOBALS['mensaje'] = $GLOBALS['mensaje'] . "que tienes borradas. ";
             $idEstado = 4;
+            break;
+        default:
+            return -1;
             break;
     }
 
@@ -380,7 +383,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
-            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($vista_en, 500, -1) == true) {
+            comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($comentario, 200, -1) == true) {
         try {
             $variabl->estado = comprueba_estado($estado);
             $variabl->puntuacion = $puntuacion;
@@ -724,7 +727,8 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
 {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if(comprueba_longitud($nombre, 200, 1) && comprueba_longitud($sinopsis, 10000,0) && $tipo >= 1  && $tipo <= 3)
+    if(comprueba_longitud($nombre, 200, 1) && comprueba_longitud($sinopsis, 10000,0) && 
+            $tipo >= 1  && $tipo <= 3 && is_numeric($anio) && strlen($anio) == 4)
     {
         try
         {
@@ -735,6 +739,7 @@ function publicar_material($nombre, $sinopsis, $anio, $tipo, $genero)
             $insertaMaterial->sinopsis = $sinopsis;
             $insertaMaterial->anio = $anio;
             $insertaMaterial->genero = $genero;
+            $insertaMaterial->fecha_publicado = date("Y/m/d");
             $insertaMaterial->img_material = "/utilidades/image/material/default.png";
                 
             $insertaMaterial->publicado = 0; 

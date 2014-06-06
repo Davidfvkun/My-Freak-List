@@ -282,13 +282,13 @@ $app->map('/login', function() use ($app) {
 
 /* Buscar usuarios */
 
-$app->map('/busquedausuario/:num', function($num) use ($app) {
+$app->post('/busquedausuario/:num', function($num) use ($app) {
     if(usuario_logeado()){
                     $datosPorPagina = 5;
                     $numPaginas = 1;
                     $busqueda = null;
                     $datosQueGuardar = array();
-                    if (strlen($_POST['busquedausuario']) > 0 && isset($_POST['filtrado'])) {
+                    if (isset($_POST['busquedausuario']) && strlen($_POST['busquedausuario']) > 0 && isset($_POST['filtrado'])) {
                     
                             $busqueda = buscar_usuarios($_POST['busquedausuario'], $_POST['filtrado']);
                             $datosQueGuardar[0] = $_POST['busquedausuario'];  $datosQueGuardar[1] = $_POST['filtrado'];  
@@ -305,12 +305,12 @@ $app->map('/busquedausuario/:num', function($num) use ($app) {
               
         }else
               $app->redirect($app->urlFor('registro'));
-        })->name('busquedausuario')->via('GET', 'POST');
+        })->name('busquedausuario');
 //////////////////////////////////////////////////////////////////////
 
 /* Buscar animes-series-peliculas */
 
-$app->map('/busquedam/:num', function($num) use ($app) {
+$app->post('/busquedam/:num', function($num) use ($app) {
     if(usuario_logeado()){
                    $datosPorPagina = 5;
                     $datosQueGuardar = array();
@@ -325,8 +325,8 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                         } else {
                             $V = array(1, 1, 1);
                         }
-                            if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
-                                if(isset($_REQUEST['buscaanime']))
+                            if (isset($_REQUEST['buscaanime'])) {// Comprobación de que introduces al menos una letra
+                                if(strlen($_REQUEST['buscaanime']) > 0)
                                 {
                                     $datosQueGuardar[0] = $_REQUEST['buscaanime'];
                                     $datosQueGuardar[1] = $_REQUEST['geneross'];
@@ -346,7 +346,7 @@ $app->map('/busquedam/:num', function($num) use ($app) {
                         'usuario' => $_SESSION['logeo']));
            }else
               $app->redirect($app->urlFor('registro'));
-        })->name('busquedam')->via('GET', 'POST');
+        })->name('busquedam');
 //////////////////////////////////////////////////////////////////////
 
 /* Llamadas al listado */
@@ -389,7 +389,7 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                                     where('usuario_id', $usuario->id)->find_one();
                     if (isset($_POST['editarmaterial'])) {
                         if (empty($material)) {
-                            $mensaje = "Ocurrió algún error inespetado";
+                            $mensaje = "Ocurrió algún error inesperado";
                             $clase = "info error";
                             $ok = false;
                         } else {
@@ -562,7 +562,6 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
 $app->map('/introducematerial', function() use ($app) {
     if(usuario_logeado())
     {
-        
             switch ($app->request()->getMethod()) {
                 case "GET":
                     $app->render('introducematerial.html.twig', array(
@@ -583,10 +582,19 @@ $app->map('/introducematerial', function() use ($app) {
                             $verificar = publicar_material($nombreMaterial, $sinopsisMaterial, 
                                     $anioMaterial, $tipoMaterial, $generoMaterial);
                         }
-                        else
+                        else{
                             $verificar = false;
+                            $nombreMaterial = "";
+                            $sinopsisMaterial = "";
+                            $anioMaterial = "";
+                            $tipoMaterial = "";
+                            $generoMaterial = "";
+                        }
                         
-                        if($verificar)
+                        echo "Hola. True:"; echo true;
+                        echo "<br/>Hola.".$verificar;
+                        
+                        if($verificar == true)
                         {
                             $datosBorrador = array("", "", "", "");
                             $clase = "info";
