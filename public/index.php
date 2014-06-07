@@ -45,7 +45,7 @@ $app->map('/error/:fail', function($fail) use ($app) {
             switch($fail)
             {
                 case 1: // El usuario no existe
-                    $info = "El usuario no existe";
+                    $info = "El usuario no existe o se ha dado de baja";
                     break;
                 case 2: // Error al editar datos
                     $info = "Ha ocurrido algún error al editar los datos";
@@ -510,6 +510,8 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                $app->redirect($app->urlFor('error',array('fail' => 2)));
             else if(isset($ok) && $ok == false)
                $app->redirect($app->urlFor('error',array('fail' => 4)));
+            else if($datosUsuario->activo == 0)
+               $app->redirect($app->urlFor('error',array('fail' => 1)));
             else {
                 if (usuario_logeado() && $_SESSION['logeo'] == $nicku) {
                     $soyyo = 'si';

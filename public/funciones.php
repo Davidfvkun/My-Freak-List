@@ -37,7 +37,9 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
     $ok = false;
     if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($contraseña, 20, 7) &&
             preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
-            comprueba_nick_existente($nick) == false && $contraseña == $contraseña2) {
+            comprueba_nick_existente($nick) == false && $contraseña == $contraseña2 && 
+            preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $nombre) && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $apellido)
+            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,45}$/", $descripcion)) {
         $dbh = \ORM::getDb();
         $dbh->beginTransaction();
         try {
@@ -315,31 +317,37 @@ function editar_usuario($nombre, $apellido, $descripcion) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     $ok = false;
-    try {
-        $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
-        $editarUsuario->nombre = $nombre;
-        $editarUsuario->apellido = $apellido;
-        $editarUsuario->descripcion = $descripcion;
-        if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
-            if(subir_archivo($_SESSION['logeo'],1)){
-                if($_FILES['uploadedfile']['type'] == "image/jpeg")
-                        $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
-                else if($_FILES['uploadedfile']['type'] == "image/png")
-                        $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".png";
+    if(preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $nombre) && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $apellido)
+            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,45}$/", $descripcion))
+    {
+        try {
+            $editarUsuario = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
+            $editarUsuario->nombre = $nombre;
+            $editarUsuario->apellido = $apellido;
+            $editarUsuario->descripcion = $descripcion;
+            if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
+                if(subir_archivo($_SESSION['logeo'],1)){
+                    if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                            $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".jpg";
+                    else if($_FILES['uploadedfile']['type'] == "image/png")
+                            $editarUsuario->img_perfil = "/utilidades/image/perfil/".$_SESSION['logeo'].".png";
+                }
+                else{
+                    $dbh->rollback();
+                    return false;
+                }
+
             }
-            else{
-                $dbh->rollback();
-                return false;
-            }
-            
+            $editarUsuario->save();
+            $ok = true;
+            $dbh->commit();
+        } catch (\PDOException $e) {
+            $dbh->rollback();
+            $ok = false;
         }
-        $editarUsuario->save();
-        $ok = true;
-        $dbh->commit();
-    } catch (\PDOException $e) {
-        $dbh->rollback();
-        $ok = false;
     }
+    else
+        $ok = false;
     return $ok;
 }
 

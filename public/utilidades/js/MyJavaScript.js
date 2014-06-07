@@ -60,7 +60,24 @@ function init()
        {
            CompruebaImagen();
        }, false);
-            
+       document.getElementById("nombreR").addEventListener(
+            'keyup',
+            function()
+            {
+                CompruebaCampo('nombreR', /^[áéíóúÁÉÍÓÚa-zA-Z ]{0,45}$/);
+            }, false);
+       document.getElementById("apellidoR").addEventListener(
+            'keyup',
+            function()
+            {
+               CompruebaCampo('apellidoR', /^[áéíóúÁÉÍÓÚa-zA-Z ]{0,45}$/);
+            }, false);
+      document.getElementById("descripcionR").addEventListener(
+            'keyup',
+            function()
+            {
+                CompruebaCampo('descripcionR', /^[áéíóúÁÉÍÓÚa-zA-Z,. ]{0,200}$/);
+            }, false);
 }
 
 function CompruebaImagen()
@@ -157,6 +174,24 @@ function initDatosUsuario()
             function()
             {
                 CamposLongitud('mensajeprivado', 500,0);
+            }, false);
+    document.getElementById("nombre").addEventListener(
+            'keyup',
+            function()
+            {
+                CompruebaCampo('nombre', /^[áéíóúÁÉÍÓÚa-zA-Z ]{0,45}$/);
+            }, false);
+       document.getElementById("apellido").addEventListener(
+            'keyup',
+            function()
+            {
+               CompruebaCampo('apellido', /^[áéíóúÁÉÍÓÚa-zA-Z ]{0,45}$/);
+            }, false);
+      document.getElementById("descripcion").addEventListener(
+            'keyup',
+            function()
+            {
+                CompruebaCampo('descripcion', /^[áéíóúÁÉÍÓÚa-zA-Z,. ]{0,200}$/);
             }, false);
     /*document.getElementById("file1").addEventListener(
        'change',

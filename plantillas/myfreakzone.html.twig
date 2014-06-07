@@ -114,23 +114,23 @@
                                         <input type="text" value="{{ datosBorrador[2] }}" class="form-control" id="email" name="email" placeholder="Email (valido)">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="nombreRdiv">
                                     <label for="nombre" class="col-lg-2 control-label">Nombre</label>
                                     <div class="col-lg-10">
-                                        <input type="text" value="{{ datosBorrador[3] }}" class="form-control"  name="nombre" placeholder="Nombre">
+                                        <input type="text" value="{{ datosBorrador[3] }}" id="nombreR" class="form-control"  name="nombre" placeholder="Máximo 45 caracteres">
                                     </div>
                                 </div>
-                                <div class="form-group" >
-                                    <label for="apellido" class="col-lg-2 control-label">Apellido</label>
+                                <div class="form-group" id="apellidoRdiv">
+                                    <label for="apellido" class="col-lg-2 control-label">Apellidos</label>
                                     <div class="col-lg-10">
-                                        <input type="text" value="{{ datosBorrador[4] }}" class="form-control" name="apellido" placeholder="Apellido">
+                                        <input type="text" value="{{ datosBorrador[4] }}" id="apellidoR" class="form-control" name="apellido" placeholder="Máximo 45 caracteres">
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="descripcionRdiv">
                                     <label for="descripcion" class="col-lg-2 control-label">Algo sobre ti</label>
                                     <div class="col-lg-10">
-                                        <textarea rows="15" type="text"class="form-control" name="descripcion"
-                                                  placeholder="Introduce aquí lo que quieras contar sobre ti">{{ datosBorrador[5] }}</textarea>
+                                        <textarea rows="15" id="descripcionR" type="text"class="form-control" name="descripcion"
+                                                  placeholder="Introduce aquí lo que quieras contar sobre ti. Máximo 200 caracteres.">{{ datosBorrador[5] }}</textarea>
                                     </div>
                                 </div>
                                 <div class="center" class="col-lg-2 control-label">
