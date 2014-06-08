@@ -62,6 +62,9 @@ $app->map('/error/:fail', function($fail) use ($app) {
                 case 6:
                     $info = "Error al aceptar el material";
                         break;
+                case 7:
+                    $info = "Error al cambiar la contraseña";
+                        break;
                 default: 
                     $info = "Error desconocido";
                     break;
@@ -483,8 +486,11 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                 case "POST":
                     if (isset($_POST['guardar'])) {
                         $caso = 'mostrar';
-                        if (isset($_POST['cnombre']) && isset($_POST['capellido']) && isset($_POST['cdescripcion']))
-                            $edit = editar_usuario($_POST['cnombre'], $_POST['capellido'], $_POST['cdescripcion']);
+                        if (isset($_POST['cnombre']) && isset($_POST['capellido']) && 
+                                isset($_POST['cdescripcion']) && isset($_POST['claveantigua']) 
+                                && isset($_POST['clavenueva']))
+                            $edit = editar_usuario($_POST['cnombre'], $_POST['capellido'], $_POST['cdescripcion'],
+                                    $_POST['claveantigua'], $_POST['clavenueva']);
                         else
                             $edit = false;
                     }
@@ -506,6 +512,10 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
 
             if (empty($datosUsuario)) {
                $app->redirect($app->urlFor('error',array('fail' => 1))); 
+            }
+            else if(isset($GLOBALS["error"]) && $GLOBALS["error"] != "")
+            {
+                $app->redirect($app->urlFor('error',array('fail' => 7)));
             } else if (isset($edit) && $edit == false)
                $app->redirect($app->urlFor('error',array('fail' => 2)));
             else if(isset($ok) && $ok == false)
@@ -515,7 +525,10 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
             else {
                 if (usuario_logeado() && $_SESSION['logeo'] == $nicku) {
                     $soyyo = 'si';
-                    $clase = array('col-md-9', 'col-md-3');
+                    if($caso == "editar")
+                        $clase = array('col-md-9', '');
+                    else
+                        $clase = array('col-md-9', 'col-md-3');
                     if($priv == 1)
                     {
                         $mensajes = mensajes_privados($datosUsuario->id);

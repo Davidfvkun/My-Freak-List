@@ -97,14 +97,7 @@
                         <img src="{{ datos['img_perfil'] }}" class="imgmaterial" ><br/>
                         {% if caso == 'editar' and soyyo == 'si' %}
                         <form enctype="multipart/form-data" method="POST" action="/datosusuario/{{ datos['nick']}}/e/1" class="form-horizontal" >
-                            
-                            <div class="form-group">
-                                <div class="col-lg-10">
-                                    <label>Cambia de avatar</label>
-                                    <input name="uploadedfile" type="file" id="file1" onChange="CompruebaImagen()" />
-                                    <label id="errorimagen">Solo imágenes de menos de 1MB</label>
-                                </div>
-                            </div>
+                          <div class="col-md-4">
                             <div class="form-group" id="nombrediv">
                                 <div class="col-lg-10">
                                     <label for="cnombre" >Nombre: </label>
@@ -123,9 +116,34 @@
                                    <textarea rows="5" class="form-control" id="descripcion" type="text" name="cdescripcion" >{{ datos['descripcion']}}</textarea>
                                 </div>
                             </div>
-                            <div class="center">
+                          </div><!-- Cierra div col -->
+                          <div class="col-md-4">
+                            <div class="form-group" id="claveantiguadiv">
+                                <div class="col-lg-10">
+                                    <label for="cnombre" >Clave antigua: </label>
+                                    <input type="password" class="form-control" id="claveantigua" 
+                                           name="claveantigua" value="" />
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                <div class="col-lg-10" id="clavenuevadiv">
+                                    <label for="capellido" >Clave nueva: </label>
+                                    <input type="password" class="form-control" id="clavenueva" 
+                                           name="clavenueva" value="" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10">
+                                    <label>Cambia de avatar</label>
+                                    <input name="uploadedfile" type="file" id="file1" onChange="CompruebaImagen()" />
+                                    <label id="errorimagen">Solo imágenes de menos de 1MB</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                   <button name="guardar" class="btn btn-success">Guardar</button>
                             </div>
+                          </div><!-- Cierra div col -->
+                            
                         </form>
                         {% else %}
                             <label class="resalta">Nombre: </label>
@@ -192,6 +210,7 @@
                             </ul>
                         </div>
                         <h2>Favoritos</h2>
+                        {% if caso != 'editar' or soyyo != 'si' %}
                         <div id="slider">
                             <div id="myCarousel" class="carousel slide">
                                 <ol class="carousel-indicators">
@@ -229,6 +248,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                  </div>
        {% if soyyo == 'si' %}
         <div class="col-md-6">

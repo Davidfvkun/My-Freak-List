@@ -313,7 +313,7 @@ function listados($idt, $ide, $nicku) {
  * @return boolean, True si se han modificado correctamente, False si no.
  */
 
-function editar_usuario($nombre, $apellido, $descripcion) {
+function editar_usuario($nombre, $apellido, $descripcion, $contraseñaantigua, $contraseñanueva) {
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
     $ok = false;
@@ -325,6 +325,21 @@ function editar_usuario($nombre, $apellido, $descripcion) {
             $editarUsuario->nombre = $nombre;
             $editarUsuario->apellido = $apellido;
             $editarUsuario->descripcion = $descripcion;
+            if($contraseñaantigua != "" && $contraseñaantigua != null)
+            {
+                if(login($_SESSION['logeo'], $contraseñaantigua) && comprueba_longitud($contraseñanueva, 20, 7))
+                {
+                    $editarUsuario->clave = password_hash($contraseñanueva, PASSWORD_DEFAULT);
+                }
+                else
+                {
+                    $GLOBALS['error'] = "Error al cambiar la contraseña";
+                    $dbh->rollback();
+                    return false;
+                }
+                
+            }
+            
             if ($_FILES['uploadedfile']['name'] != null && $_FILES['uploadedfile']['name'] != "") {
                 if(subir_archivo($_SESSION['logeo'],1)){
                     if($_FILES['uploadedfile']['type'] == "image/jpeg")
