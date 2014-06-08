@@ -864,11 +864,20 @@ function borrar_noticia($idNoticia)
     $dbh->beginTransaction();
     $laNoticia = ORM::for_table('noticia')->find_one($idNoticia);
     $ok = false;
-    if($laNoticia->usuario_id == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id)
+    $usuarioActual = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
+    echo "<br/>";
+    echo $usuarioActual->es_admin;
+    echo "<br/>";
+    echo $laNoticia->usuario_id;
+    echo "<br/>";
+    echo $usuarioActual->id;
+    if(false);
     {
         try
         {
-            $laNoticia->delete();
+            echo "Holas";
+            /*$laNoticia->delete();
+            $dbh->commit();*/
             $ok = true;
         } catch (\PDOException $e) 
         {
