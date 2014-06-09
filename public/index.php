@@ -725,16 +725,16 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
 $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
             if (usuario_logeado()) {
                 $datosNoticia = ORM::for_table('noticia')->where('id', $idt)->find_one();
-
+                $userActual = ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one();
                 if (empty($datosNoticia)) {
                     $app->redirect($app->urlFor('error', array('fail' => 5)));
                 } else {
                     $comentarioBorrar = ORM::for_table('comentario')->where('id', $idc)->find_one();
                     if (!empty($comentarioBorrar)) {
                         $user = ORM::for_table('usuario')->where('id', $comentarioBorrar->usuario_id)->find_one();
-                        if ($user->nick != $_SESSION['logeo'] && $user->es_admin == 0) {
+                        if ($user->nick != $_SESSION['logeo'] && $userActual->es_admin == 0) {
                             $mensaje = "No puedes borrar un comentario que no es tuyo";
-                            $clase = "info error";
+                            $clase = "info error"; /* No se muestran en ninguna parte */
                         } else {
                             $comentarioBorrar->delete();
                             $mensaje = "";
@@ -742,7 +742,7 @@ $app->get('/borrar/:idc/:idt', function($idc, $idt) use ($app) {
                         }
                     } else {
                         $mensaje = "No puedes borrar un comentario que no es tuyo";
-                        $clase = "info error";
+                        $clase = "info error"; /* No se muestran en ninguna parte */
                     }
                     $app->redirect($app->urlFor('noticia', array('idt' => $idt)));
                 }
@@ -759,9 +759,9 @@ $app->post('/eliminarcuenta', function() use ($app) {
 $app->get('/borrarnoticia/:idn', function($idn) use ($app) {
             $ok = borrar_noticia($idn);
             if ($ok == false) {
-                //$app->redirect($app->urlFor('error', array('fail' => 8)));
+                $app->redirect($app->urlFor('error', array('fail' => 8)));
             } else {
-                //$app->redirect($app->urlFor('registro'));
+                $app->redirect($app->urlFor('registro'));
             }
         })->name('borrarnoticia');
 

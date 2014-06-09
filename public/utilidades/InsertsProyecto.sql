@@ -355,6 +355,16 @@ insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, tit
 insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
 		values ('Noticia numero 5', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5',1);
 
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 6', '2014/02/03', 'fuente numero 3', 1, 'pepita, coso, otro', 'Titulo 4',1);
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 7', '2014/02/03', 'fuente numero 4', 1, 'pepe, cosita, otroscosos', 'Titulo 5',1);
+
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 8', '2011/02/03', 'fuente numero 8', 1, 'pepita, coso, otro', 'Titulo 8',0);
+insert into noticia(noticia, fecha_publicado, fuente, usuario_id, etiquetas, titulo, publicada)
+		values ('Noticia numero 9', '2013/05/06', 'fuente numero 8', 1, 'pepe, cosita, otroscosos', 'Titulo 9',1);
+
 
 insert into comentario(comentario,fecha_publicad,usuario_id,noticias_id) values
             ('Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1 Comentario 1 de noticia 1', '2014/02/03',1,1);
