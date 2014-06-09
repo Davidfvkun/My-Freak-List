@@ -274,6 +274,9 @@ $app->post('/busquedausuario/:num', function($num) use ($app) {
                     $datosQueGuardar[1] = $_POST['filtrado'];
                     $totalDatos = count($busqueda->find_many());
                     $numPaginas = ceil($totalDatos / $datosPorPagina);
+                    echo $numPaginas;
+                    echo "<br/>";
+                    echo $datosPorPagina;
                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num - 1) * $datosPorPagina)->find_many();
                 }
                 $app->render('busquedausuario.html.twig', array(
@@ -470,6 +473,10 @@ $app->map('/datosusuario/:nicku/:modo/:priv', function($nicku, $modo, $priv) use
                             if (isset($_POST['mensajeprivado'])) {
                                 if ($priv == 2 && isset($_POST['para'])) {
                                     $priv = $_POST['para'];
+                                    $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
+                                }
+                                else
+                                {
                                     $ok = enviar_mensaje_privado($_POST['mensajeprivado'], $priv);
                                 }
                             }

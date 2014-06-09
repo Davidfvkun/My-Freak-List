@@ -653,8 +653,8 @@ function mensajes_privados_contenido($usuario)
     $idUsuario = ORM::for_table('usuario')->where('nick',$usuario)->find_one();
     if(!empty($idUsuario)){
         $mensaje = ORM::for_table('mensaje')->
-                where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($idUsuario->id, $idUsuario->id))->
-                where_raw('`usuario_e` = ? OR `usuario_r` = ?', array($yo->id, $yo->id))->
+                where_raw('(`usuario_e` = ? OR `usuario_r` = ?)', array($idUsuario->id, $idUsuario->id))->
+                where_raw('(`usuario_e` = ? OR `usuario_r` = ?)', array($yo->id, $yo->id))->
                 find_many();
         foreach($mensaje as $aux){
             if($aux->usuario_r == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id){
