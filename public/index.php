@@ -191,6 +191,30 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
         })->name('myfreakzone')->via('GET', 'POST');
 
 /* Cerrar sesión y sacar al usuario de la aplicacion */
+$app->map('/instalador', function() use ($app) {
+    switch ($app->request()->getMethod()) {
+                case "GET":
+                        $app->render('instalador.html.twig');
+                    break;
+                case "POST":
+                        $instalacion = instalar(); 
+                        if($instalacion){
+                            $mensaje = "Instalación completada con exito";
+                            $clase = "info";
+                        }
+                        else{
+                            $mensaje = "Hubo algún error en su instalación";
+                            $clase = "info error";
+                        }
+                         $app->render('instalador.html.twig',array(
+                             'mensaje' => $mensaje,
+                             'clase' => $info
+                         ));
+                    break;
+    }
+        })->name('instalador')->via('GET', 'POST');
+        
+/* Instalador */
 $app->get('/salir', function() use ($app) {
             unset($_SESSION['logeo']);
             //session_destroy();

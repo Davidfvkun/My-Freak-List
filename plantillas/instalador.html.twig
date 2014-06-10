@@ -1,0 +1,86 @@
+{# My Freak Zone - My Freak List - Web application for films, series and animes (Japanase Animation)
+  Copyright (C) 2014: David Femenía Vázquez
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see [http://www.gnu.org/licenses/]. #}
+
+{% extends "base2.html.twig" %}
+{% block contenido2 %}
+<div class="container margintop">
+   <form method="POST" action="{{ urlFor("instalador")}}" >
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                   <div class="col-lg-10">
+                        <label for="usuarioRoot" class="control-label">Introduce usuario (root) de la BD</label>
+                        <input type="text" class="form-control" name="usuarioRoot" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                          <label for="claveRoot" class="control-label">Introduce la contraseña del root</label>
+                          <input type="password" class="form-control" name="claveRoot" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                          <label for="puerto" class="control-label">Introduce el puerto(localhost en pruebas locales)</label>
+                          <input type="text" class="form-control" name="puerto" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                        <label for="schema" class="control-label">Introduce el nombre del Schema</label>
+                          <input type="text" class="form-control" name="schema" />
+                   </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                   <div class="col-lg-10">
+                         <label for="nickAdmin" class="control-label">Introduce nick del usuario admin de MyFreakZone</label>
+                          <input type="text" class="form-control" name="nickAdmin" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                            <label for="claveAdmin" class="control-label">Introduce contraseña del admin</label>
+                          <input type="password" class="form-control" name="claveAdmin" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                        <label for="nombreAdmin" class="control-label">Introduce nombre del admin</label>
+                          <input type="text" class="form-control" name="nombreAdmin" />
+                   </div>
+            </div>
+            <div class="form-group">
+                   <div class="col-lg-10">
+                           <label for="emailAdmin" class="control-label">Introduce email del admin</label>
+                          <input type="text" class="form-control" name="emailAdmin" />
+                   </div>
+            </div>
+        </div>
+      </div>
+        <div class="row margintop" >
+            <div class="center">
+                <button type="submit" class="btn-lg btn-primary" name="instalar">Instalar</button>
+                
+            </div>
+            <div class="center">
+                <br/><div class="{{ clase }}">mensaje</div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
