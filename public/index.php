@@ -18,6 +18,7 @@
 
 include "../vendor/autoload.php";
 include "../vendor/password.php";
+include "instalador.php";
 include "funciones.php";
 require_once "../config.php";
 $app = new \Slim\Slim(
@@ -197,7 +198,11 @@ $app->map('/instalador', function() use ($app) {
                         $app->render('instalador.html.twig');
                     break;
                 case "POST":
-                        $instalacion = instalar(); 
+                    if(isset($_POST['instalar'])){
+                        $instalacion = instalar(htmlentities($_POST['usuarioRoot']),htmlentities($_POST['claveRoot']),
+                                htmlentities($_POST['puerto']),htmlentities($_POST['schema']),
+                                htmlentities($_POST['nickAdmin']),htmlentities($_POST['claveAdmin']),
+                                htmlentities($_POST['nombreAdmin']),htmlentities($_POST['emailAdmin'])); 
                         if($instalacion){
                             $mensaje = "Instalación completada con exito";
                             $clase = "info";
@@ -208,8 +213,9 @@ $app->map('/instalador', function() use ($app) {
                         }
                          $app->render('instalador.html.twig',array(
                              'mensaje' => $mensaje,
-                             'clase' => $info
+                             'clase' => $clase
                          ));
+                    }
                     break;
     }
         })->name('instalador')->via('GET', 'POST');

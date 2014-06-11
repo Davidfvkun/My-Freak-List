@@ -16,6 +16,16 @@ My Freak Zone - My Freak List - Web application for films, series and animes (Ja
   along with this program.  If not, see [http://www.gnu.org/licenses/]. 
 */
 
+body
+{
+    background: #E0F8F7 !important;
+}
+
+.fondo_blanco
+{
+    background: white !important;
+}
+
 .margintop
 {
     margin-top: 100px !important;
