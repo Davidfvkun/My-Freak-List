@@ -250,6 +250,7 @@ $app->map('/MyFreakZone', function() use ($app) {
                             } else {
                                 $mensaje = "Algún campo es incorrecto";
                                 $clase = "info error";
+                                $datosBorrador = array("", "", "", "", "", "");
                             }
                             $app->render('myfreakzone.html.twig', array(
                                 'clase' => $clase,
@@ -271,18 +272,23 @@ $app->map('/login', function() use ($app) {
                     break;
                 case "POST":
                     if (isset($_POST['entrar'])) {
-                        if (login($_POST['nick'], $_POST['clave']) == false) {
-                            $app->render('myfreakzone.html.twig', array(
-                                'mensaje' => 'Usuario y/o contraseña incorrectos',
-                                'clase' => 'info error'));
-                        } else {
-                            $dioBaja = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
-                            if ($dioBaja->activo == 0) {
-                                $dioBaja->activo = 1;
-                                $dioBaja->save();
+                        if( isset($_POST['nick']) && isset($_POST['clave']) )
+                        {
+                            if (login($_POST['nick'], $_POST['clave']) == false) {
+                                $app->render('myfreakzone.html.twig', array(
+                                    'mensaje' => 'Usuario y/o contraseña incorrectos',
+                                    'clase' => 'info error'));
+                            } else {
+                                $dioBaja = ORM::for_table('usuario')->where('nick', $_SESSION['logeo'])->find_one();
+                                if ($dioBaja->activo == 0) {
+                                    $dioBaja->activo = 1;
+                                    $dioBaja->save();
+                                }
+                                $app->redirect($app->urlFor('myfreakzone'));
                             }
-                            $app->redirect($app->urlFor('myfreakzone'));
                         }
+                        else
+                            $app->redirect($app->urlFor('myfreakzone'));
                     }
                     break;
             }
@@ -337,8 +343,8 @@ $app->post('/busquedam/:num', function($num) use ($app) {
                     } else {
                         $V = array(1, 1, 1);
                     }
-                    if (isset($_REQUEST['buscaanime'])) {// Comprobación de que introduces al menos una letra
-                        if (strlen($_REQUEST['buscaanime']) > 0) {
+                    if (isset($_REQUEST['buscaanime'])) {
+                        if (strlen($_REQUEST['buscaanime']) > 0) {// Comprobación de que introduces al menos una letra
                             $datosQueGuardar[0] = $_REQUEST['buscaanime'];
                             $datosQueGuardar[1] = $_REQUEST['geneross'];
                             $busqueda = buscar_material($_REQUEST['buscaanime'], $V, $_REQUEST['geneross']);

@@ -35,11 +35,10 @@ require_once "../config.php";
 function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
 
     $ok = false;
-    if (comprueba_longitud($nick, 30, 1) && comprueba_longitud($contraseña, 20, 7) &&
-            preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
+    if (comprueba_longitud($contraseña, 20, 7) && preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2 && 
             preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $nombre) && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $apellido)
-            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,45}$/", $descripcion)) {
+            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,45}$/", $descripcion) && preg_match("/^[a-zA-Z0-9_]{1,30}$/", $nick)) {
         $dbh = \ORM::getDb();
         $dbh->beginTransaction();
         try {
@@ -52,20 +51,28 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
             $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT);
             $insertarUsuario->es_admin = 0;
             $insertarUsuario->activo = 1;
-
-            if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
-                $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
-                $insertarUsuario->save();
-            } else if (subir_archivo($nick, 1)) {
-                if($_FILES['uploadedfile']['type'] == "image/jpeg")
-                    $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
-                else if($_FILES['uploadedfile']['type'] == "image/png")
-                    $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".png";
-                else
+            
+            if(isset($_FILES['uploadedfile']))
+            {
+                if ($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['name'] == "") {
                     $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
-                    
-                $insertarUsuario->save();
-            } else {
+                    $insertarUsuario->save();
+                } else if (subir_archivo($nick, 1)) {
+                    if($_FILES['uploadedfile']['type'] == "image/jpeg")
+                        $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".jpg";
+                    else if($_FILES['uploadedfile']['type'] == "image/png")
+                        $insertarUsuario->img_perfil = "/utilidades/image/perfil/".$nick.".png";
+                    else
+                        $insertarUsuario->img_perfil = "/utilidades/image/perfil/default.png";
+
+                    $insertarUsuario->save();
+                } else {
+                    $dbh->rollback();
+                    return false;
+                }
+            }
+            else
+            {
                 $dbh->rollback();
                 return false;
             }
