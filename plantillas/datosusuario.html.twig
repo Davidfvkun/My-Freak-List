@@ -81,6 +81,8 @@
              </div>
         {% endif %}
         <div class={{ clase[0] }}>
+            <div class="panel panel-default">
+                <div class="panel-body">
                 <h2>Datos del usuario {{ datos.nick }}</h2>
                     <div id="datospersonales" class="{{ clase[1] }}">
                         <h2>Datos Personales</h2>
@@ -199,9 +201,10 @@
                                 <li><a href="/listado/peliculas/borradas/{{ datos.nick }}">Borradas</a></li>
                             </ul>
                         </div>
-                        <h2>Favoritos</h2>
+                        
                         {% if caso != 'editar' or soyyo != 'si' %}
                         <div id="slider">
+                            <h2>Favoritos</h2>
                             <div id="myCarousel" class="carousel slide">
                                 <ol class="carousel-indicators">
                                  {% set cont = 0 %}
@@ -240,9 +243,13 @@
                     </div>
                     {% endif %}
                  </div>
+       </div>
+      </div>
+    </div>
+               
        {% if soyyo == 'si' %}
         <div class="col-md-6">
-        <input type="button" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
+        <input type="button" onClick="Toogle();" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
             <div style="display: none;" id="bajaCuenta">
                 <form method="POST" action="{{ urlFor('eliminarcuenta')}}">
                     <label>Está seguro de que quiere darse de baja. Los datos de su cuenta se mantendrán durante un mes.
@@ -252,20 +259,17 @@
             </div>
         </div>
         {% endif %}
-    </div>
     
   </div>
 <script>
      window.onload = initDatosUsuario();
-     
-     $(document).ready(function(){
-        $("#eliminarCuenta").click(function(){
-          $("#bajaCuenta").slideToggle();
+     function Toogle()
+     {
+        $("#bajaCuenta").slideToggle();
           if(document.getElementById("eliminarCuenta").value === "Darse de baja")
             document.getElementById("eliminarCuenta").value = "Abortar";
           else
             document.getElementById("eliminarCuenta").value = "Darse de baja";
-        });
-      });
+     }
 </script>
 {% endblock %}

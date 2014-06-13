@@ -686,7 +686,7 @@ $app->post('/buscarnoticia/:num', function($num) use ($app) {
             if (usuario_logeado()) {
                 $datosNoticias = null;
                 $numPaginas = 0;
-                $datosPorPagina = 1;
+                $datosPorPagina = 4;
                 $datosQueGuardar = array();
                 if (isset($_POST['inputbuscarnoticias']) && isset($_POST['filtradonoticia'])) {
                     $datosNoticias = buscar_noticia($_POST['inputbuscarnoticias'], $_POST['filtradonoticia']);

@@ -49,15 +49,17 @@
                 </div>
             </form>
         </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
                     {% if dato < 2 %}
                        {% if dato == 0 %}
                             <h2>Listado de noticias pendientes en esas fechas</h2><br/>
                             {% for i in N %}
                                 <form class="form-horizontal" method="POST" action="{{ urlFor('panelAdmin')}}">
                                     <div class="row">
-                                        <input type="text" value="{{ fecha1 }}" name="fecha_1" />
-                                        <input type="text" value="{{ fecha2 }}" name="fecha_2" />
-                                        <input type="text" value="{{ i['id'] }}" name="id" />
+                                        <input type="hidden" value="{{ fecha1 }}" name="fecha_1" />
+                                        <input type="hidden" value="{{ fecha2 }}" name="fecha_2" />
+                                        <input type="hidden" value="{{ i['id'] }}" name="id" />
                                         <div class="col-md-10">
                                             <label>Titulo: {{ i['titulo'] }}</label>
                                             <br/><label>Fuente: 
@@ -81,9 +83,9 @@
                             <h2>Listado de materiales pendientes en esas fechas</h2><br/>
                             {% for i in N %}
                             <form class="form-horizontal" method="POST" action="{{ urlFor('panelAdmin')}}" enctype="multipart/form-data">
-                            <input type="text" value="{{ fecha1 }}" name="fecha_1" />
-                            <input type="text" value="{{ fecha2 }}" name="fecha_2" />
-                            <input type="text" value="{{ i['id'] }}" name="id" />
+                            <input type="hidden" value="{{ fecha1 }}" name="fecha_1" />
+                            <input type="hidden" value="{{ fecha2 }}" name="fecha_2" />
+                            <input type="hidden" value="{{ i['id'] }}" name="id" />
                             <div class="row">
                                 <div class="col-md-6" >
                                    <div class="form-group" id="nombrematerialdiv">
@@ -160,4 +162,6 @@
                      {% endif %}
                   {% endif %}
             </div>
+          </div>
+       </div>
 {% endblock %}

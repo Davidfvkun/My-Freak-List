@@ -19,7 +19,9 @@
 {% block contenido2 %}
 <div class="container margintop">
         <div class="{{ clase }}">{{ info }}</div>
-    <div class="row">
+  <div class="panel panel-default">
+       <div class="panel-body">
+        <div class="row">
             <h1 class="center">Listado de {{ cosas }}</h1>
             {% for i in datos %}
             <div class="col-md-3 cajitas">
@@ -66,5 +68,7 @@
             <div class="info center">Su lista está vacia</div>
             {% endfor %}
     </div>
+  </div>
+</div>
 
 {% endblock %}
