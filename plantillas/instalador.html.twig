@@ -16,8 +16,22 @@
 
 {% extends "base2.html.twig" %}
 {% block contenido2 %}
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/MyFreakZone" class="navbar-brand"><img class='simbol' src="/utilidades/img.png" alt="simbolo" /> MyFreakZone</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="container margintop">
-   <form method="POST" action="{{ urlFor("instalador")}}" >
+   <form enctype="multipart/form-data" method="POST" action="{{ urlFor("instalador")}}" >
+   <div class="panel panel-default">
+   <div class="panel-body">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -71,7 +85,7 @@
                    </div>
             </div>
         </div>
-      </div>
+        </div>
         <div class="row margintop" >
             <div class="center">
                 <button type="submit" class="btn-lg btn-primary" name="instalar">Instalar</button>
@@ -81,6 +95,17 @@
                 <br/><div class="{{ clase }}">{{mensaje}}</div>
             </div>
         </div>
+           <div style="visibility: hidden">
+                   <label for="img" class="col-lg-2 control-label">Imagen de perfil: </label>
+                   <div class="col-lg-10">
+                      <input name="uploadedfile" type="file" id="file1" />
+                      <label id="errorimagen">Solo imágenes de menos de 1MB</label>
+            </div>
+                                    
+          </div>
     </form>
+  
+       </div>
+      </div>
 </div>
 {% endblock %}

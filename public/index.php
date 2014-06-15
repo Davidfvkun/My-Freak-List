@@ -19,7 +19,7 @@
 include "../vendor/autoload.php";
 include "../vendor/password.php";
 include "instalador.php";
-include "funciones.php";
+require_once "funciones.php";
 require_once "../config.php";
 $app = new \Slim\Slim(
         array(
@@ -203,12 +203,12 @@ $app->map('/instalador', function() use ($app) {
                                 htmlentities($_POST['puerto']),htmlentities($_POST['schema']),
                                 htmlentities($_POST['nickAdmin']),htmlentities($_POST['claveAdmin']),
                                 htmlentities($_POST['nombreAdmin']),htmlentities($_POST['emailAdmin'])); 
-                        if($instalacion){
+                        if($instalacion == -1){
                             $mensaje = "Instalación completada con exito";
                             $clase = "info";
                         }
                         else{
-                            $mensaje = "Hubo algún error en su instalación";
+                            $mensaje = $instalacion;
                             $clase = "info error";
                         }
                          $app->render('instalador.html.twig',array(

@@ -192,34 +192,38 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="center">Listado de capítulos</h1>
-                        <table class="table table-hover mytable" >
-                            <thead>
-                            <th>Número</th>
-                            <th>Titulo del capitulo</th>
-                            <th>Fecha en el que salió</th>
-                            </thead>
-                            <tbody>
-                    {% set cont = 0 %}
-                    {% for i in datos2 %}
-                                    <tr>
-                                        <td>{{ cont }}</td>
-                                        <td>{{ i.titulo }}</td>
-                            {% if i['fecha_salida'] is null %}
-                                        <td>????</td>
-                            {% else %}
-                                        <td>{{ i['fecha_salida'] }}</td>
-                            {% endif %}
-                                    </tr>
-                        {% set cont = cont + 1 %}
-                     {% else %}
-                                <div class="info center">No tiene capítulos</div>
-                     {% endfor %}
-                                </tbody>
-                            </table>
+                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-body">
+                                    <h1 class="center">Listado de capítulos</h1>
+                                    <table class="table table-hover mytable" >
+                                        <thead>
+                                        <th>Número</th>
+                                        <th>Titulo del capitulo</th>
+                                        <th>Fecha en el que salió</th>
+                                        </thead>
+                                        <tbody>
+                                {% set cont = 0 %}
+                                {% for i in datos2 %}
+                                                <tr>
+                                                    <td>{{ cont }}</td>
+                                                    <td>{{ i.titulo }}</td>
+                                        {% if i['fecha_salida'] is null %}
+                                                    <td>????</td>
+                                        {% else %}
+                                                    <td>{{ i['fecha_salida'] }}</td>
+                                        {% endif %}
+                                                </tr>
+                                    {% set cont = cont + 1 %}
+                                 {% else %}
+                                            <div class="info center">No tiene capítulos</div>
+                                 {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                         </div>
-                    </div>
+                        </div>
+                  </div>
                 </div>
 <script type="text/JavaScript">
     window.onload = InitMaterial();
