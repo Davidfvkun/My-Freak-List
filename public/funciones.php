@@ -192,6 +192,7 @@ function buscar_usuarios($busqueda, $filtrado) {
             $buscaUsuario = $buscaUsuario->
                     join("material_usuario", array("usuario.id", "=", "material_usuario.usuario_id"))->
                     where('material_usuario.material_id', $idMaterial->id);
+            break;
         default:
             $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%"); // Si alguien cambia el value de ese select aplicamos case 1
             break;
@@ -300,7 +301,7 @@ function listados($idt, $ide, $nicku) {
     $idUsuario = ORM::for_table('usuario')->select('id')->where("nick", $nicku)->find_one();
     if (!empty($idUsuario)) {
         $buscaCosa = ORM::for_table('material')->
-                        select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material_usuario.vista_en', 'material_usuario.comentario')->
+                        select_many('material.nombre', 'material.n_capitulos', 'material_usuario.capitulo_por_el_que_vas', 'material_usuario.puntuacion', 'material_usuario.material_id', 'material.img_material','material_usuario.vista_en', 'material_usuario.comentario')->
                         join('material_usuario', array('material.id', '=', 'material_id'))->
                         join('usuario', array('usuario_id', '=', 'usuario.id'))->
                         where('material.tipo', $idTipo)->

@@ -248,16 +248,20 @@
     </div>
                
        {% if soyyo == 'si' %}
-        <div class="col-md-6">
-        <input type="button" onClick="Toogle();" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
-            <div style="display: none;" id="bajaCuenta">
-                <form method="POST" action="{{ urlFor('eliminarcuenta')}}">
-                    <label>Está seguro de que quiere darse de baja. Los datos de su cuenta se mantendrán durante un mes.
-                        En ese tiempo podrá volver a entrar sin problema y se reactivará la cuenta</label>
-                        <button class="btn btn-danger">Aceptar</button>
-               </form>
+     <div class="panel panel-default">
+         <div class="panel-body">
+            <div class="col-md-6">
+            <input type="button" onClick="Toogle();" id="eliminarCuenta" class="btn btn-primary" value="Darse de baja" />
+                <div style="display: none;" id="bajaCuenta">
+                    <form method="POST" action="{{ urlFor('eliminarcuenta')}}">
+                        <label>Está seguro de que quiere darse de baja. Los datos de su cuenta se mantendrán durante un mes.
+                            En ese tiempo podrá volver a entrar sin problema y se reactivará la cuenta</label>
+                            <button class="btn btn-danger">Aceptar</button>
+                   </form>
+                </div>
             </div>
-        </div>
+           </div>
+       </div>
         {% endif %}
     
   </div>

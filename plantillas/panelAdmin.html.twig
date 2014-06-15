@@ -18,36 +18,40 @@
 {% block contenido2 %}
     <div class="container margintop">
        <div class="row">
-           <h1 style="text-align: center">Panel de administración</h1>
-           <form method="POST" action="{{ urlFor('panelAdmin')}}">
-                <div class="col-md-6">
-                    <h2>Noticias pendientes de aprobar</h2>
-                    <button class="btn btn-primary" name="muestranoticias">Mostrar noticias</button>
-                </div>
-                <div class="col-md-6">
-                    <h2>Materiales pendientes de aprobar</h2>
-                    <button class="btn btn-primary" name="muestramateriales">Mostrar materiales</button>
-                </div>
-                <div class="col-md-12">
-                    <br/>
-                </div>
-                <div class="col-md-4">
-                     <div class="form-group">
-                           <label for="fecha_1" class="col-lg-2 control-label">Fecha inicial</label>
-                            <div class="col-lg-10">
-                                 <input type="date" name="fecha_1" value="2012-10-05" class="form-control" />
-                            </div>
-                      </div>
-                </div>
-                <div class="col-md-4">
-                      <div class="form-group">
-                           <label for="fecha_2" class="col-lg-2 control-label">Fecha final</label>
-                            <div class="col-lg-10">
-                                 <input type="date" name="fecha_2"value="2012-10-08" class="form-control" />
-                            </div>
-                      </div>
-                </div>
-            </form>
+        <div class="panel panel-default">
+             <div class="panel-body">
+                <h1 style="text-align: center">Panel de administración</h1>
+                <form method="POST" action="{{ urlFor('panelAdmin')}}">
+                     <div class="col-md-6">
+                         <h2>Noticias pendientes de aprobar</h2>
+                         <button class="btn btn-primary" name="muestranoticias">Mostrar noticias</button>
+                     </div>
+                     <div class="col-md-6">
+                         <h2>Materiales pendientes de aprobar</h2>
+                         <button class="btn btn-primary" name="muestramateriales">Mostrar materiales</button>
+                     </div>
+                     <div class="col-md-12">
+                         <br/>
+                     </div>
+                     <div class="col-md-4">
+                          <div class="form-group">
+                                <label for="fecha_1" class="col-lg-2 control-label">Fecha inicial</label>
+                                 <div class="col-lg-10">
+                                      <input type="date" name="fecha_1" value="" class="form-control" />
+                                 </div>
+                           </div>
+                     </div>
+                     <div class="col-md-4">
+                           <div class="form-group">
+                                <label for="fecha_2" class="col-lg-2 control-label">Fecha final</label>
+                                 <div class="col-lg-10">
+                                      <input type="date" name="fecha_2"value="" class="form-control" />
+                                 </div>
+                           </div>
+                     </div>
+                 </form>
+           </div>
+          </div>
         </div>
             <div class="panel panel-default">
                 <div class="panel-body">

@@ -310,10 +310,8 @@ $app->post('/busquedausuario/:num', function($num) use ($app) {
                     $datosQueGuardar[1] = $_POST['filtrado'];
                     $totalDatos = count($busqueda->find_many());
                     $numPaginas = ceil($totalDatos / $datosPorPagina);
-                    echo $numPaginas;
-                    echo "<br/>";
-                    echo $datosPorPagina;
                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num - 1) * $datosPorPagina)->find_many();
+                    
                 }
                 $app->render('busquedausuario.html.twig', array(
                     'datos' => $busqueda,
@@ -379,7 +377,6 @@ $app->get('/listado/:idt/:ide/:nicku', function($idt, $ide, $nicku) use ($app) {
                     $mensaje = "No existe ese usuario o la URL está mal puesta";
                     $clase = "info error";
                 }
-
                 $app->render('listado.html.twig', array(
                     'datos' => $listad,
                     'cosas' => $mensajeListado,
