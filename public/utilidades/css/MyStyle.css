@@ -20,7 +20,21 @@ body
 {
     background: #151515 !important;
 }
-
+#footer{
+    color: white !important;
+}
+#navfooter{
+    width: 100% !important; 
+    height: 50px !important;
+    bottom: 0 !important;
+    position: fixed !important;
+}
+#scrollD
+{
+    overflow-y: scroll;
+    max-height: 420px;
+    padding-bottom: 20px;
+}
 .fondo_blanco
 {
     background: white !important;
@@ -197,6 +211,10 @@ input[type=checkbox].css-checkbox:checked + label.css-label
     .img_leidos_{
         margin-left: 15px;
         margin-top: 0 !important;
+    }
+    #piederecha
+    {
+        visibility: hidden;
     }
 }
 .mensajesprivados{

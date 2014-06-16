@@ -270,7 +270,7 @@ function listados($idt, $ide, $nicku) {
             $GLOBALS['mensaje'] = "Animes ";
             break;
         case "peliculas":
-            $GLOBALS['mensaje'] = "Peliculas ";
+            $GLOBALS['mensaje'] = "Películas ";
             $idTipo = 3;
             break;
         default:
@@ -666,7 +666,8 @@ function mensajes_privados_contenido($usuario)
                 where_raw('(`usuario_e` = ? OR `usuario_r` = ?)', array($yo->id, $yo->id))->
                 find_many();
         foreach($mensaje as $aux){
-            if($aux->usuario_r == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id){
+            if($aux->usuario_r == ORM::for_table('usuario')->where('nick',$_SESSION['logeo'])->find_one()->id
+                    && $aux->usuario_e == $idUsuario->id){
                 $aux->leido = 1;
                 $aux->save();
             }
