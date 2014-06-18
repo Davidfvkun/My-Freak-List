@@ -285,13 +285,16 @@ function InitMaterial()
 function CamposNumericos(id,max,min, expresion)
 {
     valor = document.getElementById(id).value;
-    if (valor > max || valor < min || !expresion.test(valor) && valor != "" && valor != null)
+    if(valor != "" && valor != null)
     {
-        document.getElementById(id + "div").className = "form-group has-error";
-    }
-    else
-    {
-          document.getElementById(id + "div").className = "form-group has-success";  
+        if (valor > max || valor < min)
+        {
+            document.getElementById(id + "div").className = "form-group has-error";
+        }
+        else
+        {
+           document.getElementById(id + "div").className = "form-group";  
+        }
     }
 }
 

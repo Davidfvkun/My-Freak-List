@@ -225,7 +225,7 @@ cosa;
     fputs($fp, $cadena);
     fclose($fp);
         
-    if(registrarse($nickAdmin, $claveAdmin, $claveAdmin, $emailAdmin, $nombreAdmin, "Sin Apellidos", "Sin Descripcion"))
+    if(registrarse($nickAdmin, $claveAdmin, $claveAdmin, $emailAdmin, $nombreAdmin, "Sin Apellidos", "Sin Descripcion",1))
     { 
     }
     else

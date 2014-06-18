@@ -237,7 +237,7 @@ $app->map('/MyFreakZone', function() use ($app) {
                     case "POST":
                         if (isset($_POST['registrarse'])) {
                             if (isset($_POST['nick']) && isset($_POST['clave']) && isset($_POST['clave2']) && isset($_POST['email']) && isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['descripcion'])) {
-                                $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['clave2'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion']);
+                                $registra = registrarse($_POST['nick'], $_POST['clave'], $_POST['clave2'], $_POST['email'], $_POST['nombre'], $_POST['apellido'], $_POST['descripcion'],0);
                                 if ($registra == true) {
                                     $mensaje = "Se ha registrado correctamente";
                                     $clase = "info";
@@ -466,10 +466,13 @@ $app->map('/datosmaterial/:idt/', function($idt) use ($app) {
                 } else {
                     $capitulosMaterial = ORM::for_table('capitulo')->
                                     where('material_id', $idt)->find_many();
+                    
+                    $notaMediaMaterial = calcula_puntuacion_media($idt);
 
                     $app->render('datosmaterial.html.twig', array(
                         'datos' => $datosMaterial,
                         'datos2' => $capitulosMaterial,
+                        'puntuacion' => $notaMediaMaterial,
                         'lotengo' => $check,
                         'info' => $mensaje,
                         'clase' => $clase,

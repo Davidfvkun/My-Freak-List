@@ -33,7 +33,7 @@ require_once "../config.php";
  *  @return boolean Será True si se ha registrado correctamente o False si ha ocurrido algún error
  */
 
-function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion) {
+function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apellido, $descripcion, $optionAdmin) {
 
     $ok = false;
     if (comprueba_longitud($contraseña, 20, 7) && preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
@@ -50,7 +50,7 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
             $insertarUsuario->email = $email;
             $insertarUsuario->descripcion = $descripcion;
             $insertarUsuario->clave = password_hash($contraseña, PASSWORD_DEFAULT);
-            $insertarUsuario->es_admin = 0;
+            $insertarUsuario->es_admin = $optionAdmin;
             $insertarUsuario->activo = 1;
             
             if(isset($_FILES['uploadedfile']))
@@ -85,6 +85,12 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
         }
     }
     return $ok;
+}
+
+function calcula_puntuacion_media($idt)
+{
+    $puntuacion = ORM::for_table('material_usuario')->where('material_id',$idt)->avg('puntuacion');
+    return $puntuacion;
 }
 
 /*
@@ -233,7 +239,7 @@ function buscar_material($busqueda, $V, $genero) {
         if ($cadena != "")
             $cadena = $cadena . "OR `tipo` = ?";
         else
-            $cadena = $cadena . "`tipo` = ?";
+            $cadena = $cadena . "(`tipo` = ?";
 
         $arr[count($arr)] = 3;
     }
@@ -428,7 +434,7 @@ function actualiza_material($variabl, $estado, $puntuacion, $progreso, $vista_en
     $ok = false;
     $dbh = \ORM::getDb();
     $dbh->beginTransaction();
-    if ($puntuacion >= 0 && $puntuacion <= 10 && $progreso >= 0 && $progreso <= 30000 &&
+    if (is_numeric($puntuacion) && $puntuacion >= 0 && $puntuacion <= 10 && is_numeric($progreso) && $progreso >= 0 && $progreso <= 30000 &&
             comprueba_longitud($vista_en, 100, -1) == true && comprueba_longitud($comentario, 200, -1) == true) {
         try {
             $variabl->estado = comprueba_estado($estado);
