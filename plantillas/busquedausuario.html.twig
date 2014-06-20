@@ -46,6 +46,7 @@
                  <div class="info center">No se han encontrado datos</div>
                  {% endfor %}
              </div>
+   {% if datos is null %}
       <form method="POST" >
         <div class="row">
             <div class="col-md-12">
@@ -58,7 +59,7 @@
                  </div>
            </div>
          </div>
-        <div class="row" style="visibility: hidden">
+        <div class="row" style="display: none;">
             <div class="col-md-12">
                 <br/><label>Está filtrando por la palabra '{{ datosBusqueda[0] }}'</label>
                       <input type="hidden"  value="{{ datosBusqueda[0] }}" name="busquedausuario" id="inputbusqueda" />
@@ -77,6 +78,7 @@
             </div>
         </div>
       </form>
+    {% endif %}
     </div>
    </div>
 </div>

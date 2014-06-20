@@ -109,9 +109,10 @@
                 <h2>Noticias recientes</h2>
                         {% for i in ultimasNoticias %}
                             <div>
-                                <h2><a href="/noticia/{{i['id']}}"> 
+                                <h2 style="display: inline-block;"><a href="/noticia/{{i['id']}}"> 
                                 {{ i['titulo'] }}
                                 </a></h2>
+                                 --- Fecha publicación: {{ i['fecha_publicado'] }}<br/>
                                 <p> {{ i['noticia']|striptags|slice(0, 150)}}</p>
                              </div>
                         {% endfor %}

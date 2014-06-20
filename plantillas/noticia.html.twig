@@ -61,7 +61,7 @@
                                         {% set cont2 = cont2 + 1 %}
                                     {% endif %}
                                   {% set cont = cont + 1 %}
-                                  <div>{{ i['comentario'] }}</div>
+                                  <div><p>{{ i['comentario'] }}</p></div>
                                   <br/>Escrito por <a href="/datosusuario/{{i['nick']}}/m/1">{{ i['nick'] }}</a>, en la fecha {{ i['fecha_publicad'] }}
                                   <br/>{% if i['nick'] == usuario or esAdmin == 1 %}
                                   <a href="/borrar/{{ i['id']}}/{{datos['id']}}">Eliminar</a>

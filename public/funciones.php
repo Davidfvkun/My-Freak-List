@@ -39,7 +39,7 @@ function registrarse($nick, $contraseña, $contraseña2, $email, $nombre, $apell
     if (comprueba_longitud($contraseña, 20, 7) && preg_match("/[A-Za-z0-9_.]+@[A-Za-z]+[.]+[A-Za-z]+/", $email) &&
             comprueba_nick_existente($nick) == false && $contraseña == $contraseña2 && 
             preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $nombre) && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z ]{0,45}$/", $apellido)
-            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,45}$/", $descripcion) && preg_match("/^[a-zA-Z0-9_]{1,30}$/", $nick)) {
+            && preg_match("/^[áéíóúÁÉÍÓÚA-Za-z,. ]{0,200}$/", $descripcion) && preg_match("/^[a-zA-Z0-9_]{1,30}$/", $nick)) {
         $dbh = \ORM::getDb();
         $dbh->beginTransaction();
         try {

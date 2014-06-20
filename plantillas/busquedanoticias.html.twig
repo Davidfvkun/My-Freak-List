@@ -28,9 +28,11 @@
                             <p> {{ i['noticia']|striptags|slice(0, 150)}}</p>
                          </div>
                  {% else %}
-                 <div class="info center">No se han encontrado datos</div>
+                 <div class="info center">No se han encontrado noticias correspondientes a tu búsqueda</div>
                  {% endfor %}
              </div>   
+
+       {% if datos == "null" %}
         <div class="row">
             <div class="col-md-12">
                 <div class="bs-component">
@@ -42,7 +44,8 @@
                  </div>
            </div>
          </div>
-        <div class="row" style="visibility: hidden">
+        {% endif %}
+        <div class="row" style="display: none">
             <div class="col-md-12">
             <br/><label>Está filtrando por la palabra '{{ datosBusqueda[0] }}'</label>
                       <input type="hidden" value="{{ datosBusqueda[0] }}" name="inputbuscarnoticias" />

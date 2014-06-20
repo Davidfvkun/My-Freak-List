@@ -67,6 +67,9 @@ $app->map('/error/:fail', function($fail) use ($app) {
                     case 8:
                         $info = "Error al borrar la noticia";
                         break;
+                    case 9:
+                        $info = "Error al publicar el comentario";
+                        break;
                     default:
                         $info = "Error desconocido";
                         break;
@@ -684,7 +687,7 @@ $app->map('/publicabuscanoticias', function() use ($app) {
 
 $app->post('/buscarnoticia/:num', function($num) use ($app) {
             if (usuario_logeado()) {
-                $datosNoticias = null;
+                $datosNoticias = "null";
                 $numPaginas = 0;
                 $datosPorPagina = 4;
                 $datosQueGuardar = array();
@@ -720,16 +723,12 @@ $app->post('/publicacomentario', function() use ($app) {
                             $mensaje = publica_comentario($_POST['comentario'], $_POST['id']);
 
                         if ($mensaje == false) {
-                            $mensaje = "Ha ocurrido algún error al enviar el comentario";
-                            echo $mensaje;
-                            $clase = "info error";
+                            $app->redirect($app->urlFor('error', array('fail' => 9)));
                         } else {
-                            $mensaje = null;
-                            $clase = null;
                             $app->redirect($app->urlFor('noticia', array('idt' => $_POST['id'])));
                         }
                     } else {
-                        echo "Ha ocurrido algún error al enviar el comentario";
+                        $app->redirect($app->urlFor('error', array('fail' => 9)));
                     }
                 }
             }
