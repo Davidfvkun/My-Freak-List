@@ -115,14 +115,14 @@ $app->map('/panelAdmin', function() use ($app) {
                             }
                         } else if (isset($_POST['borrarnoticia'])) {
                             if (isset($_POST['id'])) {
-                                $aceptarNoticia = ORM::for_table('noticia')->find_one($_POST['id']);
-                                $aceptarNoticia->delete();
+                                $borrarNoticia = ORM::for_table('noticia')->find_one($_POST['id']);
+                                $borrarNoticia->delete();
                             }
                             if (isset($_POST['fecha_1']) && isset($_POST['fecha_2'])) {
                                 $fecha1 = $_POST['fecha_1'];
                                 $fecha2 = $_POST['fecha_2'];
                                 $datos = dame_no_publicados('noticia', $fecha1, $fecha2);
-                                $dato = 1;
+                                $dato = 0;
                             }
                         } else if (isset($_POST['muestramateriales'])) {
                             if (isset($_POST['fecha_1']) && isset($_POST['fecha_2'])) {
@@ -746,7 +746,7 @@ $app->get('/noticia/:idt', function($idt) use ($app) {
                     $comentarios = ORM::for_table('comentario')->
                                     select_many('comentario.id', 'comentario.comentario', 'comentario.fecha_publicad', 'usuario.nick')->
                                     join('usuario', array('comentario.usuario_id', '=', 'usuario.id'))->
-                                    where('noticias_id', $datosNoticia->id)->order_by_asc('fecha_publicad')->find_many();
+                                    where('noticias_id', $datosNoticia->id)->order_by_desc('fecha_publicad')->find_many();
                     $nombreUsuario = ORM::for_table("usuario")->where('id', $datosNoticia->usuario_id)->find_one();
                     $_SESSION['logeo'] == $nombreUsuario->nick ? $soyyo = "si" : $soyyo = "no";
                     $app->render('noticia.html.twig', array(
