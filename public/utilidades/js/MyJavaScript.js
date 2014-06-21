@@ -287,7 +287,7 @@ function CamposNumericos(id,max,min, expresion)
     valor = document.getElementById(id).value;
     if(valor != "" && valor != null)
     {
-        if (valor > max || valor < min)
+        if (valor >= max || valor <= min)
         {
             document.getElementById(id + "div").className = "form-group has-error";
         }
