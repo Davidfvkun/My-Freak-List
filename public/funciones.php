@@ -189,10 +189,17 @@ function buscar_usuarios($busqueda, $filtrado) {
     $buscaUsuario = ORM::for_table('usuario');
     switch ($filtrado) {
         case "1":
-            $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%");
+
+            if (strlen($busqueda) > 2) 
+                $buscaUsuario = $buscaUsuario->where_like("nombre", "%" . $busqueda . "%");
+            else
+                 $buscaUsuario = $buscaUsuario->where_like("nombre", $busqueda . "%");
             break;
         case "2":
-            $buscaUsuario = $buscaUsuario->where_like("nick", "%" . $busqueda . "%");
+            if (strlen($busqueda) > 2) 
+                $buscaUsuario = $buscaUsuario->where_like("nick", "%" . $busqueda . "%");
+            else
+                $buscaUsuario = $buscaUsuario->where_like("nick", $busqueda . "%");
             break;
         case "3":
             $idMaterial = ORM::for_table("material")->where_like("nombre", "%" . $busqueda . "%")->find_one();

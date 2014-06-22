@@ -24,7 +24,7 @@ switch ($_REQUEST['peticion']) {
         switch ($_GET['val2']) {
             case 1:
                 $busqueda = buscar_usuarios($_GET['val1'], $_GET['val2']);
-                $busqueda = $busqueda->find_many();
+                $busqueda = $busqueda->limit(5)->find_many();
                 $i = 0;
                 $arr = array();
                 foreach ($busqueda as $j) {
@@ -52,7 +52,7 @@ switch ($_REQUEST['peticion']) {
         else
             $arri = array($_GET['val2'], $_GET['val3'], $_GET['val4']);
         $busqueda = buscar_material($_GET['val1'], $arri, $_GET['val5']);
-        $busqueda = $busqueda->find_many();
+        $busqueda = $busqueda->limit(5)->find_many();
         $i = 0;
         $arr = array();
         foreach ($busqueda as $j) {

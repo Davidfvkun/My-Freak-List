@@ -50,7 +50,7 @@
        </div> 
         <label>Si la serie/película/anime que ha buscado no ha sido encontrada y
         quiere agregarla pinche <a href="/introducematerial">aquí</a></label>
-       {% if datos is null %}
+        {% if datos is not null %}
            <form method="POST">
               <div class="row">
                   <div class="col-md-12">

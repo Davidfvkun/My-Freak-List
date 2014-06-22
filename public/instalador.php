@@ -18,9 +18,8 @@
 
 
 include "../vendor/autoload.php";
-require_once "../config.php";
 
-function instalar($root, $claveRoot, $puerto, $esquema, $nickAdmin, $claveAdmin, $nombreAdmin, $emailAdmin) {
+function instalar($root, $claveRoot, $puerto, $esquema) {
     $instalacion = -1;
     try {
         $dbh = new PDO('mysql:host=' . $puerto . ';charset=utf8', $root, $claveRoot);
@@ -42,6 +41,32 @@ function instalar($root, $claveRoot, $puerto, $esquema, $nickAdmin, $claveAdmin,
         $instalacion = "Error al crear el esquema";
         $dbh->rollBack();
     }
+
+    $fp = fopen("../config.php", "w+");
+
+    $cadena = <<<cosa
+<?php
+\ORM::configure('mysql:host=$puerto;dbname=$esquema; charset=utf8');
+\ORM::configure('username','$root');
+\ORM::configure('password','$claveRoot');
+\$GLOBALS['generos'] = array('No filtrar','lucha','accion','misterio','apocaliptico','shonen','shojo','drama','amor','infantil');
+                    
+cosa;
+    if(file_exists("../config.php"))
+    {
+        
+    }
+    else
+    {
+        $dbh->rollBack();
+        die($e->getMessage());
+        $instalacion = "Error al generar el fichero de configuración";
+    }
+
+    
+
+    fputs($fp, $cadena);
+    fclose($fp);
 
     try {
         $crea1SQL = $dbh->prepare("CREATE TABLE IF NOT EXISTS `$esquema`.`usuario` (
@@ -207,43 +232,20 @@ ENGINE = InnoDB;");
         $instalacion = "Error al crear la tabla material_usuario";
         $dbh->rollBack();
     }
+    
+    return $instalacion;
+}
 
-    /* Aquí irá todo el proceso de tablas */
-
-    /* Para finalizar creamos el config */
-    $fp = fopen("../config2.php", "w+");
-
-    $cadena = <<<cosa
-<?php
-\ORM::configure('mysql:host=$puerto;dbname=$esquema; charset=utf8');
-\ORM::configure('username','$root');
-\ORM::configure('password','$claveRoot');
-\$GLOBALS['generos'] = array('No filtrar','lucha','accion','misterio','apocaliptico','shonen','shojo','drama','amor','infantil');
-                    
-cosa;
-
-    fputs($fp, $cadena);
-    fclose($fp);
-        
+function creaAdmins($nickAdmin, $claveAdmin, $nombreAdmin,  $emailAdmin)
+{
+    $instalacion = -1;
     if(registrarse($nickAdmin, $claveAdmin, $claveAdmin, $emailAdmin, $nombreAdmin, "Sin Apellidos", "Sin Descripcion",1))
     { 
     }
     else
     {
-        $dbh->rollBack();
         $instalacion = "Error al generar el usuario administrador";
     }
-    if(file_exists("../config2.php"))
-    {
-        
-    }
-    else
-    {
-        $dbh->rollBack();
-        die($e->getMessage());
-        $instalacion = "Error al generar el fichero de configuración";
-    }
-    
     return $instalacion;
 }
 

@@ -40,7 +40,7 @@ $view->parserExtensions = array(
 
 session_start();
 
-$app->map('/error/:fail', function($fail) use ($app) {
+$app->map('/errores/:fail', function($fail) use ($app) {
             if (usuario_logeado()) {
                 switch ($fail) {
                     case 1: // El usuario no existe
@@ -194,7 +194,7 @@ $app->map('/MyFreakZone/principal', function() use ($app) {
             }
         })->name('myfreakzone')->via('GET', 'POST');
 
-/* Cerrar sesión y sacar al usuario de la aplicacion */
+/* Instalador */
 $app->map('/instalador', function() use ($app) {
     switch ($app->request()->getMethod()) {
                 case "GET":
@@ -203,9 +203,7 @@ $app->map('/instalador', function() use ($app) {
                 case "POST":
                     if(isset($_POST['instalar'])){
                         $instalacion = instalar(htmlentities($_POST['usuarioRoot']),htmlentities($_POST['claveRoot']),
-                                htmlentities($_POST['puerto']),htmlentities($_POST['schema']),
-                                htmlentities($_POST['nickAdmin']),htmlentities($_POST['claveAdmin']),
-                                htmlentities($_POST['nombreAdmin']),htmlentities($_POST['emailAdmin'])); 
+                                htmlentities($_POST['puerto']),htmlentities($_POST['schema'])); 
                         if($instalacion == -1){
                             $mensaje = "Instalación completada con exito";
                             $clase = "info";
@@ -219,18 +217,35 @@ $app->map('/instalador', function() use ($app) {
                              'clase' => $clase
                          ));
                     }
+                    if(isset($_POST['creaAdmins']))
+                    {
+                        $crear = creaAdmins(htmlentities($_POST['nickAdmin']),htmlentities($_POST['claveAdmin']),
+                                htmlentities($_POST['nombreAdmin']),htmlentities($_POST['emailAdmin']));
+                        if($crear == -1){
+                            $mensaje = "Admin creado";
+                            $clase = "info";
+                        }
+                        else{
+                            $mensaje = $crear;
+                            $clase = "info error";
+                        }
+                         $app->render('instalador.html.twig',array(
+                             'mensaje' => $mensaje,
+                             'clase' => $clase
+                         ));
+                    }
                     break;
     }
         })->name('instalador')->via('GET', 'POST');
         
-/* Instalador */
+
+/* Cerrar sesión y sacar al usuario de la aplicacion */
 $app->get('/salir', function() use ($app) {
             unset($_SESSION['logeo']);
             //session_destroy();
             $app->redirect($app->urlFor('registro'));
         })->name('salir');
 
-/* De momento dejo esto como forma de acceder al logeo por si quiero probar algo */
 $app->map('/MyFreakZone', function() use ($app) {
             if (!usuario_logeado()) {
                 switch ($app->request()->getMethod()) {
@@ -267,6 +282,7 @@ $app->map('/MyFreakZone', function() use ($app) {
             else
                 $app->redirect($app->urlFor('myfreakzone'));
         })->name('registro')->via('GET', 'POST');
+
 //////////////////////////////////////////////////////////////////////
 $app->map('/login', function() use ($app) {
             switch ($app->request()->getMethod()) {
@@ -316,6 +332,8 @@ $app->post('/busquedausuario/:num', function($num) use ($app) {
                     $busqueda = $busqueda->limit($datosPorPagina)->offset(($num - 1) * $datosPorPagina)->find_many();
                     
                 }
+                if(empty($busqueda))
+                    $busqueda = null;
                 $app->render('busquedausuario.html.twig', array(
                     'datos' => $busqueda,
                     'N' => $numPaginas,
@@ -334,7 +352,7 @@ $app->post('/busquedam/:num', function($num) use ($app) {
                 $datosPorPagina = 5;
                 $datosQueGuardar = array();
                 $V = array(0, 0, 0);
-                $busqueda = null;
+                $busqueda = "null";
                 $numPaginas = 1;
                 if (is_numeric($num)) {
                     if (isset($_REQUEST['cbmaterial'])) {
@@ -355,7 +373,8 @@ $app->post('/busquedam/:num', function($num) use ($app) {
                         }
                     }
                 }
-
+                if(empty($busqueda))
+                    $busqueda = null;
                 $app->render('busquedamaterial.html.twig', array(
                     'datos' => $busqueda,
                     'N' => $numPaginas,
@@ -609,10 +628,6 @@ $app->map('/introducematerial', function() use ($app) {
                                 $generoMaterial = "";
                             }
 
-                            echo "Hola. True:";
-                            echo true;
-                            echo "<br/>Hola." . $verificar;
-
                             if ($verificar == true) {
                                 $datosBorrador = array("", "", "", "");
                                 $clase = "info";
@@ -687,7 +702,7 @@ $app->map('/publicabuscanoticias', function() use ($app) {
 
 $app->post('/buscarnoticia/:num', function($num) use ($app) {
             if (usuario_logeado()) {
-                $datosNoticias = "null";
+                $datosNoticias = null;
                 $numPaginas = 0;
                 $datosPorPagina = 4;
                 $datosQueGuardar = array();
@@ -702,6 +717,8 @@ $app->post('/buscarnoticia/:num', function($num) use ($app) {
                         $datosQueGuardar[1] = $_POST['filtradonoticia'];
                     }
                 }
+                if(empty($datosNoticias))
+                    $datosNoticias = null;
                 $app->render('busquedanoticias.html.twig', array(
                     'datos' => $datosNoticias,
                     'N' => $numPaginas,
